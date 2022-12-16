@@ -21,6 +21,18 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from personnelPlanet import views
 
 urlpatterns = [
+    #APIs and admin
     path('admin/', admin.site.urls),
+
+    # Views
     path('', views.home, name='home'),
+    path('hire', views.hire, name='hire'),
+    path('shifts', views.shift, name='shifts'),
+    path('profile', views.profile, name='profile'),
+
+    # Authentication/Authorization
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
+    path('register', views.register, name='register'),
+
 ]
