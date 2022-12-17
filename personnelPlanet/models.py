@@ -9,6 +9,7 @@ class User(AbstractUser):
     phoneNumber = PhoneNumberField()
     payRate = models.FloatField()
     is_employer = models.BooleanField(default=False)
+    hoursWorked = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -23,6 +24,13 @@ class Availability(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Shifts(models.Model):
+    employee = models.ForeignKey(User, on_delete=models.CASCADE)
+    day = models.CharField(max_length=10)
+    start = models.TimeField(null=False, blank=False)
+    end = models.TimeField(null=False, blank=False)
 
 
 class Company(models.Model):
