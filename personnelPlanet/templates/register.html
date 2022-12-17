@@ -1,1 +1,34 @@
 {% extends 'layout.html' %}
+{% block body %}
+    <div id='reg-body' class='full-page'>
+        <form id='register-form' action='{% url "register" %}' method='post'>
+            <div  class='form'>
+                <box-icon id="reg-user-circle" name='user-circle' color='white' size='100px'></box-icon>
+                {% csrf_token %}
+                <div class="form-inputs">
+                    {{ form.firstName }}
+                </div>
+                <div class="form-inputs">
+                    {{ form.lastName }}
+                </div>
+                <div class="form-inputs">
+                    {{ form.phoneNumber }}
+                </div>
+                <div class="form-inputs">
+                    <span>Are you an Employer?</span>
+                    {{ form.is_employer }}
+                </div>
+                <div class="form-inputs">
+                    {{ form.company }}
+                </div>
+                <div class="form-inputs">
+                    {{ form.password }}
+                </div>
+                <div class="form-inputs">
+                    <input type='submit' value='Submit'>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+{% endblock %}

@@ -1,6 +1,31 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
+from django.urls import reverse
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django import forms
+from .models import User, Availability, Shifts, Company, EmployeeTracker, Messages
+from phonenumber_field.formfields import PhoneNumberField
 
 # Create your views here.
+
+
+class RegisterForm(forms.Form):
+    firstName = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'First Name'}), required=True)
+    lastName = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Last Name'}), required=True)
+    phoneNumber = PhoneNumberField(widget=forms.TextInput(
+        attrs={'placeholder': 'Phone Number'}), required=True)
+    is_employer = forms.BooleanField()
+    company = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Company Name'}), required=True)
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'placeholder': 'Password'}), max_length=32)
 
 
 def home(request):
@@ -33,7 +58,8 @@ def login(request):
 def register(request):
     # simple registration for employees
     # for employer they should be able to register a company
-    return render(request, 'register.html')
+
+    return render(request, 'register.html', {'form': RegisterForm})
 
 
 def logout(request):
