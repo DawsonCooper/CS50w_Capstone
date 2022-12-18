@@ -1,20 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+html{
+    font-family: 'Space Grotesk', sans-serif !important;
+}
 body{
-    height: 100vh;
+    height: 95vh;
     width: 100vw;
+    overflow: hidden;
 }
 .full-page{
     height: 100%;
     width: 100%;
 }
-
+.navbar{
+    background-color: #63ACE5 ;
+}
+.nav-link{
+    color: #e7eff6 !important;
+    font-size: 1.5rem !important;
+    transition: color 1s ease-in-out 1s;   
+}
+.nav-link:hover{
+    color: #2a4d69 !important;
+}
+#reg-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
 /* REG PAGE */
 @media (max-width: 650px) { 
-    #reg-body{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: white;
-    }
+
     #register-form{
         min-height: 75%;
         min-width: 55%;
@@ -33,28 +50,50 @@ body{
         padding-top: 5%;
     }
  }
+ /*   REG PAGE DESKTOP STYLES   */
  @media (min-width: 650px) { 
-    #reg-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    }
+
     #register-form{
+        display: flex;
+        justify-content: center;
         min-height: 50%;
-        min-width: 25%;
+        min-width: 20%;
+        margin-bottom: 10%;
     }
     .form{
-        height: 100%;
+        min-height: 100%;
+        min-width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: lightgrey;
+        background-color: #63ACE5 ;
         border: 10px solid transparent; 
-        border-radius: 45%;
+        border-radius: 50%;
     }
     .form-inputs{
         padding-top: 1.5%;
     }
+}
+
+
+.wave-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.wave-footer svg {
+    position: relative;
+    display: block;
+    width: calc(143% + 1.3px);
+    height: 133px;
+}
+
+.wave-footer .shape-fill {
+    fill: #63ACE5;
 }

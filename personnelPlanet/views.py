@@ -62,5 +62,6 @@ def register(request):
     return render(request, 'register.html', {'form': RegisterForm})
 
 
-def logout(request):
-    return render(request, 'logout.html')
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))
