@@ -1,15 +1,15 @@
 {% extends 'layout.html' %}
 {% block body %}
 <div id='reg-body' class='full-page'>
-    <form id='register-form' action='{% url "register" %}' method='post'>
+    <form id='register-form' action="{% url 'login' %}" method='post'>
         <div  class='form'>
             <box-icon id="reg-user-circle" name='user-circle' color='#e7eff6  ' size='100px'></box-icon>
             {% csrf_token %}
             <div class="login-form-inputs">
-                {{ form.username }}
+                {{ loginForm.workId }}
             </div>
             <div class="login-form-inputs">
-                {{ form.password }}
+                {{ loginForm.password }}
             </div>
 
             <div class="login-form-inputs">

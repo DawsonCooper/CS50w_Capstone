@@ -10,27 +10,28 @@ from django.contrib.auth.decorators import login_required
 from django import forms
 from .models import User, Availability, Shifts, Company, EmployeeTracker, Messages
 from phonenumber_field.formfields import PhoneNumberField
+from random import randrange, randint
 
 # Create your views here.
 
 
 class RegisterForm(forms.Form):
     firstName = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'First Name'}), required=True)
+        attrs={'placeholder': 'First Name'}), required=False, max_length=25)
     lastName = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Last Name'}), required=True)
+        attrs={'placeholder': 'Last Name'}), required=False, max_length=25)
     phoneNumber = PhoneNumberField(widget=forms.TextInput(
-        attrs={'placeholder': 'Phone Number'}), required=True)
-    is_employer = forms.BooleanField()
+        attrs={'placeholder': 'Phone Number'}), region="US", required=False, max_length=25)
+    isEmployer = forms.BooleanField(required=False)
     company = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Company Name'}), required=True)
+        attrs={'placeholder': 'Company Name'}), required=False, max_length=25)
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Password'}), max_length=32)
+        attrs={'placeholder': 'Password'}), max_length=32, required=False)
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(
-        attrs={'placeholder': 'Username'}), required=True
+    workId = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Work Id'}), required=True
     )
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Password'}), required=True
@@ -60,9 +61,23 @@ def profile(request):
     return render(request, 'profile.html')
 
 
-def login(request):
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST, request.FILES)
+        if form.is_valid():
+            workId = form.cleaned_data["workId"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, workId=workId, password=password)
+            print(user)
+            if user is not None:
+                login(request, user)
+                return home(request)
+        else:
+            return render(request, "login.html", {
+                "message": "Invalid work Id and/or password."
+            })
     return render(request, 'login.html', {
-        'form': LoginForm
+        'loginForm': LoginForm
     })
 
 
@@ -71,41 +86,46 @@ def register(request):
     # for employer they should be able to register a company
     if request.method == "POST":
 
-        form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST, request.FILES)
+        for field in form:
+            print("Field Error:", field.name,  field.errors)
         if form.is_valid():
-            firstName = form.cleaned_data["FirstName"]
-            lastName = form.cleaned_data["LastName"]
-            password = form.cleaned_data["Password"]
-
-        # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
+            first_name = form.cleaned_data["firstName"]
+            last_name = form.cleaned_data["lastName"]
+            phoneNumber = form.cleaned_data["phoneNumber"]
+            isEmployer = form.cleaned_data["isEmployer"]
+            company = form.cleaned_data["company"]
+            password = form.cleaned_data["password"]
+        # generate username (make sure to display it to the user) and create new user
+            fInital = first_name[0]
+            lInital = last_name[0]
+            oneDigit = randint(0, 9)
+            threeDigit = randrange(100, 999)
+            workId = f"{fInital}{oneDigit}{lInital}{oneDigit}{threeDigit}"
+            user = User(
+                first_name=first_name,
+                last_name=last_name,
+                workId=workId,
+                phoneNumber=phoneNumber,
+                isEmployer=isEmployer,
+                company=company,
+                password=password
+            )
+            print(workId)
+            # user.save()
             return render(request, "register.html", {
-                "message": "Passwords must match.",
-                'form': RegisterForm,
+                'regForm': RegisterForm,
             })
 
-        # Attempt to create new user
-        try:
-            user = User.objects.create_user(
-                username, password)
-            user.save()
-            User.objects.filter(username=username).update(
-                bio=bio, name=name)
-            print(bio, name)
-        except IntegrityError:
-            return render(request, "network/register.html", {
-                "message": "Username already taken.",
-                'postForm': PostForm,
+        else:
+            print(form.errors.as_data())
+            return render(request, "register.html", {
+                'regForm': RegisterForm,
             })
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "network/register.html", {
-            'postForm': PostForm,
-        })
-    return render(request, 'register.html', {'form': RegisterForm})
+
+    return render(request, "register.html", {
+        'regForm': RegisterForm,
+    })
 
 
 def logout_view(request):
