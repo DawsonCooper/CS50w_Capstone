@@ -13,7 +13,11 @@ body{
     width: 100%;
 }
 .navbar{
-    background-color: #63ACE5 ;
+    background-color: #63ACE5;
+}
+
+.navbar-brand{
+    color: #e7eff6 !important;
 }
 .nav-link{
     color: #e7eff6 !important;
@@ -23,6 +27,7 @@ body{
 .nav-link:hover{
     color: #2a4d69 !important;
 }
+
 #reg-body{
     display: flex;
     justify-content: center;
@@ -93,7 +98,27 @@ body{
     width: calc(143% + 1.3px);
     height: 133px;
 }
+@media (max-width: 767px) {
+    .wave-footer svg {
+        width: calc(160% + 1.3px);
+        height: 50px;
+    }
+}
 
 .wave-footer .shape-fill {
     fill: #63ACE5;
+}
+
+
+/* LOGIN VIEW */
+
+@media (max-width: 650px){
+    .login-form-inputs{
+        padding-top: 10%;
+    }
+}
+@media (min-width: 650px){
+    .login-form-inputs{
+        padding-top: 5%;
+    }
 }

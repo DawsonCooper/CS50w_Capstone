@@ -28,6 +28,15 @@ class RegisterForm(forms.Form):
         attrs={'placeholder': 'Password'}), max_length=32)
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Username'}), required=True
+    )
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'placeholder': 'Password'}), required=True
+    )
+
+
 def home(request):
     # User information (company, shifts,)
     return render(request, 'home.html')
@@ -52,13 +61,50 @@ def profile(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'login.html', {
+        'form': LoginForm
+    })
 
 
 def register(request):
     # simple registration for employees
     # for employer they should be able to register a company
+    if request.method == "POST":
 
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            firstName = form.cleaned_data["FirstName"]
+            lastName = form.cleaned_data["LastName"]
+            password = form.cleaned_data["Password"]
+
+        # Ensure password matches confirmation
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            return render(request, "register.html", {
+                "message": "Passwords must match.",
+                'form': RegisterForm,
+            })
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(
+                username, password)
+            user.save()
+            User.objects.filter(username=username).update(
+                bio=bio, name=name)
+            print(bio, name)
+        except IntegrityError:
+            return render(request, "network/register.html", {
+                "message": "Username already taken.",
+                'postForm': PostForm,
+            })
+        login(request, user)
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "network/register.html", {
+            'postForm': PostForm,
+        })
     return render(request, 'register.html', {'form': RegisterForm})
 
 
