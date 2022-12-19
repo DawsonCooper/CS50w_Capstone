@@ -38,6 +38,38 @@ class LoginForm(forms.Form):
     )
 
 
+@csrf_exempt
+def availability(request):
+    # In post req we will be getting a users avail as a json obj {day: shift}
+    # we will want to loop over that obj and populate the avail model with userId, day, shift in each iteration
+    data = json.loads(request.body)
+    availObj = data.get('body')
+    print(request.user)
+    employee = User.objects.filter(workId=request.user).values('pk')
+    print(employee[0]['pk'])
+
+    for day in availObj:
+
+        try:
+            check = Availability.objects.get(
+                employee=employee[0]['pk'], day=day)
+            print(check)
+
+        except:
+            newAvail = Availability(
+                employee=employee,
+                day=day,
+                shift=availObj[day]
+            )
+            newAvail.save()
+        if (check):
+            Availability.objects.filter(
+                employee=employee[0]['pk'], day=day).update(shift=availObj[day])
+    return JsonResponse({
+        'message': 'success'
+    })
+
+
 def home(request):
     # User information (company, shifts,)
     user = request.user
@@ -69,17 +101,21 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST, request.FILES)
         if form.is_valid():
-            workId = form.cleaned_data["workId"]
+            username = form.cleaned_data["workId"]
             password = form.cleaned_data["password"]
-            user = authenticate(request, workId=workId, password=password)
+            print(username, password, request)
+            user = User.objects.get(workId=username, password=password)
+
             print(user)
             if user is not None:
                 login(request, user)
-                return home(request)
+                return render(request, 'home.html', {
+                })
         else:
             return render(request, "login.html", {
                 "message": "Invalid work Id and/or password."
             })
+
     return render(request, 'login.html', {
         'loginForm': LoginForm
     })

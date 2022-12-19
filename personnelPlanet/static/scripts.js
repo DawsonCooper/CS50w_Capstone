@@ -1,4 +1,25 @@
+let availObj = {
+    monday: '',
+    tuesday: '',
+    wednesday: '',
+    thursday: '',
+    friday: '',
+    saturday: '',
+    sunday: ''
+}
 
+function availability(userAvailability) {
+    
+    fetch(`/availability`, {
+        method: 'POST',
+        body: JSON.stringify({
+            body: userAvailability,
+        })
+    }).then(response => response.json)
+    .then(result=> console.log(result))
+    .catch(err => console.log(err))
+
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     regUserCircle = document.querySelector("#reg-user-circle");
@@ -9,27 +30,56 @@ document.addEventListener("DOMContentLoaded", () => {
     //-------------------- PROFILE AVAIL TABLE SCRIPTS --------------------------//
     if (/\bprofile\b/gi.test(window.location.href)){
         console.log('working');
-    }
-    document.querySelectorAll('.avail-cell').forEach(cell => {
-        console.log(cell)
-        cell.addEventListener('mouseover', () => {
-            if (cell.style.backgroundColor !== 'limegreen'){
-                cell.style.backgroundColor = 'lightgreen';
-            }
-        })
-        cell.addEventListener('mouseout', () => {
-            if (cell.style.backgroundColor != 'limegreen'){
-                cell.style.backgroundColor = '';
-            }
-        });
-        cell.addEventListener('click', () => {
-            if (cell.style.backgroundColor !== 'limegreen'){
-                cell.style.backgroundColor = 'limegreen';
-            }else{
-                cell.style.backgroundColor = '';
-            }
-        });
-    })
+        let allCells = document.querySelectorAll('.avail-cell')
+        allCells.forEach(cell => {
+            // --------------  CHANGES BG ON HOVER  ------------------ //
+            cell.addEventListener('mouseover', () => {
+                if (cell.style.backgroundColor !== 'limegreen'){
+                    cell.style.backgroundColor = 'lightgreen';
+                }
+            })
+            cell.addEventListener('mouseout', () => {
+                if (cell.style.backgroundColor != 'limegreen'){
+                    cell.style.backgroundColor = '';
+                }
+            });
+            // -------------  CHANGES BG AND POPULATES availObj  ------------------- //
+            cell.addEventListener('click', () => {
+                let test = cell.attributes.id.value;
+                let split = test.split('-');
+                let day = split[1];
 
+                allCells.forEach(item =>{  
+                    if (item.attributes.id.value.includes(`${day}`) && item != cell){
+                        
+                        item.style.backgroundColor = '';
+                    }
+                })
+                
+                if (cell.style.backgroundColor !== 'limegreen'){
+                    cell.style.backgroundColor = 'limegreen';
+                    availObj[split[1]] = split[0];
+                }else{
+                    cell.style.backgroundColor = '';
+
+                }
+                console.log(availObj)
+            });
+        })
+        // -----------------  RESETS AVAIL TABLE  ------------------------- //
+        document.querySelector("#reset-avail").addEventListener('click', () => {
+            allCells.forEach(cell => {
+                cell.style.backgroundColor = ''
+            })
+            for (var day in availObj) availObj[day] = '';
+            console.log(availObj)
+        })
+        document.querySelector("#submit-avail").addEventListener('click', (e) => {
+        e.preventDefault()
+        availability(availObj);
+        console.log(availObj);
+    })
+    }
+    
 
 })

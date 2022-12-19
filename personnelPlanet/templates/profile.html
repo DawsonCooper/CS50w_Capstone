@@ -16,35 +16,40 @@
     <tbody>
       <tr>
         <th scope="row">Morning</th>
-        <td class="avail-cell" id="m-m"></td>
-        <td class="avail-cell" id="m-t"></td>
-        <td class="avail-cell" id="m-w"></td>
-        <td class="avail-cell" id="m-th"></td>
-        <td class="avail-cell" id="m-f"></td>
-        <td class="avail-cell" id="m-sat"></td>
-        <td class="avail-cell" id="m-sun"></td>
+        <td class="avail-cell" id="morning-monday"></td>
+        <td class="avail-cell" id="morning-tuesday"></td>
+        <td class="avail-cell" id="morning-wednesday"></td>
+        <td class="avail-cell" id="morning-thursday"></td>
+        <td class="avail-cell" id="morning-friday"></td>
+        <td class="avail-cell" id="morning-saturday"></td>
+        <td class="avail-cell" id="morning-sunday"></td>
       </tr>
       <tr>
         <th scope="row">Evening</th>
-        <td class="avail-cell" id="e-m"></td>
-        <td class="avail-cell" id="e-t"></td>
-        <td class="avail-cell" id="e-w"></td>
-        <td class="avail-cell" id="e-th"></td>
-        <td class="avail-cell" id="e-f"></td>
-        <td class="avail-cell" id="e-sat"></td>
-        <td class="avail-cell" id="e-sun"></td>
+        <td class="avail-cell" id="evening-monday"></td>
+        <td class="avail-cell" id="evening-tuesday"></td>
+        <td class="avail-cell" id="evening-wednesday"></td>
+        <td class="avail-cell" id="evening-thursday"></td>
+        <td class="avail-cell" id="evening-friday"></td>
+        <td class="avail-cell" id="evening-saturday"></td>
+        <td class="avail-cell" id="evening-sunday"></td>
       </tr>
       <tr>
         <th scope="row">All</th>
-        <td class="avail-cell" id="all-m"></td>
-        <td class="avail-cell" id="all-t"></td>
-        <td class="avail-cell" id="all-w"></td>
-        <td class="avail-cell" id="all-th"></td>
-        <td class="avail-cell" id="all-f"></td>
-        <td class="avail-cell" id="all-sat"></td>
-        <td class="avail-cell" id="all-sun"></td>
+        <td class="avail-cell" id="all-monday"></td>
+        <td class="avail-cell" id="all-tuesday"></td>
+        <td class="avail-cell" id="all-wednesday"></td>
+        <td class="avail-cell" id="all-thursday"></td>
+        <td class="avail-cell" id="all-friday"></td>
+        <td class="avail-cell" id="all-saturday"></td>
+        <td class="avail-cell" id="all-sunday"></td>
       </tr>
     </tbody>
   </table>
+  <div id="profile-buttons">
+    <button type="button" id="reset-avail" class="btn btn-danger">Reset</button>
+    {% csrf_token %}
+    <button type="button" id="submit-avail" class="btn">Submit</button>
+  </div>
 </div>
 {% endblock %}

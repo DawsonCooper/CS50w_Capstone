@@ -23,6 +23,7 @@ from personnelPlanet import views
 urlpatterns = [
     #APIs and admin
     path('admin/', admin.site.urls),
+    path('availability', views.availability, name='availability'),
 
     # Views
     path('', views.home, name='home'),

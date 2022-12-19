@@ -132,3 +132,16 @@ body{
 #avail-table{
     width: 60%;
 }
+#submit-avail{
+    background-color: limegreen;
+    color: white;
+}
+#submit-avail:hover{
+    background-color: rgb(9, 182, 9);
+}
+#profile-buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    
+}
