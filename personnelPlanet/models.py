@@ -13,7 +13,7 @@ class User(AbstractUser):
     workId = models.CharField(max_length=10, default='000000')
     phoneNumber = PhoneNumberField(default='(555) 555 5555')
     payRate = models.FloatField(default=7.45)
-    is_employer = models.BooleanField(default=False)
+    isEmployer = models.BooleanField(default=False)
     hoursWorked = models.IntegerField(default=0)
     company = models.CharField(max_length=25, null=True)
 
@@ -21,9 +21,8 @@ class User(AbstractUser):
 class Availability(models.Model):
     employee = models.IntegerField()
     day = models.CharField(max_length=10)
-    # If start and/or end is null we will count that as full/any time
-    start = models.TimeField(null=True, blank=True)
-    end = models.TimeField(null=True, blank=True)
+    # shift will be morning, evenning, or all
+    shift = models.CharField(max_length=10, default='All')
 
 
 class Shifts(models.Model):

@@ -40,6 +40,10 @@ class LoginForm(forms.Form):
 
 def home(request):
     # User information (company, shifts,)
+    user = request.user
+    print(user)
+    user = User.objects.filter(username=user)
+
     return render(request, 'home.html')
 
 
@@ -87,8 +91,7 @@ def register(request):
     if request.method == "POST":
 
         form = RegisterForm(request.POST, request.FILES)
-        for field in form:
-            print("Field Error:", field.name,  field.errors)
+
         if form.is_valid():
             first_name = form.cleaned_data["firstName"]
             last_name = form.cleaned_data["lastName"]
@@ -102,7 +105,8 @@ def register(request):
             oneDigit = randint(0, 9)
             threeDigit = randrange(100, 999)
             workId = f"{fInital}{oneDigit}{lInital}{oneDigit}{threeDigit}"
-            user = User(
+            createUser = User(
+                username=workId,
                 first_name=first_name,
                 last_name=last_name,
                 workId=workId,
@@ -111,13 +115,14 @@ def register(request):
                 company=company,
                 password=password
             )
+            createUser.save()
             print(workId)
-            user.save()
-            return render(request, "register.html", {
-                'regForm': RegisterForm,
-            })
+            login(request, createUser)
+            return home(request)
 
         else:
+            for field in form:
+                print("Field Error:", field.name,  field.errors)
             print(form.errors.as_data())
             return render(request, "register.html", {
                 'regForm': RegisterForm,

@@ -122,3 +122,13 @@ body{
         padding-top: 5%;
     }
 }
+
+/* Profile Page */
+#availability{
+    
+    margin: 2%;
+    width: 100%;
+}
+#avail-table{
+    width: 60%;
+}

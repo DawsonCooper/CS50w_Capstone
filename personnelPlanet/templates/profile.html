@@ -1,1 +1,50 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html' %} {% block body %}
+<div id="availability">
+  <table id="avail-table" class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Availability</th>
+        <th scope="col">Monday</th>
+        <th scope="col">Tuesday</th>
+        <th scope="col">Wednesday</th>
+        <th scope="col">Thursday</th>
+        <th scope="col">Friday</th>
+        <th scope="col">Saturday</th>
+        <th scope="col">Sunday</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Morning</th>
+        <td class="avail-cell" id="m-m"></td>
+        <td class="avail-cell" id="m-t"></td>
+        <td class="avail-cell" id="m-w"></td>
+        <td class="avail-cell" id="m-th"></td>
+        <td class="avail-cell" id="m-f"></td>
+        <td class="avail-cell" id="m-sat"></td>
+        <td class="avail-cell" id="m-sun"></td>
+      </tr>
+      <tr>
+        <th scope="row">Evening</th>
+        <td class="avail-cell" id="e-m"></td>
+        <td class="avail-cell" id="e-t"></td>
+        <td class="avail-cell" id="e-w"></td>
+        <td class="avail-cell" id="e-th"></td>
+        <td class="avail-cell" id="e-f"></td>
+        <td class="avail-cell" id="e-sat"></td>
+        <td class="avail-cell" id="e-sun"></td>
+      </tr>
+      <tr>
+        <th scope="row">All</th>
+        <td class="avail-cell" id="all-m"></td>
+        <td class="avail-cell" id="all-t"></td>
+        <td class="avail-cell" id="all-w"></td>
+        <td class="avail-cell" id="all-th"></td>
+        <td class="avail-cell" id="all-f"></td>
+        <td class="avail-cell" id="all-sat"></td>
+        <td class="avail-cell" id="all-sun"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
