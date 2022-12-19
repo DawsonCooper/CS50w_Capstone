@@ -112,7 +112,7 @@ def register(request):
                 password=password
             )
             print(workId)
-            # user.save()
+            user.save()
             return render(request, "register.html", {
                 'regForm': RegisterForm,
             })
