@@ -8,7 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django import forms
-from .models import User, Availability, Shifts, Company, EmployeeTracker, Messages
+from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages
 from phonenumber_field.formfields import PhoneNumberField
 from random import randrange, randint
 
@@ -88,7 +88,27 @@ def hire(request):
 def shift(request):
     # for employee (a grid like page with day and shift information, swap shift functionality, call in functionality)
     # for emplyer (input fields for adding/removing shift information, swap shift approval call in notices)
-    return render(request, 'shift.html')
+    if request.user.isEmployer:
+        return render(request, 'employer/shift.html', {
+
+        })
+    else:
+
+        employeeId = request.user.id
+        schedule = Schedule.objects.filter(employee=employeeId).values()
+        schedule = schedule[0]
+        for day in schedule:
+            print(day)
+            if not isinstance(schedule[day], int):
+                if len(schedule[day]) > 3:
+                    print(schedule[day])
+                    schedule[day] = schedule[day].split('-')
+                    print(day)
+
+        print(schedule)
+        return render(request, 'shift.html', {
+            'schedule': schedule
+        })
 
 
 def profile(request):
