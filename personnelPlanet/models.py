@@ -14,22 +14,33 @@ class User(AbstractUser):
     phoneNumber = PhoneNumberField(default='(555) 555 5555')
     payRate = models.FloatField(default=7.45)
     isEmployer = models.BooleanField(default=False)
-    hoursWorked = models.IntegerField(default=0)
+    hoursWorked = models.FloatField(default=0)
     company = models.CharField(max_length=25, null=True)
 
 
 class Availability(models.Model):
     employee = models.IntegerField()
-    day = models.CharField(max_length=10)
+    day = models.CharField(max_length=12)
     # shift will be morning, evenning, or all
-    shift = models.CharField(max_length=10, default='All')
+    shift = models.CharField(max_length=10, default='None')
 
 
-class Shifts(models.Model):
+class Schedule(models.Model):
     employee = models.IntegerField()
-    day = models.CharField(max_length=10)
-    start = models.TimeField(null=False, blank=False)
-    end = models.TimeField(null=False, blank=False)
+    monday = models.CharField(default='off', max_length=15)
+    tuesday = models.CharField(default='off', max_length=15)
+    wednesday = models.CharField(default='off', max_length=15)
+    thursday = models.CharField(default='off', max_length=15)
+    friday = models.CharField(default='off', max_length=15)
+    saturday = models.CharField(default='off', max_length=15)
+    sunday = models.CharField(default='off', max_length=15)
+
+
+class Clock(models.Model):
+    employee = models.IntegerField()
+    day = models.CharField(max_length=12)
+    clockIn = models.DateField(auto_now_add=True)
+    clockOut = models.DateField(auto_now_add=True)
 
 
 class EmployeeTracker(models.Model):
