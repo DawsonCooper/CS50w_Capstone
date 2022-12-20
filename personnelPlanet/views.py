@@ -89,8 +89,19 @@ def shift(request):
     # for employee (a grid like page with day and shift information, swap shift functionality, call in functionality)
     # for emplyer (input fields for adding/removing shift information, swap shift approval call in notices)
     if request.user.isEmployer:
-        return render(request, 'employer/shift.html', {
+        workerList = User.objects.filter(
+            company=request.user.company).values()
+        workers = workerList.values('id', 'workId')
+        schedules = []
+        for employee in workers:
+            if Schedule.objects.filter(employee=employee['id']).values():
+                schedules.append(Schedule.objects.filter(
+                    employee=employee['id']).values())
 
+        print(schedules, workers)
+        return render(request, 'employer/shift.html', {
+            'schedules': schedules,
+            'workers': workers,
         })
     else:
 

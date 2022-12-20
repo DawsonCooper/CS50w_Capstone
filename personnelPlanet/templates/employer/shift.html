@@ -1,4 +1,18 @@
 {% extends 'layout.html' %}
 {% block body %}
-<header>THIS IS THE EMPLOYER HTML</header>
+<div id='employer-shift-body'>
+{% if workers %}
+<select class="form-select employer-shift-select" aria-label="Default select example">
+    <option selected disabled>Employees</option>
+  
+    {% for worker in workers  %}
+    {% if worker.id != user.id %}
+    <option value="{{ worker.id }}">{{ worker.workId }}</option>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</select>
+<!-- WE WILL WANT A TABLE THAT DISPLAYS EMPLOYEE SHIFT INFO ONCE AN EMPLOYEE IS CLICKED IN THE SELECT MENU -->
+
+</div>
 {% endblock %}

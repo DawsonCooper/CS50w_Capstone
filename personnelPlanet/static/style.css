@@ -151,3 +151,12 @@ body{
 #shift-table-cont{
     margin: 2%;
 }
+
+/* EMPLOYER SECTION */
+#employer-shift-body{
+    margin: 1%;
+}
+
+.employer-shift-select{
+    width: 20% !important;
+}
