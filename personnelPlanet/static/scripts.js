@@ -8,6 +8,7 @@ let availObj = {
     sunday: ''
 }
 
+// APIS
 function availability(userAvailability) {
     
     fetch(`/availability`, {
@@ -18,7 +19,31 @@ function availability(userAvailability) {
     }).then(response => response.json)
     .then(result=> console.log(result))
     .catch(err => console.log(err))
+}
+function schedules(workerId){
+    fetch(`/schedules/${workerId}`, {
+        method: 'GET',
+    }).then(response => response.json())
+    .then(result => {
+        let schedule = result.schedule
+        let scheduleArr = []
+        for(let day in schedule){
+            if (typeof schedule[day] === 'string'){    
+                scheduleArr.push(schedule[day].split('-'))
+            }
+            console.log(schedule[day])
+        }
+        console.log(scheduleArr)
+        let daysInput = document.querySelectorAll('.scheduling-input')
+        console.log(daysInput)
+        for(let i = 0; i < 7; i++){
+            daysInput[i].value = scheduleArr[i][0] 
+            daysInput[i + 7].value = scheduleArr[i][1] 
+        }
 
+
+    })
+    .catch(err => console.log(err))
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -80,6 +105,22 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(availObj);
     })
     }
-    
+    // SHIFT MAKER FUNCTION
+    if (/\bshifts\b/gi.test(window.location.href)){
+        let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
+        let submitSchedule = document.querySelector("#submit-schedule")
+        let resetChanges= document.querySelector("#reset-changes")
+        scheduleDropdown.addEventListener('change', () =>{
+            let workerId = scheduleDropdown.value
+            schedules(workerId)
+        })
+
+        submitSchedule.addEventListener('click', () =>{
+            let daysInput = document.querySelectorAll('.scheduling-input')
+            console.log(daysInput)
+        })
+        
+    }
+
 
 })

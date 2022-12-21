@@ -35,6 +35,18 @@ class Schedule(models.Model):
     saturday = models.CharField(default='off', max_length=15)
     sunday = models.CharField(default='off', max_length=15)
 
+    def serialize(self):
+        return {
+            'employee': self.employee,
+            'monday': self.monday,
+            'tuesday': self.tuesday,
+            'wednesday': self.wednesday,
+            'thursday': self.thursday,
+            'friday': self.friday,
+            'saturday': self.saturday,
+            'sunday': self.sunday
+        }
+
 
 class Clock(models.Model):
     employee = models.IntegerField()

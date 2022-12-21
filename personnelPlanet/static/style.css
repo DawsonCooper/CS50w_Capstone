@@ -160,3 +160,10 @@ body{
 .employer-shift-select{
     width: 20% !important;
 }
+
+#employer-schedule-table{
+    
+}
+.scheduling-input{
+    width: 60%;
+}

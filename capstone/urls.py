@@ -24,6 +24,7 @@ urlpatterns = [
     #APIs and admin
     path('admin/', admin.site.urls),
     path('availability', views.availability, name='availability'),
+    path('schedules/<int:workerId>', views.schedules, name='schedules'),
 
     # Views
     path('', views.home, name='home'),

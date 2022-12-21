@@ -70,6 +70,18 @@ def availability(request):
     })
 
 
+@csrf_exempt
+def schedules(request, workerId):
+    print(workerId)
+    schedule = Schedule.objects.filter(employee=workerId)
+    print(schedule)
+    schedule = schedule[0].serialize()
+    print(schedule)
+    return JsonResponse({
+        'schedule': schedule
+    })
+
+
 def home(request):
     # User information (company, shifts,)
     user = request.user
