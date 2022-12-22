@@ -9,6 +9,17 @@ let availObj = {
 }
 
 // APIS
+function sendSchedule(schedule, workerId){
+    fetch('/shifts', {
+        method: 'POST',
+        body: JSON.stringify({
+            schedule: schedule,
+            employeeId: workerId,
+        }).then(response => response.json)
+        .then(result=> console.log(result))
+        .catch(err => console.log(err))
+    })
+}
 function availability(userAvailability) {
     
     fetch(`/availability`, {
@@ -110,16 +121,37 @@ document.addEventListener("DOMContentLoaded", () => {
         let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
         let submitSchedule = document.querySelector("#submit-schedule")
         let resetChanges= document.querySelector("#reset-changes")
+        let saveChanges = document.querySelector("#shift-save")
+        let workerId = scheduleDropdown.value
         scheduleDropdown.addEventListener('change', () =>{
-            let workerId = scheduleDropdown.value
+            workerId = scheduleDropdown.value
             schedules(workerId)
         })
 
         submitSchedule.addEventListener('click', () =>{
             let daysInput = document.querySelectorAll('.scheduling-input')
-            console.log(daysInput)
+            let regex = /\d{1,2}:\d{2}/;
+            // Use regex to test all values for format when looping first 7 are start times last are end times
+            
+            let isCleanData = true;
+            daysInput.forEach(day => {
+                if(day.value != 'off' && !regex.test(day.value)){
+                    isCleanData = false;
+                }
+            })
+            if (!isCleanData){alert('Make sure all times are in the proper format hh:mm');}
+            else{$('#shift-change-modal').modal('show')}
+            let sortedDaysArr = []
+            saveChanges.addEventListener('click', () =>{
+                for (let i = 0; i < 7; i++){
+                    sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
+                }
+                sendSchedule(sortedDaysArr, workerId)
+                console.log(sortedDaysArr, workerId)
+                sortedDaysArray = [];
+        });
         })
-        
+
     }
 
 

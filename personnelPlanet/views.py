@@ -109,7 +109,12 @@ def shift(request):
             if Schedule.objects.filter(employee=employee['id']).values():
                 schedules.append(Schedule.objects.filter(
                     employee=employee['id']).values())
-
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            scheduleChanges = data.get('schedule')
+            workerId = data.get('workerId')
+            print('working')
+            print(scheduleChanges, workerId)
         print(schedules, workers)
         return render(request, 'employer/shift.html', {
             'schedules': schedules,

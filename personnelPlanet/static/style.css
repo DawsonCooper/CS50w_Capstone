@@ -22,7 +22,7 @@ body{
 .nav-link{
     color: #e7eff6 !important;
     font-size: 1.5rem !important;
-    transition: color 1s ease-in-out 1s;   
+    transition: color 50ms ease-in-out 25ms;   
 }
 .nav-link:hover{
     color: #2a4d69 !important;
@@ -162,7 +162,7 @@ body{
 }
 
 #employer-schedule-table{
-    
+    margin-top: 1%;
 }
 .scheduling-input{
     width: 60%;
