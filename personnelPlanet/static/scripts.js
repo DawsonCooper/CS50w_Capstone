@@ -14,11 +14,12 @@ function sendSchedule(schedule, workerId){
         method: 'POST',
         body: JSON.stringify({
             schedule: schedule,
-            employeeId: workerId,
-        }).then(response => response.json)
-        .then(result=> console.log(result))
-        .catch(err => console.log(err))
-    })
+            workerId: workerId,
+        })
+        })
+    .then(response => response.json)
+    .then(result=> console.log(result))
+    .catch(err => console.log(err))
 }
 function availability(userAvailability) {
     
@@ -146,9 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 for (let i = 0; i < 7; i++){
                     sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
                 }
+                console.log(sortedDaysArr, workerId, 'here')
                 sendSchedule(sortedDaysArr, workerId)
-                console.log(sortedDaysArr, workerId)
-                sortedDaysArray = [];
+                
+                sortedDaysArr = [];
         });
         })
 

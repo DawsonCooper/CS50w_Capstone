@@ -73,9 +73,25 @@ def availability(request):
 @csrf_exempt
 def schedules(request, workerId):
     print(workerId)
+
     schedule = Schedule.objects.filter(employee=workerId)
     print(schedule)
-    schedule = schedule[0].serialize()
+    try:
+        schedule = schedule[0].serialize()
+    except IndexError:
+        return JsonResponse({
+            'schedule': {
+                'employee': workerId,
+                'monday': 'off-off',
+                'tuesday': 'off-off',
+                'wednesday': 'off-off',
+                'thursday': 'off-off',
+                'friday': 'off-off',
+                'saturday': 'off-off',
+                'sunday': 'off-off',
+            }
+        })
+
     print(schedule)
     return JsonResponse({
         'schedule': schedule
@@ -97,10 +113,45 @@ def hire(request):
     return render(request, 'hire.html')
 
 
+@csrf_exempt
 def shift(request):
     # for employee (a grid like page with day and shift information, swap shift functionality, call in functionality)
     # for emplyer (input fields for adding/removing shift information, swap shift approval call in notices)
-    if request.user.isEmployer:
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        scheduleChanges = data.get('schedule')
+        workerId = data.get('workerId')
+        print('working')
+        print(scheduleChanges, workerId)
+        try:
+            exists = Schedule.objects.get(employee=workerId)
+            exists.update(
+                monday=scheduleChanges[0],
+                tuesday=scheduleChanges[1],
+                wednesday=scheduleChanges[2],
+                thursday=scheduleChanges[3],
+                friday=scheduleChanges[4],
+                saturday=scheduleChanges[5],
+                sunday=scheduleChanges[6],
+            )
+            print('updating')
+        except Schedule.DoesNotExist:
+            change = Schedule(
+                employee=workerId,
+                monday=scheduleChanges[0],
+                tuesday=scheduleChanges[1],
+                wednesday=scheduleChanges[2],
+                thursday=scheduleChanges[3],
+                friday=scheduleChanges[4],
+                saturday=scheduleChanges[5],
+                sunday=scheduleChanges[6],
+            )
+            change.save()
+            print('creating')
+        return JsonResponse({
+            'message': 'Shift changed successfully'
+        })
+    if request.user.isEmployer and request.method == 'GET':
         workerList = User.objects.filter(
             company=request.user.company).values()
         workers = workerList.values('id', 'workId')
@@ -109,12 +160,7 @@ def shift(request):
             if Schedule.objects.filter(employee=employee['id']).values():
                 schedules.append(Schedule.objects.filter(
                     employee=employee['id']).values())
-        if request.method == 'POST':
-            data = json.loads(request.body)
-            scheduleChanges = data.get('schedule')
-            workerId = data.get('workerId')
-            print('working')
-            print(scheduleChanges, workerId)
+
         print(schedules, workers)
         return render(request, 'employer/shift.html', {
             'schedules': schedules,
