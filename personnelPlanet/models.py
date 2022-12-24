@@ -65,3 +65,9 @@ class Messages(models.Model):
     toUser = models.IntegerField(blank=False, null=False)
     content = models.CharField(max_length=350, blank=False, null=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Memo(models.Model):
+    subject = models.CharField(max_length=50)
+    body = models.CharField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)

@@ -8,7 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django import forms
-from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages
+from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages, Memo
 from phonenumber_field.formfields import PhoneNumberField
 from random import randrange, randint
 

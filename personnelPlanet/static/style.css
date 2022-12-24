@@ -167,3 +167,19 @@ body{
 .scheduling-input{
     width: 60%;
 }
+
+/* HOME PAGE */
+#memo-container{
+    margin: 2%;
+    color: black;
+    height: 50%;
+}
+.carousel{
+    position: absolute !important;
+    border-radius: 5%;
+}
+#carouselExampleDark{
+    width: 30%;
+    height: 30%;
+    background-color: #f5f5f5;
+}
