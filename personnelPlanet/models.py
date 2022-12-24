@@ -71,3 +71,4 @@ class Memo(models.Model):
     subject = models.CharField(max_length=50)
     body = models.CharField(max_length=300)
     created = models.DateTimeField(auto_now_add=True)
+    company = models.CharField(max_length=20, default='NA')

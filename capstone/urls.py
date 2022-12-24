@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('availability', views.availability, name='availability'),
     path('schedules/<int:workerId>', views.schedules, name='schedules'),
+    path('memo', views.memo, name='memo'),
 
     # Views
     path('', views.home, name='home'),

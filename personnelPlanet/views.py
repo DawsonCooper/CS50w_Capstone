@@ -39,6 +39,11 @@ class LoginForm(forms.Form):
 
 
 @csrf_exempt
+def memo(request):
+    pass
+
+
+@csrf_exempt
 def availability(request):
     # In post req we will be getting a users avail as a json obj {day: shift}
     # we will want to loop over that obj and populate the avail model with userId, day, shift in each iteration
@@ -98,13 +103,18 @@ def schedules(request, workerId):
     })
 
 
+@login_required(login_url='/login')
 def home(request):
     # User information (company, shifts,)
     user = request.user
     print(user)
-    user = User.objects.filter(username=user)
-
-    return render(request, 'home.html')
+    user = User.objects.filter(username=user).values()
+    memos = Memo.objects.filter(company=user[0]['company']).values()
+    print(memos)
+    return render(request, 'home.html', {
+        'memos': memos,
+        'counter': range(1, len(memos) + 1),
+    })
 
 
 def hire(request):

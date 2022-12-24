@@ -1,32 +1,34 @@
 {% extends "layout.html" %} {% block body %}
-<div style='height: 100%;' class='.container-fluid'>
+
     <div id='memo-container'>
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+
+            {% for i in counter %}
+
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{ i }}" aria-label="Slide {{ i }}"></button>
+            {% endfor %}
             </div>
             <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="10000">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>First slide label</h5>
-                  <p>Some representative placeholder content for the first slide.</p>
+                <div class="carousel-item active" data-bs-interval="10000">
+                  <div class="carousel-caption d-none d-md-block">
+
+                    <h5>Memo Board</h5>
+                    <p>Keep up to date with information across your company</p>
+                  </div>
+                </div>
+            
+            {% for memo in memos %}
+            <div id='{{ memo.id }}' class="carousel-item" data-bs-interval="20000">
+
+                <div class="carousel-caption d-md-block">
+                  <h5>{{ memo.subject }}</h5>
+                  <p>{{ memo.body }}</p>
                 </div>
               </div>
-              <div class="carousel-item" data-bs-interval="2000">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Second slide label</h5>
-                  <p>Some representative placeholder content for the second slide.</p>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Third slide label</h5>
-                  <p>Some representative placeholder content for the third slide.</p>
-                </div>
-              </div>
-            </div>
+          
+            {% endfor %}
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
@@ -36,6 +38,51 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
+      {% if user.isEmployer %}
+      <div id='memo-buttons'>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Update Crew
+          </button>
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel"><input type='text' placeholder='Memo Subject'></h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <textarea id='memo-body-input' type='text' placeholder='Memo Body'></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button id='submit-memo' type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        <button id='remove-memo' class='btn btn-danger'>Remove this Memo</button>
       </div>
-</div>
-{{ user.isEmployer }} {% endblock %}
+      {% endif %}
+      </div>
+    </div>
+      <div id='clock-container'>
+        <div id='clock-in-out' class='clock-cont-child'>
+            <h5>Clock Status: PH</h5>
+            <div id='clock-buttons'>
+                <button type='button' class='btn btn-success'>Clock In</button>
+                <button type='button' class='btn btn-danger'>Clock Out</button>
+            </div>
+            <h5>Shift:</h5>
+            <h5>placeholder</h5>
+        </div>
+        <div id='hours-today' class='clock-cont-child'>
+            <h4>Hours Today: </h4>
+            <h5>PH</h5>
+            <h5>Hours this Week:</h5>
+            <h5>PH</h5>
+        </div>
+      </div>
+
+
+{% endblock %}

@@ -9,6 +9,10 @@ let availObj = {
 }
 
 // APIS
+function updateMemo(memoId, memoUpdate){
+    // memo update should be an object in memo model format and memo id is for edits if memo id = 0 then we are creating a new memo
+
+}
 function sendSchedule(schedule, workerId){
     fetch('/shifts', {
         method: 'POST',
@@ -155,6 +159,16 @@ document.addEventListener("DOMContentLoaded", () => {
         })
 
     }
-
-
+    if (/\b\b/gi.test(window.location.href)){
+        let memoId = 0;
+        document.querySelector('#remove-memo').addEventListener('click', () =>{
+            let memoList = document.querySelectorAll('.carousel-item')
+            memoList.forEach(memo => {
+                if (memo.classList.contains('active')){
+                    memoId = memo.id
+                }
+            })
+            console.log(memoId);
+        });
+    }
 })
