@@ -8,7 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django import forms
-from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages, Memo
+from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages, Memo, Clock
 from phonenumber_field.formfields import PhoneNumberField
 from random import randrange, randint
 import datetime
@@ -44,19 +44,36 @@ DAYS = ["Monday", "Tuesday", "Wednesday",
 
 @csrf_exempt
 def clock(request):
+    employee = request.user.id
     if request.method == 'POST':
-        employee = request.user.id
-        day = datetime.datetime(2021, 5, 16).weekday()
+        day = datetime.date.today()
+        day = datetime.datetime(day.year, day.month, day.day).weekday()
         day = DAYS[day]
-        print(day, employee)
-
-        return JsonResponse({
-            'message': 'clocked in'
-        })
+        try:
+            Clock.objects.get(employee=employee)
+            return JsonResponse({'message': 'failed to clock in'})
+        except Clock.DoesNotExist:
+            Clock.objects.create(employee=employee, day=day,
+                                 clockIn=datetime.datetime.now())
+            return JsonResponse({
+                'message': 'clocked in'
+            })
     elif request.method == 'PUT':
-        return JsonResponse({
-            'message': 'clocked out',
-        })
+        now = datetime.datetime.now()
+        print(now, employee)
+        try:
+            clockStatus = Clock.objects.get(employee=employee)
+            clockIn = clockStatus.clockIn
+            clockIn = datetime.datetime(
+                clockIn.year, clockIn.month, clockIn.day, clockIn.hour, clockIn.minute, clockIn.second)
+            worked = now - clockIn
+            worked = worked.total_seconds() / 60 / 60
+            print(round(worked, 2))
+            print('In try')
+
+        except Clock.DoesNotExist:
+            return JsonResponse({'message': 'Failed to clock out: You are not clocked in'})
+
     return JsonResponse({
         'message': 'Clock status failed'
     })

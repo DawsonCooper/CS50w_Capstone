@@ -11,11 +11,19 @@ let availObj = {
 // APIS
 function clockIn(){
     // SEND POST REQUEST AND HANDLE REST IN VIEW
-
+    fetch('/clock', {
+        method: 'POST',
+    }).then(response => response)
+    .then(result => alert(result))
+    .catch(err => alert(err))
 }
 function clockOut(){
     // SENT PUT REQUEST AND HANDLE REST IN VIEW
-    
+    fetch('/clock', {
+        method: 'PUT',
+    }).then(response => response)
+    .then(result => alert(result))
+    .catch(err => alert(err))
 }
 
 function updateMemo(memoId, memoUpdate){
@@ -217,5 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             updateMemo('new', memoObj);
         })
+        document.querySelector('#clock-in').addEventListener('click', () =>{
+            clockIn();
+        });
+        document.querySelector('#clock-out').addEventListener('click', () =>{
+            clockOut();
+        });
     }
 })

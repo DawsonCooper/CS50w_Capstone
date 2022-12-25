@@ -51,8 +51,8 @@ class Schedule(models.Model):
 class Clock(models.Model):
     employee = models.IntegerField()
     day = models.CharField(max_length=12)
-    clockIn = models.DateField(auto_now_add=True)
-    clockOut = models.DateField(auto_now_add=False)
+    clockIn = models.DateTimeField(auto_now_add=False, blank=True, null=True)
+    clockOut = models.DateTimeField(auto_now_add=False, blank=True, null=True)
 
 
 class EmployeeTracker(models.Model):
