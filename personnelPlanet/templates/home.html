@@ -19,7 +19,7 @@
                   </div>
                 </div>
             
-            {% for memo in memos %}
+            {% for memo in context.memos %}
             <div id='{{ memo.id }}' class="carousel-item" data-bs-interval="20000">
 
                 <div class="carousel-caption d-md-block">
@@ -91,13 +91,13 @@
                 <button type='button' id='clock-out' class='btn btn-danger'>Clock Out</button>
             </div>
             <h5>Shift:</h5>
-            <h5>placeholder</h5>
+            <h5>{{ context.shift }}</h5>
         </div>
         <div id='hours-today' class='clock-cont-child'>
             <h4>Hours Today: </h4>
-            <h5>PH</h5>
+            <h5>{{ context.hoursToday }}</h5>
             <h5>Hours this Week:</h5>
-            <h5>PH</h5>
+            <h5>{{ user.hoursWorked }}</h5>
         </div>
       </div>
 

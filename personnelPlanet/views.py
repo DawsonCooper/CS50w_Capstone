@@ -38,8 +38,8 @@ class LoginForm(forms.Form):
     )
 
 
-DAYS = ["Monday", "Tuesday", "Wednesday",
-        "Thursday", "Friday", "Saturday", "Sunday"]
+DAYS = ["monday", "tuesday", "wednesday",
+        "thursday", "friday", "saturday", "sunday"]
 
 
 @csrf_exempt
@@ -67,9 +67,12 @@ def clock(request):
             clockIn = datetime.datetime(
                 clockIn.year, clockIn.month, clockIn.day, clockIn.hour, clockIn.minute, clockIn.second)
             worked = now - clockIn
-            worked = worked.total_seconds() / 60 / 60
-            print(round(worked, 2))
-            print('In try')
+            hoursWorked = round(worked.total_seconds() / 60 / 60, 2)
+            print(hoursWorked)
+            employeeInstace = User.objects.get(id=employee)
+            employeeInstace.hoursWorked = employeeInstace.hoursWorked + hoursWorked
+            employeeInstace.save()
+            clockStatus.delete()
 
         except Clock.DoesNotExist:
             return JsonResponse({'message': 'Failed to clock out: You are not clocked in'})
@@ -161,12 +164,35 @@ def schedules(request, workerId):
 def home(request):
     # User information (company, shifts,)
     user = request.user
-    print(user)
     user = User.objects.filter(username=user).values()
     memos = Memo.objects.filter(company=user[0]['company']).values()
-    print(memos)
+    context = {'user': user, 'memos': memos}
+    try:
+        clockStat = Clock.objects.get(employee=request.user.id)
+        clockIn = clockStat.clockIn
+        clockIn = datetime.datetime(
+            clockIn.year, clockIn.month, clockIn.day, clockIn.hour, clockIn.minute, clockIn.second)
+        now = datetime.datetime.now()
+        worked = now - clockIn
+        hoursToday = round(worked.total_seconds() / 60 / 60, 2)
+        context['hoursToday'] = hoursToday
+    except Clock.DoesNotExist:
+        pass
+    day = datetime.date.today()
+    day = datetime.datetime(day.year, day.month, day.day).weekday()
+    day = DAYS[day]
+    try:
+        shift = Schedule.objects.filter(
+            employee=request.user.id).values(day)
+        shift = shift[0][day]
+        if shift == "off-off":
+            shift = 'off'
+
+    except Exception:
+        shift = "No schedule"
+    context['shift'] = shift
     return render(request, 'home.html', {
-        'memos': memos,
+        'context': context,
         'counter': range(1, len(memos) + 1),
     })
 
