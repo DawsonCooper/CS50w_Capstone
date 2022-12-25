@@ -10,7 +10,7 @@
               <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{ i }}" aria-label="Slide {{ i }}"></button>
             {% endfor %}
             </div>
-            <div class="carousel-inner">
+            <div id='memoNotice' class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="10000">
                   <div class="carousel-caption d-none d-md-block">
 
@@ -47,7 +47,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel"><input type='text' placeholder='Memo Subject'></h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel"><input id='memo-subject-input' type='text' placeholder='Memo Subject'></h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -61,7 +61,24 @@
             </div>
           </div>
           
-        <button id='remove-memo' class='btn btn-danger'>Remove this Memo</button>
+        <button id='remove-memo' class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#removeModal">Remove this Memo</button>
+        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="removeModalLabel">Please Confirm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h6 id='remove-memo-check'></h6>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id='remove-memo-confirm' type="button" class="btn btn-danger">Remove Current Memo</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {% endif %}
       </div>

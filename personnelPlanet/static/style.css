@@ -243,6 +243,7 @@ body{
     flex-direction: column;
     justify-content: space-evenly;
 }
+/*  -------------- HOME PAGE MOBILE --------------  */
 @media (max-width: 650px) { 
     .carousel-indicators{
         display: none !important;

@@ -11,7 +11,7 @@ from django import forms
 from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages, Memo
 from phonenumber_field.formfields import PhoneNumberField
 from random import randrange, randint
-
+import datetime
 # Create your views here.
 
 
@@ -38,9 +38,46 @@ class LoginForm(forms.Form):
     )
 
 
+DAYS = ["Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+@csrf_exempt
+def clock(request):
+    if request.method == 'POST':
+        employee = request.user.id
+        day = datetime.datetime(2021, 5, 16).weekday()
+        day = DAYS[day]
+        print(day, employee)
+
+        return JsonResponse({
+            'message': 'clocked in'
+        })
+    elif request.method == 'PUT':
+        return JsonResponse({
+            'message': 'clocked out',
+        })
+    return JsonResponse({
+        'message': 'Clock status failed'
+    })
+
+
 @csrf_exempt
 def memo(request):
-    pass
+    # put is for removing the memo
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        memoId = data.get('memoId')
+        Memo.objects.filter(id=memoId).delete()
+        return JsonResponse({'message': 'Memo removed'})
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        subject = data.get('subject')
+        body = data.get('body')
+        company = request.user.company
+        print(subject, body, company)
+        Memo.objects.create(subject=subject, body=body, company=company)
+    return JsonResponse({'message': 'Missed request'})
 
 
 @csrf_exempt

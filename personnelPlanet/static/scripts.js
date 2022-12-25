@@ -9,9 +9,40 @@ let availObj = {
 }
 
 // APIS
+function clockIn(){
+    // SEND POST REQUEST AND HANDLE REST IN VIEW
+
+}
+function clockOut(){
+    // SENT PUT REQUEST AND HANDLE REST IN VIEW
+    
+}
+
 function updateMemo(memoId, memoUpdate){
     // memo update should be an object in memo model format and memo id is for edits if memo id = 0 then we are creating a new memo
-
+    if (!memoUpdate && memoId !== 'memoNotice'){
+        fetch('/memo',{
+            method: 'PUT',
+            body: JSON.stringify({
+                memoId: memoId
+            })
+        }).then(response => response)
+        .then(result => alert(result))
+        .catch(err => alert(err))
+    }
+    else if (memoId === 'new'){
+        console.log(memoUpdate)
+        fetch('/memo',{
+            method: 'POST',
+            body: JSON.stringify({
+                subject: memoUpdate['subject'],
+                body: memoUpdate['body']
+            })
+        }).then(response => response)
+        .then(result => alert(result))
+        .catch(err => alert(err))
+        
+    }
 }
 function sendSchedule(schedule, workerId){
     fetch('/shifts', {
@@ -163,12 +194,28 @@ document.addEventListener("DOMContentLoaded", () => {
         let memoId = 0;
         document.querySelector('#remove-memo').addEventListener('click', () =>{
             let memoList = document.querySelectorAll('.carousel-item')
+            let memoSubject = ''
             memoList.forEach(memo => {
                 if (memo.classList.contains('active')){
                     memoId = memo.id
+                    console.log(memo);
+                    memoSubject = memo.childNodes[1].childNodes[1].innerText;
+
                 }
             })
-            console.log(memoId);
+            document.querySelector('#remove-memo-check').innerText = `Remove memo ${memoSubject}`
+            document.querySelector('#remove-memo-confirm').addEventListener('click', () =>{
+                updateMemo(memoId, false);
+            })
+                
+            console.log(memoSubject);
         });
+        document.querySelector('#submit-memo').addEventListener('click', () =>{
+            let memoObj = {
+                subject: document.querySelector('#memo-subject-input').value,
+                body: document.querySelector('#memo-body-input').value
+            }
+            updateMemo('new', memoObj);
+        })
     }
 })
