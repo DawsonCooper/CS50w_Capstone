@@ -85,7 +85,11 @@
     </div>
       <div id='clock-container'>
         <div id='clock-in-out' class='clock-cont-child'>
-            <h5>Clock Status: PH</h5>
+          {% if context.hoursToday %}
+            <h5>Clock Status: On</h5>
+          {% else %}
+            <h5>Clock Status: Off</h5>
+          {% endif %}
             <div id='clock-buttons'>
                 <button type='button' id='clock-in' class='btn btn-success'>Clock In</button>
                 <button type='button' id='clock-out' class='btn btn-danger'>Clock Out</button>
@@ -95,9 +99,17 @@
         </div>
         <div id='hours-today' class='clock-cont-child'>
             <h4>Hours Today: </h4>
+            {% if context.hoursToday %}
             <h5>{{ context.hoursToday }}</h5>
-            <h5>Hours this Week:</h5>
+            {% else %}
+            <h6>Not clocked in</h6>
+            {% endif %}
+            <h4>Hours this Week:</h4>
+            {% if user.hoursWorked %}
             <h5>{{ user.hoursWorked }}</h5>
+            {% else %}
+            <p>No time this week</p>
+            {% endif %}
         </div>
       </div>
 
