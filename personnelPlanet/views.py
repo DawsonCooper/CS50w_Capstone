@@ -191,6 +191,16 @@ def home(request):
     except Exception:
         shift = "No schedule"
     context['shift'] = shift
+
+    try:
+        messages = Messages.objects.filter(
+            company=request.user.company).values()
+        messages = messages.order_by('-timestamp').all()
+
+        context['messages'] = messages
+    except Messages.DoesNotExist:
+        context['messages'] = 'Now company messages'
+
     return render(request, 'home.html', {
         'context': context,
         'counter': range(1, len(memos) + 1),

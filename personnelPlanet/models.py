@@ -62,7 +62,7 @@ class EmployeeTracker(models.Model):
 
 class Messages(models.Model):
     fromUser = models.IntegerField(blank=False, null=False)
-    toUser = models.IntegerField(blank=False, null=False)
+    company = models.CharField(max_length=25, blank=False, null=False)
     content = models.CharField(max_length=350, blank=False, null=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
