@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block body %}
-
+    <div id='home-main'>
     <div id='memo-container'>
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -82,6 +82,15 @@
       </div>
       {% endif %}
       </div>
+      <div id='right-container'>
+        <h3>E-Learning</h3>
+        <div id='eLearn-main-cont'>
+          <div id='eLearn-todo' class='eLearn-row'>
+          </div>
+          <div id='eLearn-complete' class='eLearn-row'>
+          </div>
+        </div>
+      </div>
     </div>
       <div id='clock-container'>
         <div id='clock-in-out' class='clock-cont-child'>
@@ -113,5 +122,5 @@
         </div>
       </div>
 
-
+</div>
 {% endblock %}
