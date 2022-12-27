@@ -199,12 +199,39 @@ def home(request):
 
         context['messages'] = messages
     except Messages.DoesNotExist:
-        context['messages'] = 'Now company messages'
+        context['messages'] = 'No company messages'
 
     return render(request, 'home.html', {
         'context': context,
         'counter': range(1, len(memos) + 1),
     })
+
+
+def messages(request):
+    context = {}
+    if request.method == 'GET':
+        try:
+            messages = Messages.objects.filter(
+                company=request.user.company).all().values()
+            messages = messages.order_by('-timestamp').all()
+            context['messages'] = messages
+        except Messages.DoesNotExist:
+            context['messages'] = 'No company messages'
+        print(context['messages'])
+        return render(request, 'messages.html', {
+            'context': context
+        })
+    if request.method == 'POST':
+        # when we send a fetch we will want to send message body and thats it
+        # we can autogen timestamp and get user from request struct
+        data = json.loads(request.body)
+        message = data.get('body')
+        Messages.objects.create(
+            fromUser=request.user.first_name,
+            company=request.user.company,
+            content=message,
+        )
+        JsonResponse({'message': 'Message Sent!'})
 
 
 def hire(request):

@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     }
     // SHIFT MAKER FUNCTION
-    if (/\bshifts\b/gi.test(window.location.href)){
+    else if (/\bshifts\b/gi.test(window.location.href)){
         let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
         let submitSchedule = document.querySelector("#submit-schedule")
         let resetChanges= document.querySelector("#reset-changes")
@@ -198,7 +198,10 @@ document.addEventListener("DOMContentLoaded", () => {
         })
 
     }
-    if (/\b\b/gi.test(window.location.href)){
+    else if (/\bmessages\b/gi.test(window.location.href)){
+
+    }
+    else if (/\b\b/gi.test(window.location.href)){
         let memoId = 0;
         document.querySelector('#remove-memo').addEventListener('click', () =>{
             let memoList = document.querySelectorAll('.carousel-item')

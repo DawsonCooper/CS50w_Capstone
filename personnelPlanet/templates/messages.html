@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div id='all-messages-container'>
+{% for message in context.messages %}
+    <section class='single-message-container'>
+        <h5 class='single-message-username'>{{ message.fromUser }}</h5>
+        <p class='single-message-body'>{{ message.content }}</p>
+        <p class='single-message-timestamp'>{{ message.timestamp.month }}/{{ message.timestamp.day }} </p>
+    </section>
+{% endfor %}
+</div>
+{% endblock %}

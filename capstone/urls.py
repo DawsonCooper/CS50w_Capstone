@@ -33,6 +33,7 @@ urlpatterns = [
     path('hire', views.hire, name='hire'),
     path('shifts', views.shift, name='shifts'),
     path('profile', views.profile, name='profile'),
+    path('messages', views.messages, name='messages'),
 
     # Authentication/Authorization
     path('login', views.login_view, name='login'),
