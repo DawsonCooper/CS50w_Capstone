@@ -7,7 +7,9 @@ let availObj = {
     saturday: '',
     sunday: ''
 }
-
+const userId = JSON.parse(document.getElementById('id').textContent);
+const firstName = JSON.parse(document.getElementById('firstName').textContent);
+const date = new Date()
 // APIS
 function clockIn(){
     // SEND POST REQUEST AND HANDLE REST IN VIEW
@@ -26,6 +28,18 @@ function clockOut(){
     .catch(err => alert(err))
 }
 
+function send_message(body){
+    
+    fetch('/messages', {
+        method: 'POST',
+        body: JSON.stringify({
+            body: body
+        })
+    }).then(response => response)
+        .then(result => alert(result))
+        .catch(err => alert(err))
+    
+}
 function updateMemo(memoId, memoUpdate){
     // memo update should be an object in memo model format and memo id is for edits if memo id = 0 then we are creating a new memo
     if (!memoUpdate && memoId !== 'memoNotice'){
@@ -199,7 +213,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     else if (/\bmessages\b/gi.test(window.location.href)){
-
+        
+        document.querySelector('#button-addon2').addEventListener('click', () =>{
+            msgBody = document.querySelector('#msg-body').value;
+            send_message(msgBody)
+            document.querySelector('#msg-body').value = '';
+            sec = document.createElement('section')
+            sec.classList.add('single-message-container', 'fromUser')
+            head = document.createElement('h6')
+            head.classList.add('single-message-username')
+            body = document.createElement('p')
+            body.classList.add('single-message-body')
+            ts = document.createElement('p')
+            ts.classList.add('single-message-timestamp')
+            head.innerText = firstName;
+            body.innerText = msgBody;
+            let day = date.getDate();
+            let month = date.getMonth();
+            ts.innerText = `${month}/${day}`;
+            sec.appendChild(head)
+            sec.appendChild(body)
+            sec.appendChild(ts)
+            msgCont = document.querySelector('#all-messages-container')
+            msgCont.insertBefore(sec, msgCont.lastElementChild)
+        });
     }
     else if (/\b\b/gi.test(window.location.href)){
         let memoId = 0;
@@ -235,4 +272,5 @@ document.addEventListener("DOMContentLoaded", () => {
             clockOut();
         });
     }
+
 })

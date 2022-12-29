@@ -292,25 +292,48 @@ body{
 
 
 
-
+#msg-page-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #all-messages-container{
-    height: 100vh;
-    width: 30vw;
+    height: 85vh;
+    width: 50vw;
     margin: 20px;
-    border: 2px solid lightblue;
+    border: 2px solid rgba(99, 172, 229, .7);
+    border-radius: 10px;
+    overflow-y: scroll;
+    position: relative;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: lightgrey white;
+
 
 }
+.msg-split{
+    background-color: #63ACE5;
+    opacity: .7;
+}
 .single-message-container{
-    width: 20vw;
-    background-color: lightblue;
+    width: auto;
+    font-size: 1rem;
+    background-color: rgb(226, 223, 223);
     margin-left: 10px;
     margin-bottom: 20px;
+    margin-right: 10vw;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
-    padding-bottom: 5px;
+    
     border: 2px solid transparent;
     border-radius: 20px;
+}
+.fromUser{
+    margin-left: 10vw !important;
+    margin-right: 10px !important;
+    color: white;
+    background-color: #63ACE5;
 }
 .single-message-username{
 
@@ -322,4 +345,19 @@ body{
     display: flex;
     justify-content: flex-end;
     font-size: smaller;
+}
+
+.msg-head{
+    color: #63ACE5;
+    opacity: .9;
+    text-align: center;
+}
+#msg-input{
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    position: sticky;
+    bottom: 10px;
 }

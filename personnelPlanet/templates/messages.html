@@ -1,12 +1,33 @@
 {% extends 'layout.html' %}
 {% block body %}
-<div id='all-messages-container'>
-{% for message in context.messages %}
-    <section class='single-message-container'>
-        <h5 class='single-message-username'>{{ message.fromUser }}</h5>
-        <p class='single-message-body'>{{ message.content }}</p>
-        <p class='single-message-timestamp'>{{ message.timestamp.month }}/{{ message.timestamp.day }} </p>
-    </section>
-{% endfor %}
+{{ request.user.id|json_script:"id" }}
+{{ request.user.first_name|json_script:"firstName" }}
+<div id='msg-page-body'>
+    <div id='all-messages-container'>
+        <h2 class='msg-head'>FLOORSHOP</h2>
+        <p class='msg-head'>Here you can see and create messages to keep healthy communication with your team</p>
+    <hr class='msg-split'>
+    {% for message in context.messages %}
+    {% if message.fromUserId == user.id %}
+        <section class='single-message-container fromUser'>
+            <h6 class='single-message-username'>{{ message.fromUser }}</h6>
+            <p class='single-message-body'>{{ message.content }}</p>
+            <p class='single-message-timestamp'>{{ message.timestamp.month }}/{{ message.timestamp.day }} </p>
+        </section>
+        {% else %}
+        <section class='single-message-container'>
+            <h6 class='single-message-username'>{{ message.fromUser }}</h6>
+            <p class='single-message-body'>{{ message.content }}</p>
+            <p class='single-message-timestamp'>{{ message.timestamp.month }}/{{ message.timestamp.day }} </p>
+        </section>
+        {% endif %}
+    {% endfor %}
+        
+            <div id='msg-input' class="input-group mb-3">
+                <input type="text" id='msg-body' class="form-control" placeholder="Message" aria-label="message-input" aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
+            </div>
+        
+    </div>
 </div>
 {% endblock %}

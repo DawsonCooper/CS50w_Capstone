@@ -207,13 +207,14 @@ def home(request):
     })
 
 
+@csrf_exempt
 def messages(request):
     context = {}
     if request.method == 'GET':
         try:
             messages = Messages.objects.filter(
                 company=request.user.company).all().values()
-            messages = messages.order_by('-timestamp').all()
+
             context['messages'] = messages
         except Messages.DoesNotExist:
             context['messages'] = 'No company messages'
@@ -226,12 +227,15 @@ def messages(request):
         # we can autogen timestamp and get user from request struct
         data = json.loads(request.body)
         message = data.get('body')
+        print(message)
         Messages.objects.create(
             fromUser=request.user.first_name,
+            fromUserId=request.user.id,
             company=request.user.company,
             content=message,
         )
-        JsonResponse({'message': 'Message Sent!'})
+        return JsonResponse({'message': 'Message Sent!'})
+    return JsonResponse({'message': 'Failed to send message'})
 
 
 def hire(request):
