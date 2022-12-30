@@ -31,16 +31,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "phonenumber_field",
-    'personnelPlanet',
-    'channels',
+    'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
+    'personnelPlanet',
 ]
+ASGI_APPLICATION = 'capstone.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

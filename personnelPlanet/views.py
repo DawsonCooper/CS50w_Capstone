@@ -227,7 +227,6 @@ def messages(request):
         # we can autogen timestamp and get user from request struct
         data = json.loads(request.body)
         message = data.get('body')
-        print(message)
         Messages.objects.create(
             fromUser=request.user.first_name,
             fromUserId=request.user.id,

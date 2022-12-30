@@ -213,29 +213,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     else if (/\bmessages\b/gi.test(window.location.href)){
+        let url = `ws://${window.location.host}/ws/socket-server/`
+        const messageSocket = new WebSocket(url)
         
         document.querySelector('#button-addon2').addEventListener('click', () =>{
             msgBody = document.querySelector('#msg-body').value;
             send_message(msgBody)
             document.querySelector('#msg-body').value = '';
-            sec = document.createElement('section')
-            sec.classList.add('single-message-container', 'fromUser')
-            head = document.createElement('h6')
-            head.classList.add('single-message-username')
-            body = document.createElement('p')
-            body.classList.add('single-message-body')
-            ts = document.createElement('p')
-            ts.classList.add('single-message-timestamp')
-            head.innerText = firstName;
-            body.innerText = msgBody;
-            let day = date.getDate();
-            let month = date.getMonth();
-            ts.innerText = `${month}/${day}`;
-            sec.appendChild(head)
-            sec.appendChild(body)
-            sec.appendChild(ts)
-            msgCont = document.querySelector('#all-messages-container')
-            msgCont.insertBefore(sec, msgCont.lastElementChild)
+            messageSocket.send(JSON.stringify({
+                'message': msgBody
+            }))
+            messageSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            console.log(data)
+            if(data.type === 'chat'){
+                sec = document.createElement('section')
+                sec.classList.add('single-message-container', 'fromUser')
+                head = document.createElement('h6')
+                head.classList.add('single-message-username')
+                body = document.createElement('p')
+                body.classList.add('single-message-body')
+                ts = document.createElement('p')
+                ts.classList.add('single-message-timestamp')
+                head.innerText = firstName;
+                body.innerText = data.message;
+                let day = date.getDate();
+                let month = date.getMonth();
+                ts.innerText = `${month}/${day}`;
+                sec.appendChild(head)
+                sec.appendChild(body)
+                sec.appendChild(ts)
+                msgCont = document.querySelector('#all-messages-container')
+                msgCont.insertBefore(sec, msgCont.lastElementChild)
+            }
+        }
+            
+
+
+           
+
         });
     }
     else if (/\b\b/gi.test(window.location.href)){
