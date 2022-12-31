@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'personnelPlanet',
 ]
 ASGI_APPLICATION = 'capstone.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

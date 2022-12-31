@@ -218,7 +218,7 @@ def messages(request):
             context['messages'] = messages
         except Messages.DoesNotExist:
             context['messages'] = 'No company messages'
-        print(context['messages'])
+
         return render(request, 'messages.html', {
             'context': context
         })

@@ -36,8 +36,8 @@ function send_message(body){
             body: body
         })
     }).then(response => response)
-        .then(result => alert(result))
-        .catch(err => alert(err))
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
     
 }
 function updateMemo(memoId, memoUpdate){
@@ -215,27 +215,36 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (/\bmessages\b/gi.test(window.location.href)){
         let url = `ws://${window.location.host}/ws/socket-server/`
         const messageSocket = new WebSocket(url)
-        
+        allMsgCont = document.querySelector('#all-messages-container')
+        allMsgCont.scrollTo(0, 100000)
         document.querySelector('#button-addon2').addEventListener('click', () =>{
+            
             msgBody = document.querySelector('#msg-body').value;
             send_message(msgBody)
             document.querySelector('#msg-body').value = '';
             messageSocket.send(JSON.stringify({
-                'message': msgBody
+                'message': msgBody,
+                'userId': userId,
+                'name': firstName
             }))
             messageSocket.onmessage = function(e){
             let data = JSON.parse(e.data)
             console.log(data)
-            if(data.type === 'chat'){
+            if(data.type === "message"){
                 sec = document.createElement('section')
+                if (data.userId === userId){
                 sec.classList.add('single-message-container', 'fromUser')
+                }else{
+                    sec.classList.add('single-message-container')  
+                }
+                
                 head = document.createElement('h6')
                 head.classList.add('single-message-username')
                 body = document.createElement('p')
                 body.classList.add('single-message-body')
                 ts = document.createElement('p')
                 ts.classList.add('single-message-timestamp')
-                head.innerText = firstName;
+                head.innerText = data.name;
                 body.innerText = data.message;
                 let day = date.getDate();
                 let month = date.getMonth();
@@ -245,13 +254,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 sec.appendChild(ts)
                 msgCont = document.querySelector('#all-messages-container')
                 msgCont.insertBefore(sec, msgCont.lastElementChild)
+                allMsgCont.scrollTo(0, 100000)
             }
         }
-            
-
-
            
-
         });
     }
     else if (/\b\b/gi.test(window.location.href)){
