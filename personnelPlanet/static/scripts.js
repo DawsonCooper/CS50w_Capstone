@@ -217,17 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const messageSocket = new WebSocket(url)
         allMsgCont = document.querySelector('#all-messages-container')
         allMsgCont.scrollTo(0, 100000)
-        document.querySelector('#button-addon2').addEventListener('click', () =>{
-            
-            msgBody = document.querySelector('#msg-body').value;
-            send_message(msgBody)
-            document.querySelector('#msg-body').value = '';
-            messageSocket.send(JSON.stringify({
-                'message': msgBody,
-                'userId': userId,
-                'name': firstName
-            }))
-            messageSocket.onmessage = function(e){
+        messageSocket.onmessage = function(e){
             let data = JSON.parse(e.data)
             console.log(data)
             if(data.type === "message"){
@@ -257,6 +247,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 allMsgCont.scrollTo(0, 100000)
             }
         }
+        document.querySelector('#button-addon2').addEventListener('click', () =>{
+            
+            msgBody = document.querySelector('#msg-body').value;
+            send_message(msgBody)
+            document.querySelector('#msg-body').value = '';
+            messageSocket.send(JSON.stringify({
+                'message': msgBody,
+                'userId': userId,
+                'name': firstName
+            }))
+
+
+            
            
         });
     }

@@ -10,6 +10,7 @@ body{
     width: 100%;
     overflow-x: hidden;
 }
+
 .full-page{
     height: 100%;
     width: 100%;
@@ -361,3 +362,10 @@ body{
     position: sticky;
     bottom: 10px;
 }
+/*   messages mobile css   */
+@media (max-width: 650px) { 
+    #all-messages-container{
+        width: 90vw;
+    }
+
+ }

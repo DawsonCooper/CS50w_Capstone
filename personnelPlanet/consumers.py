@@ -33,7 +33,6 @@ class MessageConsumer(WebsocketConsumer):
                 'name': firstName
             }
         )
-    #
 
     def send_message(self, event):
         message = event['message']
@@ -45,6 +44,3 @@ class MessageConsumer(WebsocketConsumer):
             'userId': userId,
             'name': firstName
         }))
-
-    def disconnect(self, code):
-        return super().disconnect(code)
