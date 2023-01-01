@@ -46,10 +46,66 @@
       </tr>
     </tbody>
   </table>
+  <table id="avail-table-mobile" class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th id='avail-mobile-thead' scope="col">Availability</th>
+        <th class='shift-mobile' scope="col">Morning</th>
+        <th class='shift-mobile' scope="col">Evening</th>
+        <th class='shift-mobile' scope="col">All</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Monday</th>
+        <td class="avail-cell" id="morning-monday"></td>
+        <td class="avail-cell" id="evening-monday"></td>
+        <td class="avail-cell" id="all-monday"></td>
+      </tr>
+      <tr>
+        <th scope="row">Tuesday</th>
+        <td class="avail-cell" id="morning-tuesday"></td>
+        <td class="avail-cell" id="evening-tuesday"></td>
+        <td class="avail-cell" id="all-tuesday"></td>
+      </tr>
+      <tr>
+      <th scope="row">Wednesday</th>
+        <td class="avail-cell" id="morning-wednesday"></td>
+        <td class="avail-cell" id="evening-wednesday"></td>
+        <td class="avail-cell" id="all-wednesday"></td>
+      </tr>
+      <tr>
+        <th scope="row">Thursday</th>
+        <td class="avail-cell" id="morning-thursday"></td>
+        <td class="avail-cell" id="evening-thursday"></td>
+        <td class="avail-cell" id="all-thursday"></td>
+      </tr>
+      <tr>
+        <th scope="row">Friday</th>
+        <td class="avail-cell" id="morning-friday"></td>
+        <td class="avail-cell" id="evening-friday"></td>
+        <td class="avail-cell" id="all-friday"></td>
+      </tr>
+      <tr>
+        <th scope="row">Saturday</th>
+        <td class="avail-cell" id="morning-saturday"></td>
+        <td class="avail-cell" id="evening-saturday"></td>
+        <td class="avail-cell" id="all-saturday"></td>
+      </tr>
+      <tr>
+        <th scope="row">Sunday</th>
+        <td class="avail-cell" id="morning-sunday"></td>
+        <td class="avail-cell" id="evening-sunday"></td>
+        <td class="avail-cell" id="all-sunday"></td>
+      </tr>
+    </tbody>
+  </table>
+
   <div id="profile-buttons">
     <button type="button" id="reset-avail" class="btn btn-danger">Reset</button>
     {% csrf_token %}
     <button type="button" id="submit-avail" class="btn">Submit</button>
   </div>
+  
 </div>
 {% endblock %}

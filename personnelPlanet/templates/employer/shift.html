@@ -2,7 +2,7 @@
 {% block body %}
 <div id='employer-shift-body'>
 {% if workers %}
-<select id='employee-schedule-dropdown' class="form-select employer-shift-select" aria-label="Default select example">
+<select id='employee-schedule-dropdown' class="form-select employer-shift-select" aria-label="List of employees">
     <option selected disabled>Employees</option>
   
     {% for worker in workers  %}
@@ -47,6 +47,54 @@
         <td class="schedule-cell" id="end-saturday"><input class='scheduling-input' type='text' value='off'></td>
         <td class="schedule-cell" id="end-sunday"><input class='scheduling-input' type='text' value='off'></td>
       </tr>
+    </tbody>
+  </table>
+  <!--  SECOND TABLE FOR JS MOBILE RESPONSIVENESS -->
+  <table id="employer-schedule-table-mobile" class="table table-bordered">
+    <thead class="thead-dark">
+      <tr id='mobile-thead'>
+        <th scope="col">Schedule</th>
+        <th scope="col">Start</th>
+        <th scope="col">End</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row" class='weekday'>Monday</th>
+        <td class="schedule-cell" id="start-monday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-monday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+      <tr>
+        <th scope="row" class='weekday'>Tuesday</th>
+        <td class="schedule-cell" id="start-tuesday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-tuesday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+      <tr>
+        <th scope="row" class='weekday'>Wednesday</th>
+        <td class="schedule-cell" id="start-wednesday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-wednesday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+      <tr>
+        <th scope="row" class='weekday'>Thursday</th>
+        <td class="schedule-cell" id="start-thursday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-thursday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+      <tr>
+        <th scope="row" class='weekday'>Friday</th>
+        <td class="schedule-cell" id="start-friday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-friday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+      <tr>
+        <th scope="row" class='weekday'>Saturday</th>
+        <td class="schedule-cell" id="start-saturday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-saturday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+      <tr>
+        <th scope="row" class='weekday'>Sunday</th>
+        <td class="schedule-cell" id="start-sunday"><input class='scheduling-input' type='text' value='off'></td>
+        <td class="schedule-cell" id="end-sunday"><input class='scheduling-input' type='text' value='off'></td>
+      </tr>
+          
     </tbody>
   </table>
   <button type="button" class="btn btn-primary" id='submit-schedule' data-target="#shift-change-modal">

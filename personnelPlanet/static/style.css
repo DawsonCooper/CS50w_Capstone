@@ -148,7 +148,36 @@ body{
     width: 60%;
     
 }
-
+#avail-table-mobile{
+    display: none;
+}
+@media (max-width: 800px) {
+    #availability{
+        margin-left: 0;
+    }
+    #profile-buttons{
+        width: 90vw;
+        margin-left: 5vw;
+    }
+    #profile-buttons button{
+        width: 20%;
+        font-size: 1.1rem;
+    }
+    #avail-table-mobile{
+        margin-left: 0;
+        display: block;
+        width: 100vw;
+    }
+    #avail-mobile-thead{
+        width: 30vw;
+    }
+    .shift-mobile{
+        width: 23.33vw;
+    }
+    #avail-table{
+        display: none;
+    }
+}
 
 /* shift page */
 #shift-table-cont{
@@ -161,7 +190,7 @@ body{
 }
 
 .employer-shift-select{
-    width: 20% !important;
+    width: 20%;
 }
 
 #employer-schedule-table{
@@ -170,7 +199,27 @@ body{
 .scheduling-input{
     width: 60%;
 }
+#employer-schedule-table-mobile{
+    display: none;
+}
+/* SHIFT PAGE MOBILE */
+@media (max-width: 800px) { 
+    #employer-schedule-table{
+        display: none;
+    }
+    #employer-schedule-table-mobile{
+        display: block;
+        width: 100%;
+    }
+    .weekday{
+        width: 40vw;
+    }
+    .schedule-cell{
+        width: 30vw;
+    }
 
+
+ }
 /* HOME PAGE */
 
 /*  Main containers */
@@ -288,7 +337,21 @@ body{
         width: 94%;
         margin: 1.5%;
     }
-
+    #right-container{
+        margin-top: 91vh;
+        width: 95vw;
+        float: none;
+    }
+    #clock-container{
+        margin-top: 17vh;
+        width: 90vw;
+    }
+    #clock-in-out{
+        width: 40vw;
+    }
+    #hours-today{
+        width: 40vw;
+    }
  }
 
 

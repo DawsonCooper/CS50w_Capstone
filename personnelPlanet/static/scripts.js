@@ -7,8 +7,8 @@ let availObj = {
     saturday: '',
     sunday: ''
 }
-const userId = JSON.parse(document.getElementById('id').textContent);
-const firstName = JSON.parse(document.getElementById('firstName').textContent);
+
+
 const date = new Date()
 // APIS
 function clockIn(){
@@ -116,13 +116,16 @@ function schedules(workerId){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    regUserCircle = document.querySelector("#reg-user-circle");
-    if (window.innerWidth < 650){
-        regUserCircle.setAttribute("color", "#63ACE5");
-        console.log(regUserCircle)
+    if (/\bregister\b/gi.test(window.location.href || /\blogin\b/gi.test(window.location.href))){
+        regUserCircle = document.querySelector("#reg-user-circle");
+        if (window.innerWidth < 650){
+
+            regUserCircle.setAttribute("color", "#63ACE5");
+            console.log(regUserCircle)
+        }
     }
     //-------------------- PROFILE AVAIL TABLE SCRIPTS --------------------------//
-    if (/\bprofile\b/gi.test(window.location.href)){
+    else if (/\bprofile\b/gi.test(window.location.href)){
         console.log('working');
         let allCells = document.querySelectorAll('.avail-cell')
         allCells.forEach(cell => {
@@ -215,6 +218,8 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (/\bmessages\b/gi.test(window.location.href)){
         let url = `ws://${window.location.host}/ws/socket-server/`
         const messageSocket = new WebSocket(url)
+        const firstName = JSON.parse(document.getElementById('firstName').textContent);
+        const userId = JSON.parse(document.getElementById('id').textContent);
         allMsgCont = document.querySelector('#all-messages-container')
         allMsgCont.scrollTo(0, 100000)
         messageSocket.onmessage = function(e){
