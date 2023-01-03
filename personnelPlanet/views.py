@@ -100,6 +100,19 @@ def memo(request):
     return JsonResponse({'message': 'Missed request'})
 
 
+def get_availability(request, user):
+    # use user to get the corrisponding availability
+    existingAvail = Availability.objects.filter(employee=user).all().values()
+    availArr = []
+    for avail in existingAvail:
+
+        temp = avail['shift'] + '-' + avail['day']
+        availArr.append(temp)
+    print('get', availArr)
+    # return availability
+    return JsonResponse({'availability': availArr})
+
+
 @csrf_exempt
 def availability(request):
     # In post req we will be getting a users avail as a json obj {day: shift}
@@ -107,26 +120,24 @@ def availability(request):
     data = json.loads(request.body)
     availObj = data.get('body')
     print(request.user)
-    employee = User.objects.filter(workId=request.user).values('pk')
-    print(employee[0]['pk'])
+    employee = User.objects.filter(workId=request.user.workId).values('pk')
 
     for day in availObj:
 
         try:
-            check = Availability.objects.get(
+            Availability.objects.get(
                 employee=employee[0]['pk'], day=day)
-            print(check)
+            Availability.objects.filter(
+                employee=employee[0]['pk'], day=day).update(shift=availObj[day])
 
-        except:
+        except Availability.DoesNotExist:
             newAvail = Availability(
                 employee=employee,
                 day=day,
                 shift=availObj[day]
             )
             newAvail.save()
-        if (check):
-            Availability.objects.filter(
-                employee=employee[0]['pk'], day=day).update(shift=availObj[day])
+
     return JsonResponse({
         'message': 'success'
     })
@@ -378,7 +389,7 @@ def register(request):
             createUser.save()
             print(workId)
             login(request, createUser)
-            return home(request)
+            return profile(request)
 
         else:
             for field in form:

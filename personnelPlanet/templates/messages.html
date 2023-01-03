@@ -1,7 +1,5 @@
 {% extends 'layout.html' %}
 {% block body %}
-{{ request.user.id|json_script:"id" }}
-{{ request.user.first_name|json_script:"firstName" }}
 <div id='msg-page-body'>
     <div id='all-messages-container'>
         <h2 class='msg-head'>FLOORSHOP</h2>

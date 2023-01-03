@@ -8,7 +8,8 @@ let availObj = {
     sunday: ''
 }
 
-
+const firstName = JSON.parse(document.getElementById('firstName').textContent);
+const userId = JSON.parse(document.getElementById('id').textContent);
 const date = new Date()
 // APIS
 function clockIn(){
@@ -114,6 +115,40 @@ function schedules(workerId){
     })
     .catch(err => console.log(err))
 }
+function get_availability(user){
+    fetch(`/get_availability/${user}`, {
+        method: 'GET',
+    }).then(response => response.json())
+    .then(result => {
+        result['availability'].forEach(day => {
+            document.querySelector(`#${day}`).style.backgroundColor = 'limegreen'
+        })
+        if(result['availability'] == false){
+            console.log('caught in if')
+            document.querySelectorAll('.avail-cell').forEach(cell => {
+                    cell.style.backgroundColor = ''
+                })
+            }
+        let allCells = document.querySelectorAll('.avail-cell')
+        // SET INITAIL AVAIL OBJ 
+        allCells.forEach(cell => {
+            let test = cell.attributes.id.value;
+            let split = test.split('-');  
+            
+            if (cell.offsetParent != null){
+                
+                if (cell.style.backgroundColor == 'limegreen'){
+                    console.log('here')
+                    availObj[split[1]] = split[0];
+                }
+        }
+        
+        })
+        console.log(availObj)
+    })
+    .catch(error => console.log(error))
+
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     if (/\bregister\b/gi.test(window.location.href || /\blogin\b/gi.test(window.location.href))){
@@ -126,42 +161,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     //-------------------- PROFILE AVAIL TABLE SCRIPTS --------------------------//
     else if (/\bprofile\b/gi.test(window.location.href)){
-        console.log('working');
-        let allCells = document.querySelectorAll('.avail-cell')
-        allCells.forEach(cell => {
-            // --------------  CHANGES BG ON HOVER  ------------------ //
-            cell.addEventListener('mouseover', () => {
-                if (cell.style.backgroundColor !== 'limegreen'){
-                    cell.style.backgroundColor = 'lightgreen';
-                }
-            })
-            cell.addEventListener('mouseout', () => {
-                if (cell.style.backgroundColor != 'limegreen'){
-                    cell.style.backgroundColor = '';
-                }
-            });
-            // -------------  CHANGES BG AND POPULATES availObj  ------------------- //
-            cell.addEventListener('click', () => {
-                let test = cell.attributes.id.value;
-                let split = test.split('-');
-                let day = split[1];
+        //STEP 1: FETCH FOR CURRENT USER AVAILABILITY
+        console.log(userId)
+        get_availability(userId)
+        
+        //STEP 2: TARGET CELLS THAT ARE MARKED AS AVAILABLE AND TURN LIMEGREEN
 
-                allCells.forEach(item =>{  
-                    if (item.attributes.id.value.includes(`${day}`) && item != cell){
-                        
-                        item.style.backgroundColor = '';
+        let allCells = document.querySelectorAll('.avail-cell')
+        // SET INITAIL AVAIL OBJ 
+        allCells.forEach(cell => {
+            if (cell.offsetParent != null){
+            // --------------  CHANGES BG ON HOVER  ------------------ //
+                cell.addEventListener('mouseover', () => {
+                    if (cell.style.backgroundColor !== 'limegreen'){
+                        cell.style.backgroundColor = 'lightgreen';
                     }
                 })
-                
-                if (cell.style.backgroundColor !== 'limegreen'){
-                    cell.style.backgroundColor = 'limegreen';
-                    availObj[split[1]] = split[0];
-                }else{
-                    cell.style.backgroundColor = '';
+                cell.addEventListener('mouseout', () => {
+                    if (cell.style.backgroundColor != 'limegreen'){
+                        cell.style.backgroundColor = '';
+                    }
+                });
+                // -------------  CHANGES BG AND POPULATES availObj  ------------------- //
+                cell.addEventListener('click', () => {
+                    let test = cell.attributes.id.value;
+                    let split = test.split('-');
+                    let day = split[1];
 
-                }
-                console.log(availObj)
-            });
+                    allCells.forEach(item =>{  
+                        if (item.attributes.id.value.includes(`${day}`) && item != cell){
+
+                            item.style.backgroundColor = '';
+                        }
+                    })
+
+                    if (cell.style.backgroundColor !== 'limegreen'){
+                        cell.style.backgroundColor = 'limegreen';
+                        availObj[split[1]] = split[0];
+                    }else{
+                        cell.style.backgroundColor = '';
+
+                    }
+                    console.log(availObj)
+                });
+            }
         })
         // -----------------  RESETS AVAIL TABLE  ------------------------- //
         document.querySelector("#reset-avail").addEventListener('click', () => {
@@ -187,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleDropdown.addEventListener('change', () =>{
             workerId = scheduleDropdown.value
             schedules(workerId)
+            get_availability(workerId)
         })
 
         submitSchedule.addEventListener('click', () =>{
@@ -218,8 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (/\bmessages\b/gi.test(window.location.href)){
         let url = `ws://${window.location.host}/ws/socket-server/`
         const messageSocket = new WebSocket(url)
-        const firstName = JSON.parse(document.getElementById('firstName').textContent);
-        const userId = JSON.parse(document.getElementById('id').textContent);
+        
         allMsgCont = document.querySelector('#all-messages-container')
         allMsgCont.scrollTo(0, 100000)
         messageSocket.onmessage = function(e){

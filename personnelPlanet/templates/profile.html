@@ -46,6 +46,7 @@
       </tr>
     </tbody>
   </table>
+  <!--  MOBILE-TABLE   -->
   <table id="avail-table-mobile" class="table table-bordered">
     <thead class="thead-dark">
       <tr>
@@ -106,6 +107,16 @@
     {% csrf_token %}
     <button type="button" id="submit-avail" class="btn">Submit</button>
   </div>
-  
+  <div id='profile-user-info'>
+    <h2 style='text-align: center; padding-top: 2%;'>Your Company Fingerprint</h2>
+    <hr style='background-color: black;'>
+    <p class='user-info-items'><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p class='user-info-items'><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p class='user-info-items'><strong>Work ID:</strong> {{ user.workId }}</p>
+    <p class='user-info-items'><strong>Joined Company:</strong> {{ user.date_joined.date }}</p>
+    <p class='user-info-items'><strong>Phone Number:</strong> {{ user.phoneNumber }}</p>
+    <p class='user-info-items'><strong>Pay Rate:</strong> {{ user.payRate }}</p>
+    <p class='user-info-items'><strong>Company:</strong> {{ user.company }}</p>
+  </div>
 </div>
 {% endblock %}

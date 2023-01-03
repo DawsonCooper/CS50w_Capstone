@@ -27,7 +27,8 @@ urlpatterns = [
     path('schedules/<int:workerId>', views.schedules, name='schedules'),
     path('memo', views.memo, name='memo'),
     path('clock', views.clock, name='clock'),
-
+    path('get_availability/<int:user>',
+         views.get_availability, name='get_availability'),
     # Views
     path('', views.home, name='home'),
     path('hire', views.hire, name='hire'),

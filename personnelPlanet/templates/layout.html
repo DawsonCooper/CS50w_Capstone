@@ -54,7 +54,10 @@
         </div>
       </div>
     </nav>
+    {{ request.user.id|json_script:"id" }}
+    {{ request.user.first_name|json_script:"firstName" }}
     {% block body %}
+
     {% endblock %}
 	
     <script type='text/javascript' src="{% static 'scripts.js' %}"></script>
