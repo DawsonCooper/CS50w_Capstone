@@ -227,6 +227,9 @@ body{
 #shift-page-avail-table{
     margin-top: 1%;
 }
+#shift-page-avail-mobile{
+    display: none;
+}
 /* SHIFT PAGE MOBILE */
 @media (max-width: 800px) { 
     #employer-schedule-table{
@@ -242,7 +245,13 @@ body{
     .schedule-cell{
         width: 30vw;
     }
-
+    #shift-page-avail-table{
+        display: none;
+    }
+    #shift-page-avail-mobile{
+        display: block;
+        width: 100%;
+    }
 
  }
 /* HOME PAGE */

@@ -265,8 +265,7 @@ def shift(request):
         print('working')
         print(scheduleChanges, workerId)
         try:
-            exists = Schedule.objects.get(employee=workerId)
-            exists.update(
+            Schedule.objects.filter(employee=workerId).update(
                 monday=scheduleChanges[0],
                 tuesday=scheduleChanges[1],
                 wednesday=scheduleChanges[2],
@@ -310,15 +309,16 @@ def shift(request):
     else:
 
         employeeId = request.user.id
+        try:
+            schedule = Schedule.objects.filter(employee=employeeId).values()
+        except Schedule.DoesNotExist:
+            Schedule.objects.create(employee=request.user.id)
         schedule = Schedule.objects.filter(employee=employeeId).values()
         schedule = schedule[0]
         for day in schedule:
-            print(day)
             if not isinstance(schedule[day], int):
                 if len(schedule[day]) > 3:
-                    print(schedule[day])
                     schedule[day] = schedule[day].split('-')
-                    print(day)
 
         print(schedule)
         return render(request, 'shift.html', {

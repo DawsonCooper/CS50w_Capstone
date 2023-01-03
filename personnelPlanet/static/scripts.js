@@ -10,6 +10,7 @@ let availObj = {
 
 const firstName = JSON.parse(document.getElementById('firstName').textContent);
 const userId = JSON.parse(document.getElementById('id').textContent);
+const isEmployer = JSON.parse(document.getElementById('isEmployer').textContent);
 const date = new Date()
 // APIS
 function clockIn(){
@@ -222,41 +223,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
-        let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
-        let submitSchedule = document.querySelector("#submit-schedule")
-        let resetChanges= document.querySelector("#reset-changes")
-        let saveChanges = document.querySelector("#shift-save")
-        let workerId = scheduleDropdown.value
-        scheduleDropdown.addEventListener('change', () =>{
-            workerId = scheduleDropdown.value
-            schedules(workerId)
-            get_availability(workerId)
-        })
-
-        submitSchedule.addEventListener('click', () =>{
-            let daysInput = document.querySelectorAll('.scheduling-input')
-            let regex = /\d{1,2}:\d{2}/;
-            // Use regex to test all values for format when looping first 7 are start times last are end times
-            
-            let isCleanData = true;
-            daysInput.forEach(day => {
-                if(day.value != 'off' && !regex.test(day.value)){
-                    isCleanData = false;
-                }
+        if(isEmployer){
+            let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
+            let submitSchedule = document.querySelector("#submit-schedule")
+            let resetChanges= document.querySelector("#reset-changes")
+            let saveChanges = document.querySelector("#shift-save")
+            let workerId = scheduleDropdown.value
+            scheduleDropdown.addEventListener('change', () =>{
+                workerId = scheduleDropdown.value
+                schedules(workerId)
+                get_availability(workerId)
             })
-            if (!isCleanData){alert('Make sure all times are in the proper format hh:mm');}
-            else{$('#shift-change-modal').modal('show')}
-            let sortedDaysArr = []
-            saveChanges.addEventListener('click', () =>{
-                for (let i = 0; i < 7; i++){
-                    sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
-                }
-                console.log(sortedDaysArr, workerId, 'here')
-                sendSchedule(sortedDaysArr, workerId)
-                
-                sortedDaysArr = [];
-        });
-        })
+
+            submitSchedule.addEventListener('click', () =>{
+                let daysInput = document.querySelectorAll('.scheduling-input')
+                let regex = /\d{1,2}:\d{2}/;
+                // Use regex to test all values for format when looping first 7 are start times last are end times
+
+                let isCleanData = true;
+                daysInput.forEach(day => {
+                    if(day.value != 'off' && !regex.test(day.value)){
+                        isCleanData = false;
+                    }
+                })
+                if (!isCleanData){alert('Make sure all times are in the proper format hh:mm');}
+                else{$('#shift-change-modal').modal('show')}
+                let sortedDaysArr = []
+                saveChanges.addEventListener('click', () =>{
+                    for (let i = 0; i < 7; i++){
+                        sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
+                    }
+                    console.log(sortedDaysArr, workerId, 'here')
+                    sendSchedule(sortedDaysArr, workerId)
+
+                    sortedDaysArr = [];
+            });
+            })
+    }
 
     }
     else if (/\bmessages\b/gi.test(window.location.href)){

@@ -56,6 +56,7 @@
     </nav>
     {{ request.user.id|json_script:"id" }}
     {{ request.user.first_name|json_script:"firstName" }}
+    {{ request.user.isEmployer|json_script:"isEmployer" }}
     {% block body %}
 
     {% endblock %}
