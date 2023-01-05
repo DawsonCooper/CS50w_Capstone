@@ -105,9 +105,9 @@ def get_availability(request, user):
     existingAvail = Availability.objects.filter(employee=user).all().values()
     availArr = []
     for avail in existingAvail:
-
-        temp = avail['shift'] + '-' + avail['day']
-        availArr.append(temp)
+        if avail['shift']:
+            temp = avail['shift'] + '-' + avail['day']
+            availArr.append(temp)
     print('get', availArr)
     # return availability
     return JsonResponse({'availability': availArr})

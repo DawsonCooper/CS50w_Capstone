@@ -121,8 +121,12 @@ function get_availability(user){
         method: 'GET',
     }).then(response => response.json())
     .then(result => {
+        // Populates color on both mobile and desktop tables
         result['availability'].forEach(day => {
-            document.querySelector(`#${day}`).style.backgroundColor = 'limegreen'
+            let tableCellId = document.querySelectorAll(`#${day}`)
+            tableCellId.forEach(cell => {
+                cell.style.backgroundColor = 'limegreen';
+            })
         })
         if(result['availability'] == false){
             console.log('caught in if')
@@ -135,11 +139,10 @@ function get_availability(user){
         allCells.forEach(cell => {
             let test = cell.attributes.id.value;
             let split = test.split('-');  
-            
+            // CHECK TO SEE IF THE TABLE IS DISPLAYED (for submit on profile page)
             if (cell.offsetParent != null){
-                
                 if (cell.style.backgroundColor == 'limegreen'){
-                    console.log('here')
+                    
                     availObj[split[1]] = split[0];
                 }
         }
@@ -201,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         availObj[split[1]] = split[0];
                     }else{
                         cell.style.backgroundColor = '';
-
+                        availObj[split[1]] = '';
                     }
                     console.log(availObj)
                 });

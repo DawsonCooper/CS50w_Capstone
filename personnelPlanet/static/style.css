@@ -172,10 +172,11 @@ body{
     display: flex;
     justify-content: space-between;
 }
-
-@media (max-width: 800px) {
+/*   PROFILE PAGE MOBILE   */
+@media (max-width: 1000px) {
     #availability{
         margin-left: 0;
+        position: static !important;
     }
     #profile-buttons{
         width: 90vw;
@@ -186,9 +187,11 @@ body{
         font-size: 1.1rem;
     }
     #avail-table-mobile{
-        margin-left: 0;
+        margin-left: .5vw;
         display: block;
-        width: 100vw;
+        
+        width: 99vw;
+       
     }
     #avail-mobile-thead{
         width: 30vw;
@@ -198,6 +201,13 @@ body{
     }
     #avail-table{
         display: none;
+    }
+    #profile-user-info{
+        position: static;
+        margin-left: 1vw;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        width: 98vw;
     }
 }
 
