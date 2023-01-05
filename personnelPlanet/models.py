@@ -76,10 +76,11 @@ class Memo(models.Model):
 
 
 class Tasks(models.Model):
-    assignedTo = models.CharField(max_length=150, default='Company')
+    assignedTo = models.CharField(max_length=150, default='Team')
     taskBody = models.CharField(max_length=300, default='Task')
     complete = models.BooleanField(default=False)
     assingedBy = models.IntegerField(default=0)
+    company = models.CharField(max_length=25, default='Company')
 
     def serialize(self):
         return {

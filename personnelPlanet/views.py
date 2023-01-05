@@ -43,6 +43,23 @@ DAYS = ["monday", "tuesday", "wednesday",
 
 
 @csrf_exempt
+def task(request):
+    data = json.loads(request.body)
+    if request.method == 'POST':
+        # TODO: handle inital creation of task populate model with fetch info
+
+        pass
+    if request.method == 'GET':
+        # TODO: pull task info by company serialize and send to client
+
+        pass
+    if request.method == 'PUT':
+        # TODO: handle status changes to tasks from employees and deletions from employers
+
+        pass
+
+
+@csrf_exempt
 def clock(request):
     employee = request.user.id
     if request.method == 'POST':

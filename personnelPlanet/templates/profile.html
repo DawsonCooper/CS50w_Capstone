@@ -135,7 +135,7 @@
                 <ul class="items">
                   {% for emp in context.employees %}
                   {% if emp.workId != user.workId %}
-                  <li><input type="checkbox" value='{{ emp.workId }}'>{{ emp.first_name }} {{ emp.last_name }}</li>
+                  <li><input class='employees-check' type="checkbox" value='{{ emp.workId }}'>{{ emp.first_name }} {{ emp.last_name }}</li>
                   {% endif %}
                   {% endfor %}
                 </ul>
@@ -148,7 +148,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Assign Task</button>
+          <button type="button" id='submit-task' value='POST' class="btn btn-primary">Assign Task</button>
         </div>
       </div>
     </div>

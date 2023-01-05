@@ -29,6 +29,7 @@ urlpatterns = [
     path('clock', views.clock, name='clock'),
     path('get_availability/<int:user>',
          views.get_availability, name='get_availability'),
+    path('task', views.task, name='task'),
     # Views
     path('', views.home, name='home'),
     path('hire', views.hire, name='hire'),

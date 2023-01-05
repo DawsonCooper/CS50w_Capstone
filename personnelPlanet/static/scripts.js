@@ -21,6 +21,39 @@ function clockIn(){
     .then(result => alert(result))
     .catch(err => alert(err))
 }
+populate_tasks(taskList){
+    // CREATE DOM ELEMENTS FOR EACH TASK AND APPEND TO #existing-tasks ELEMENT
+    
+}
+function task(assignTo, taskBody, status, method){
+    if (method === 'POST'){
+    // CREATE TASK
+        fetch('/task', {
+            method: 'POST',
+            body: JSON.stringify({
+                assignTo: assignTo,
+                taskBody: taskBody,
+                status: status,
+            })
+        })
+        .then(response => response.json())
+        .then(result => {method = 'GET';})
+        .catch(err => alert(err));
+    
+    }
+    else if (method === 'GET'){
+    // GET TASKS
+        fetch('/task', {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(result => {populate_tasks(result)})
+        .catch(error => alert(error));
+    }
+    else{
+    // update task status
+    }
+}
 function clockOut(){
     // SENT PUT REQUEST AND HANDLE REST IN VIEW
     fetch('/clock', {
@@ -87,7 +120,7 @@ function availability(userAvailability) {
         body: JSON.stringify({
             body: userAvailability,
         })
-    }).then(response => response.json)
+    }).then(response => response.json())
     .then(result=> console.log(result))
     .catch(err => console.log(err))
 }
@@ -223,6 +256,20 @@ document.addEventListener("DOMContentLoaded", () => {
         availability(availObj);
         console.log(availObj);
     })
+    // POST FETCH FOR TASK CREATION //
+    let taskButton = document.querySelector("#submit-task");
+    taskButton.addEventListener('click', () => {
+        let taskBody = document.querySelector('#task-textarea').value;
+        let empList = [];
+        document.querySelectorAll('.employees-check').forEach(emp => {
+            if (emp.checked){
+                empList.push(emp.value);
+            }
+        })
+        task(empList, taskBody, false, 'POST');
+    });
+
+
 
     // SELECT MENU CHECKBOX LSIT OF EMPPLOYEES //
     let checkList = document.querySelector('#emp-list');
