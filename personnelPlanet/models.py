@@ -73,3 +73,18 @@ class Memo(models.Model):
     body = models.CharField(max_length=300)
     created = models.DateTimeField(auto_now_add=True)
     company = models.CharField(max_length=20, default='NA')
+
+
+class Tasks(models.Model):
+    assignedTo = models.CharField(max_length=150, default='Company')
+    taskBody = models.CharField(max_length=300, default='Task')
+    complete = models.BooleanField(default=False)
+    assingedBy = models.IntegerField(default=0)
+
+    def serialize(self):
+        return {
+            'assignedTo': self.assignedTo,
+            'taskBody': self.taskBody,
+            'complete': self.complete,
+            'assingedBy': self.assingedBy,
+        }

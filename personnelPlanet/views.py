@@ -328,8 +328,16 @@ def shift(request):
 
 def profile(request):
     # More specific user info (company id, pay, hours worked, position, etc)
-
-    return render(request, 'profile.html')
+    context = {}
+    if request.user.isEmployer:
+        empList = User.objects.filter(
+            company=request.user.company).all().values("first_name", "last_name", 'workId')
+        print(empList)
+        if empList:
+            print('in if')
+            context['employees'] = empList
+    return render(request, 'profile.html', {
+        'context': context})
 
 
 def login_view(request):

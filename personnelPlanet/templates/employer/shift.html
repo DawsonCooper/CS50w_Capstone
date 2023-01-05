@@ -3,7 +3,7 @@
 <div id='employer-shift-body'>
 {% if workers %}
 <select id='employee-schedule-dropdown' class="form-select employer-shift-select" aria-label="List of employees">
-    <option selected disabled>Employees</option>
+    <option selected hidden>Employees</option>
   
     {% for worker in workers  %}
     {% if worker.id != user.id %}

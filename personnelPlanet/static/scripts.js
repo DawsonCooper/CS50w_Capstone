@@ -223,6 +223,15 @@ document.addEventListener("DOMContentLoaded", () => {
         availability(availObj);
         console.log(availObj);
     })
+
+    // SELECT MENU CHECKBOX LSIT OF EMPPLOYEES //
+    let checkList = document.querySelector('#emp-list');
+    checkList.getElementsByClassName('selector')[0].onclick = function(e) {
+      if (checkList.classList.contains('visible'))
+        checkList.classList.remove('visible');
+      else
+        checkList.classList.add('visible');
+    }
     }
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
