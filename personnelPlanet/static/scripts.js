@@ -21,11 +21,25 @@ function clockIn(){
     .then(result => alert(result))
     .catch(err => alert(err))
 }
-populate_tasks(taskList){
+function populate_tasks(taskList){
+    console.log('made it')
     // CREATE DOM ELEMENTS FOR EACH TASK AND APPEND TO #existing-tasks ELEMENT
-    
+    taskList.forEach(task => {
+        taskWrapper = document.createElement('section');
+        taskWrapper.innerHTML = `
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">${task.assignedTo}</h5>
+            <p class="card-text">${task.taskBody}</p>
+            <a href="#" id='task-complete' class='btn'>Mark Complete</a>
+          </div>
+        </div>`
+        document.querySelector('#existing-tasks').appendChild(taskWrapper)
+    })
+
 }
-function task(assignTo, taskBody, status, method){
+function task(assignTo='', taskBody='', status=false, method=''){
+    
     if (method === 'POST'){
     // CREATE TASK
         fetch('/task', {
@@ -43,12 +57,13 @@ function task(assignTo, taskBody, status, method){
     }
     else if (method === 'GET'){
     // GET TASKS
+    console.log('called')
         fetch('/task', {
             method: 'GET',
         })
         .then(response => response.json())
-        .then(result => {populate_tasks(result)})
-        .catch(error => alert(error));
+        .then(result => populate_tasks(result.taskList))
+        .catch(error => console.log(error));
     }
     else{
     // update task status
@@ -201,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //STEP 1: FETCH FOR CURRENT USER AVAILABILITY
         console.log(userId)
         get_availability(userId)
-        
+        task("","","","GET")
         //STEP 2: TARGET CELLS THAT ARE MARKED AS AVAILABLE AND TURN LIMEGREEN
 
         let allCells = document.querySelectorAll('.avail-cell')

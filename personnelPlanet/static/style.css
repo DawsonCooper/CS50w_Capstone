@@ -175,6 +175,11 @@ body{
 /*   TASK CREATOR STYLES   */
 #task-container{
     margin-top: 5vh;
+    width: 60vw;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10vw;
+    height: 50vh;
 }
 #task-textarea{
     width: 100%;
@@ -231,6 +236,34 @@ body{
   
   .dropdown-check-list.visible .items {
     display: block;
+  }
+  /*   GENERIC TASK STYLES     */
+#existing-tasks{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 19rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: lightgrey white;
+}
+  #task-complete{
+    background-color: limegreen;
+    color: white;
+  }
+  #task-complete:hover{
+    background-color: rgb(9, 182, 9);
+  }
+  #employees{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 19rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: lightgrey white;
   }
 /*   PROFILE PAGE MOBILE   */
 @media (max-width: 1000px) {

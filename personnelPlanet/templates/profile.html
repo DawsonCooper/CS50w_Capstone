@@ -118,14 +118,39 @@
     <p class='user-info-items'><strong>Pay Rate:</strong> {{ user.payRate }}</p>
     <p class='user-info-items'><strong>Company:</strong> {{ user.company }}</p>
   </div>
+  
   <div id='task-container'>
     {% if user.isEmployer %}
-    <h2>Add tasks:</h2>
-    <button type="button" id='add-task-button' class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add-task-modal">
-      <i class="bi bi-plus-square" style="font-size: 2rem;" alt='Add Task'></i>
-    </button>
-    
-    <div class="modal" id="add-task-modal" tabindex="-1">
+    <div>
+      <h2>Add tasks:</h2>
+      <button type="button" id='add-task-button' class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add-task-modal">
+        <i class="bi bi-plus-square" style="font-size: 2rem;" alt='Add Task'></i>
+      </button>
+    </div>
+    {% endif %}
+    <div id='existing-tasks'>
+      <h2>Tasks</h2>
+      <!-- GET TASKS FROM DB AND DISPLAY -->
+    </div>
+    <div id='employees'>
+      <h2>Team List</h2>
+      {% for emp in context.employees %}
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ emp.first_name }} {{ emp.last_name }}</h5>
+          <p class="card-text">{{ user.company }}</p>
+          <p>{% if emp.isEmployer %}
+            Role: Manager
+            {% else %}
+            Role: Teammember
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+<div class="modal" id="add-task-modal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -152,12 +177,6 @@
         </div>
       </div>
     </div>
-  </div>
-  {% endif %}
-  
-  </div>
-  <div id='existing-tasks'>
-    <!-- GET TASKS FROM DB AND DISPLAY -->
   </div>
 </div>
 {% endblock %}

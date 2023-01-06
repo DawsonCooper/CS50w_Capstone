@@ -8,7 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django import forms
-from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages, Memo, Clock
+from .models import User, Availability, Schedule, Company, EmployeeTracker, Messages, Memo, Clock, Tasks
 from phonenumber_field.formfields import PhoneNumberField
 from random import randrange, randint
 import datetime
@@ -44,16 +44,22 @@ DAYS = ["monday", "tuesday", "wednesday",
 
 @csrf_exempt
 def task(request):
-    data = json.loads(request.body)
+
     if request.method == 'POST':
+        data = json.loads(request.body)
         # TODO: handle inital creation of task populate model with fetch info
 
         pass
     if request.method == 'GET':
         # TODO: pull task info by company serialize and send to client
+        taskList = Tasks.objects.filter(
+            company=request.user.company).all()
+        return JsonResponse({
+            'taskList': [task.serialize() for task in taskList]
+        })
 
-        pass
     if request.method == 'PUT':
+        data = json.loads(request.body)
         # TODO: handle status changes to tasks from employees and deletions from employers
 
         pass
@@ -346,13 +352,11 @@ def shift(request):
 def profile(request):
     # More specific user info (company id, pay, hours worked, position, etc)
     context = {}
-    if request.user.isEmployer:
-        empList = User.objects.filter(
-            company=request.user.company).all().values("first_name", "last_name", 'workId')
-        print(empList)
-        if empList:
-            print('in if')
-            context['employees'] = empList
+    empList = User.objects.filter(
+        company=request.user.company).all().values("first_name", "last_name", 'workId', 'isEmployer')
+    print(empList)
+    if empList:
+        context['employees'] = empList
     return render(request, 'profile.html', {
         'context': context})
 
