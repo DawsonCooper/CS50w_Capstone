@@ -12,6 +12,7 @@ const firstName = JSON.parse(document.getElementById('firstName').textContent);
 const userId = JSON.parse(document.getElementById('id').textContent);
 const isEmployer = JSON.parse(document.getElementById('isEmployer').textContent);
 const date = new Date()
+const userWorkId = JSON.parse(document.getElementById('userWorkId').textContent);
 // APIS
 function clockIn(){
     // SEND POST REQUEST AND HANDLE REST IN VIEW
@@ -26,7 +27,7 @@ function populate_tasks(taskList){
     // CREATE DOM ELEMENTS FOR EACH TASK AND APPEND TO #existing-tasks ELEMENT
     taskList.forEach(task => {
         taskWrapper = document.createElement('section');
-        taskWrapper.innerHTML = `
+        let taskOfUser = `
         <div class="card" style="width: 18rem;">
           <div class="card-body">
             <h5 class="card-title">${task.assignedTo}</h5>
@@ -34,6 +35,32 @@ function populate_tasks(taskList){
             <a href="#" id='task-complete' class='btn'>Mark Complete</a>
           </div>
         </div>`
+        let taskOfCoworker = `
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${task.assignedTo}</h5>
+                <p class="card-text">${task.taskBody}</p>
+                <a href="#" id='task-complete' class='btn'>Offer Help</a>
+            </div>
+        </div>`
+        let taskViewedByManager = `
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">${task.assignedTo}</h5>
+            <p class="card-text">${task.taskBody}</p>
+            <a href="#" id='task-complete' class='btn'>Close task</a>
+          </div>
+        </div>`
+        if(isEmployer){
+            taskWrapper.innerHTML += taskViewedByManager
+        }
+        else if(userWorkId == task.assignedTo) {
+            taskWrapper.innerHTML += taskOfUser
+        }else{
+            taskWrapper.innerHTML += taskOfCoworker
+        }
+
+            
         document.querySelector('#existing-tasks').appendChild(taskWrapper)
     })
 
@@ -363,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 body.innerText = data.message;
                 let day = date.getDate();
                 let month = date.getMonth();
-                ts.innerText = `${month}/${day}`;
+                ts.innerText = `${month + 1}/${day}`;
                 sec.appendChild(head)
                 sec.appendChild(body)
                 sec.appendChild(ts)

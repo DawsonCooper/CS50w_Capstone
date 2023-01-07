@@ -242,6 +242,7 @@ def home(request):
 
 
 @csrf_exempt
+@login_required(login_url='/login')
 def messages(request):
     context = {}
     if request.method == 'GET':
@@ -278,6 +279,7 @@ def hire(request):
 
 
 @csrf_exempt
+@login_required(login_url='/login')
 def shift(request):
     # for employee (a grid like page with day and shift information, swap shift functionality, call in functionality)
     # for emplyer (input fields for adding/removing shift information, swap shift approval call in notices)
@@ -349,6 +351,7 @@ def shift(request):
         })
 
 
+@login_required(login_url='/login')
 def profile(request):
     # More specific user info (company id, pay, hours worked, position, etc)
     context = {}

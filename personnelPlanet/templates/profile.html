@@ -121,7 +121,7 @@
   
   <div id='task-container'>
     {% if user.isEmployer %}
-    <div>
+    <div id='add-task-wrapper'>
       <h2>Add tasks:</h2>
       <button type="button" id='add-task-button' class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add-task-modal">
         <i class="bi bi-plus-square" style="font-size: 2rem;" alt='Add Task'></i>
@@ -135,6 +135,7 @@
     <div id='employees'>
       <h2>Team List</h2>
       {% for emp in context.employees %}
+      <section>
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">{{ emp.first_name }} {{ emp.last_name }}</h5>
@@ -147,6 +148,7 @@
           </p>
         </div>
       </div>
+    </section>
       {% endfor %}
     </div>
   </div>

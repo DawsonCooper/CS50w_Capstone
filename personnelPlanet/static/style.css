@@ -15,6 +15,11 @@ body{
     height: 100%;
     width: 100%;
 }
+nav{
+    position: sticky !important;
+    top: 0;
+    z-index: 99;
+}
 .navbar{
     background-color: #63ACE5;
 }
@@ -245,7 +250,7 @@ body{
     width: 19rem;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: lightgrey white;
 }
   #task-complete{
@@ -262,8 +267,12 @@ body{
     width: 19rem;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: lightgrey white;
+  }
+  #employees::-webkit-scrollbar,
+  #existing-tasks::-webkit-scrollbar{
+    display: none;
   }
 /*   PROFILE PAGE MOBILE   */
 @media (max-width: 1000px) {
@@ -301,6 +310,38 @@ body{
         margin-top: 5vh;
         margin-bottom: 5vh;
         width: 98vw;
+    }
+    #task-container {
+        height: auto;
+        
+        width: 100vw;
+        flex-direction: column;
+    }
+    #add-task-wrapper{
+        text-align: center;
+    }
+    #existing-tasks,
+    #employees{
+        padding-bottom: 10px;
+        flex-direction: row; 
+        width: auto;
+        height: auto;
+        overflow: scroll;
+        scrollbar-width: thin;
+    }
+    #employees::-webkit-scrollbar,
+    #existing-tasks::-webkit-scrollbar{
+      display: visable;
+      height: 10px;
+      width: 100px;
+    }
+    #existing-tasks section div{
+        height: auto;
+        width: 40vw !important;
+    }
+    #employees section div{
+        width: 40vw !important;
+        height: auto;
     }
 }
 
@@ -363,21 +404,21 @@ body{
 #home-main{
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 #memo-container{
     margin: 2%;
     display: block !important;
     padding-bottom: 20%;
     color: black;
-    height: 35%;
+    height: 35vh;
     width: 95%;
 }
 #clock-container{
     margin: 2%;
     color: black;
-    height: 25%;
+    height: auto;
     width: 30%;
     display: flex;
     justify-content: space-between;
@@ -471,7 +512,7 @@ body{
     #carouselExampleDark{
         
         font-size: .8rem;
-        width: 94%;
+        width: 94vw;
         margin: 1.5%;
     }
     #right-container{
@@ -480,7 +521,8 @@ body{
         float: none;
     }
     #clock-container{
-        margin-top: 17vh;
+        margin-left: 5vw;
+        margin-top: 20vh;
         width: 90vw;
     }
     #clock-in-out{
@@ -489,10 +531,11 @@ body{
     #hours-today{
         width: 40vw;
     }
+
  }
 
 
-
+/*   MESSAGES PAGE STYLES AND STUFF   */
 #msg-page-body{
   
     display: flex;
@@ -512,6 +555,10 @@ body{
     scrollbar-color: lightgrey white;
 
 
+}
+#all-messages-container::-webkit-scrollbar{
+    width: 10px;
+    height: 10vh;
 }
 .msg-split{
     background-color: #63ACE5;
@@ -537,9 +584,7 @@ body{
     color: white;
     background-color: #63ACE5;
 }
-.single-message-username{
 
-}
 .single-message-body{
     margin-bottom: 0;
 }
