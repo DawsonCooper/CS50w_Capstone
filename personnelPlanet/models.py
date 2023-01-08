@@ -84,6 +84,7 @@ class Tasks(models.Model):
 
     def serialize(self):
         return {
+            'id': self.pk,
             'assignedTo': self.assignedTo,
             'taskBody': self.taskBody,
             'complete': self.complete,

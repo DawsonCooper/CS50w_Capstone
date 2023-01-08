@@ -47,9 +47,16 @@ def task(request):
 
     if request.method == 'POST':
         data = json.loads(request.body)
-        # TODO: handle inital creation of task populate model with fetch info
 
-        pass
+        # TODO: handle inital creation of task populate model with fetch info
+        try:
+            Tasks.objects.create(assignedTo=data.get('assignTo'), taskBody=data.get('taskBody'), complete=data.get('status'),
+                                 assingedBy=request.user.id, company=request.user.company
+                                 )
+        except Exception as e:
+            print(e)
+            return JsonResponse({'message': 'error: task unable to be created'})
+        return JsonResponse({'message': 'Task creation complete'})
     if request.method == 'GET':
         # TODO: pull task info by company serialize and send to client
         taskList = Tasks.objects.filter(
@@ -60,9 +67,21 @@ def task(request):
 
     if request.method == 'PUT':
         data = json.loads(request.body)
+        print('hello from put')
         # TODO: handle status changes to tasks from employees and deletions from employers
-
-        pass
+        if data.get('status'):
+            print(data.get('status'), data.get('taskId'))
+            if request.user.isEmployer:
+                try:
+                    Tasks.objects.delete(data.get('taskId'))
+                    return JsonResponse({'status': 'Task successfully removed'})
+                except Exception as e:
+                    print(e)
+                    return JsonResponse({'status': f'Your task deletion failed with code: {e}'})
+            else:
+                Tasks.objects.filter(pk=data.get('taskId')).update(
+                    complete=data.get('status'))
+                return JsonResponse({'status': 'Task marked as complete'})
 
 
 @csrf_exempt

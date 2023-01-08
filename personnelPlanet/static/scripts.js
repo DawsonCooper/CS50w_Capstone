@@ -23,16 +23,20 @@ function clockIn(){
     .catch(err => alert(err))
 }
 function populate_tasks(taskList){
-    console.log('made it')
     // CREATE DOM ELEMENTS FOR EACH TASK AND APPEND TO #existing-tasks ELEMENT
     taskList.forEach(task => {
         taskWrapper = document.createElement('section');
+        if (task.assignedTo.length > 10){
+            console.log(task.assignedTo)
+            task.assignedTo = task.assignedTo.replace(/[^a-zA-Z0-9]/g, ' ')
+        }
+        
         let taskOfUser = `
         <div class="card" style="width: 18rem;">
           <div class="card-body">
             <h5 class="card-title">${task.assignedTo}</h5>
             <p class="card-text">${task.taskBody}</p>
-            <a href="#" id='task-complete' class='btn'>Mark Complete</a>
+            <a id='task-complete' onclick='task("","", true, "PUT", ${task.id})' value=${task.id} class='btn'>Mark Complete</a>
           </div>
         </div>`
         let taskOfCoworker = `
@@ -40,7 +44,7 @@ function populate_tasks(taskList){
             <div class="card-body">
                 <h5 class="card-title">${task.assignedTo}</h5>
                 <p class="card-text">${task.taskBody}</p>
-                <a href="#" id='task-complete' class='btn'>Offer Help</a>
+                <a id='task-complete' value=${task.id} class='btn'>Offer Help</a>
             </div>
         </div>`
         let taskViewedByManager = `
@@ -48,7 +52,7 @@ function populate_tasks(taskList){
           <div class="card-body">
             <h5 class="card-title">${task.assignedTo}</h5>
             <p class="card-text">${task.taskBody}</p>
-            <a href="#" id='task-complete' class='btn'>Close task</a>
+            <a id='task-complete' onclick='task("","", true, "PUT", ${task.id})' value=${task.id} class='btn'>Close task</a>
           </div>
         </div>`
         if(isEmployer){
@@ -65,7 +69,7 @@ function populate_tasks(taskList){
     })
 
 }
-function task(assignTo='', taskBody='', status=false, method=''){
+function task(assignTo='', taskBody='', status=false, method='', taskId = 0){
     
     if (method === 'POST'){
     // CREATE TASK
@@ -94,6 +98,17 @@ function task(assignTo='', taskBody='', status=false, method=''){
     }
     else{
     // update task status
+        console.log('in put')
+        fetch('/task', {
+            method: 'PUT',
+            body: JSON.stringify({
+                status: status,
+                taskId: taskId
+            })
+        })
+        .then(response => response.json())
+        .then(result => alert(result))
+        .catch(error => alert(error));
     }
 }
 function clockOut(){
