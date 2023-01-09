@@ -1,19 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
+:root{
+    --my-lightblue: #63ACE5;
+}
 html{
     font-family: 'Space Grotesk', sans-serif !important;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 body{
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     overflow-x: hidden;
 }
 
 .full-page{
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 nav{
     position: sticky !important;
@@ -40,54 +43,101 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: rgb(238, 238, 238);
+    overflow: hidden;
+    height: 90vh;
 }
+#reg-form-head{
+        background-color: var(--my-lightblue);
+        height: 10vh;
+        width: 30%;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        letter-spacing: 5px;
+        color: white;
+    }
 /* REG PAGE */
-@media (max-width: 650px) { 
+#register-form{
+    display: flex;
+    justify-content: center;
+    height: 60%;
+    width: 30%;
+    margin-bottom: 10%;
+    box-shadow: 3px 2px 2px #ccc;
+
+}
+.form{
+    min-height: 100%;
+    min-width: 100%;
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgrey ;
+    
+}
+.form-inputs{
+    margin-top: 2.5%;
+    font-size: 1.1rem;
+
+}
+.form-inputs input[type=text],
+.form-inputs input[type=tel],
+.form-inputs input[type=password]
+{
+    height: 4vh;
+    width: 10vw;
+}
+.form-inputs input[type=checkbox]{
+    height: 2vh;
+    width: 2vw;
+}
+#check-input{
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 1500px) {
+    .form-inputs input[type=text],
+    .form-inputs input[type=tel],
+    .form-inputs input[type=password]
+    {
+        height: 4vh;
+        width: 20vw;
+    }
+}
+
+@media (max-width: 800px) { 
 
     #register-form{
-        min-height: 75%;
-        min-width: 55%;
+        margin-top: 5vh;
+        height: 75%;
+        width: 60vw;
     }
-    .form{
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+    #reg-form-head{
+        width: 60vw;
+    }
 
-    
-    }
     .form-inputs{
         padding-top: 5%;
     }
+    .form-inputs input[type=text],
+    .form-inputs input[type=tel],
+    .form-inputs input[type=password]
+    {
+        height: 4vh;
+        width: 40vw;
+    }
+    .form-inputs input[type=checkbox]{
+        height: 3vh;
+        width: 3vw;
+        margin-left: 2vw;
+    }
  }
- /*   REG PAGE DESKTOP STYLES   */
- @media (min-width: 650px) { 
-
-    #register-form{
-        display: flex;
-        justify-content: center;
-        min-height: 50%;
-        min-width: 20%;
-        margin-bottom: 10%;
-    }
-    .form{
-        min-height: 100%;
-        min-width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: #63ACE5 ;
-        border: 10px solid transparent; 
-        border-radius: 50%;
-    }
-    .form-inputs{
-        padding-top: 1.5%;
-    }
-}
 
 
 .wave-footer {
@@ -106,13 +156,18 @@ nav{
     width: calc(143% + 1.3px);
     height: 133px;
 }
-@media (max-width: 767px) {
+@media (max-width: 700px) {
+    .wave-footer svg {
+        width: calc(160% + 1.3px);
+        height: 100px;
+    }
+}
+@media (max-width: 600px) {
     .wave-footer svg {
         width: calc(160% + 1.3px);
         height: 50px;
     }
 }
-
 .wave-footer .shape-fill {
     fill: #63ACE5;
 }
