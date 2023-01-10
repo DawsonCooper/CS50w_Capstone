@@ -49,8 +49,8 @@ nav{
 }
 #reg-form-head{
         background-color: var(--my-lightblue);
-        height: 10vh;
-        width: 30%;
+        height: 8vh;
+        width: 25vw;
         position: absolute;
         display: flex;
         justify-content: center;
@@ -62,13 +62,17 @@ nav{
 /* REG PAGE */
 #register-form{
     display: flex;
+    position: relative;
+    z-index: 99;
     justify-content: center;
-    height: 60%;
-    width: 30%;
+    height: 50vh;
+    width: 25vw;
     margin-bottom: 10%;
+    
     box-shadow: 3px 2px 2px #ccc;
 
 }
+
 .form{
     min-height: 100%;
     min-width: 100%;
@@ -101,22 +105,15 @@ nav{
     align-items: center;
 }
 
-@media (max-width: 1500px) {
-    .form-inputs input[type=text],
-    .form-inputs input[type=tel],
-    .form-inputs input[type=password]
-    {
-        height: 4vh;
-        width: 20vw;
-    }
-}
 
-@media (max-width: 800px) { 
 
+@media (max-width: 1500px) { 
+    
     #register-form{
-        margin-top: 5vh;
+        margin-top: 2vh;
         height: 75%;
         width: 60vw;
+        margin-left: 0;
     }
     #reg-form-head{
         width: 60vw;
@@ -459,7 +456,7 @@ nav{
 #home-main{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     width: 100vw;
 }
 #memo-container{
@@ -554,11 +551,34 @@ nav{
 
 /*   RIGHT CONTAINER CHILDREN   */
 .eLearn-row{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
     height: 45%;
-    background-color: #2a4d69;
+    background-color: rgba(0,0,0,.5);
     margin: 2%;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    scrollbar-color: lightgrey white;
+}
+.eLearn-row::-webkit-scrollbar{
+    display: none;
 }
 
+.card .card-body{
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: white !important;
+    background-color: rgba(0,0,0,0);
+    transition: all 0.5s ease;
+}
+.card:hover .card-body{
+    display: block;
+    background-color: rgba(0,0,0,.5);
+}
 /*  -------------- HOME PAGE MOBILE --------------  */
 @media (max-width: 650px) { 
     .carousel-indicators{

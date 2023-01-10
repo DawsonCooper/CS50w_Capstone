@@ -1,15 +1,14 @@
 {% extends 'layout.html' %} {% block body %}
 <div id="reg-body" class="full-page">
-  
   <form id="register-form" action="{% url 'login' %}" method="POST">
     <div id='reg-form-head'><p>Login</p></div>
     <div class="form">
       
       {% csrf_token %}
-      <div class="login-form-inputs">{{ loginForm.workId }}</div>
-      <div class="login-form-inputs">{{ loginForm.password }}</div>
+      <div class="form-inputs">{{ loginForm.workId }}</div>
+      <div class="form-inputs">{{ loginForm.password }}</div>
 
-      <div class="login-form-inputs">
+      <div class="form-inputs">
         <input type="submit" value="Submit" />
       </div>
     </div>

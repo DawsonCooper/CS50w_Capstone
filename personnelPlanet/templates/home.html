@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %} {% load static %}{% block body %}
     <div id='home-main'>
     <div id='memo-container'>
         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -83,11 +83,39 @@
       {% endif %}
       </div>
       <div id='right-container'>
-        <h3>E-Learning</h3>
+        <h3 style='text-align: center;'>E-Learning</h3>
         <div id='eLearn-main-cont'>
           <div id='eLearn-todo' class='eLearn-row'>
+            
           </div>
           <div id='eLearn-complete' class='eLearn-row'>
+            <div class="card" style="width: 30vw;">
+              <img class="card-img-top" src="{% static '/media/cs50.png' %}" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">CS50x</h5>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+            <div class="card" style="width: 30vw;">
+              <img class="card-img-top" src="{% static '/media/cs50w.png' %}" height='100%'alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">CS50w</h5>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+            <div class="card" style="width: 30vw;">
+              <img class="card-img-top" src="{% static '/media/fcc.png' %}" height='100%'alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">FCC Responsive Web Design</h5>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div><div class="card" style="width: 30vw;">
+              <img class="card-img-top" src="{% static '/media/fcc.png' %}" height='100%'alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">FCC Javascript</h5>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
