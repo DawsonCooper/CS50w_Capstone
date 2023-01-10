@@ -551,10 +551,10 @@ nav{
 
 /*   RIGHT CONTAINER CHILDREN   */
 .eLearn-row{
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
+    width: auto;
     height: 45%;
+    display: flex;
+    
     background-color: rgba(0,0,0,.5);
     margin: 2%;
     overflow-x: scroll;
@@ -565,8 +565,11 @@ nav{
 .eLearn-row::-webkit-scrollbar{
     display: none;
 }
-
-.card .card-body{
+.home-card{
+    height: 45%;
+    margin-right: 50px;
+}
+.home-card .home-card-body{
     display: none;
     position: absolute;
     bottom: 0;
@@ -575,7 +578,7 @@ nav{
     background-color: rgba(0,0,0,0);
     transition: all 0.5s ease;
 }
-.card:hover .card-body{
+.home-card:hover .home-card-body{
     display: block;
     background-color: rgba(0,0,0,.5);
 }
