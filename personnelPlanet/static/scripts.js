@@ -339,6 +339,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
+        let today = new Date();
+        let weekStart = (today.getDate() - today.getDay()) + 1;
+        let weekEnd = weekStart + 6;
+        let weekStartMonth = new Date(today.setDate(weekStart)).getMonth() + 1;
+        let weekEndMonth = new Date(today.setDate(weekEnd)).getMonth() + 1;;
+        let weekStartDay = new Date(today.setDate(weekStart)).getDate();
+        let weekEndDay = new Date(today.setDate(weekEnd)).getDate();
+        let weekSelect = document.querySelector('#week');
+        let option = document.createElement('option');
+        option.textContent = `${weekStartMonth}/${weekStartDay}-${weekEndMonth}/${weekEndDay}`
+        weekSelect.appendChild(option);
+        console.log({weekStart, weekEnd,weekEndMonth,weekStartDay,weekStartMonth, weekEndDay});
         if(isEmployer){
             let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
             let submitSchedule = document.querySelector("#submit-schedule")
@@ -350,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 schedules(workerId)
                 get_availability(workerId)
             })
-
+        
             submitSchedule.addEventListener('click', () =>{
                 let daysInput = document.querySelectorAll('.scheduling-input')
                 let regex = /\d{1,2}:\d{2}/;
@@ -463,6 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector('#clock-out').addEventListener('click', () =>{
             clockOut();
         });
+        
+    
     }
-
 })

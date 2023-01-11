@@ -558,29 +558,29 @@ nav{
     background-color: rgba(0,0,0,.5);
     margin: 2%;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-behavior: smooth;
-    scrollbar-width: none;
+    scrollbar-width:thin;
     scrollbar-color: lightgrey white;
 }
 .eLearn-row::-webkit-scrollbar{
     display: none;
 }
 .home-card{
-    height: 45%;
+    height: 100% !important;
     margin-right: 50px;
 }
-.home-card .home-card-body{
-    display: none;
+.home-card-body{
+    text-align: center;
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     width: 100%;
-    color: white !important;
-    background-color: rgba(0,0,0,0);
-    transition: all 0.5s ease;
 }
-.home-card:hover .home-card-body{
-    display: block;
-    background-color: rgba(0,0,0,.5);
+.home-card-body a{
+
+}
+.card-img-top{
+    max-height: 60% !important;
 }
 /*  -------------- HOME PAGE MOBILE --------------  */
 @media (max-width: 650px) { 

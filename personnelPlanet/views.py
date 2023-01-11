@@ -308,6 +308,7 @@ def shift(request):
         workerId = data.get('workerId')
         print('working')
         print(scheduleChanges, workerId)
+        # VERY POOR PRACTICE USING ARRAY INSTEAD OF OBJECT THESE INDEXS ARE ARBITRARY
         try:
             Schedule.objects.filter(employee=workerId).update(
                 monday=scheduleChanges[0],
