@@ -339,30 +339,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
-        let today = new Date();
-        let weekStart = (today.getDate() - today.getDay()) + 1;
+        // week range select menu
+        let date = new Date();
+        let weekStart = (date.getDate() - date.getDay()) + 1;
         let weekEnd = weekStart + 6;
-        let weekStartMonth = new Date(today.setDate(weekStart)).getMonth() + 1;
-        let weekEndMonth = new Date(today.setDate(weekEnd)).getMonth() + 1;;
-        let weekStartDay = new Date(today.setDate(weekStart)).getDate();
-        let weekEndDay = new Date(today.setDate(weekEnd)).getDate();
+        let weekStartMonth = new Date(date.setDate(weekStart)).getMonth() + 1;
+        let weekEndMonth = new Date(date.setDate(weekEnd)).getMonth() + 1;
+        let weekStartDay = new Date(date.setDate(weekStart)).getDate();
+        let weekEndDay = new Date(date.setDate(weekEnd)).getDate();
         let weekSelect = document.querySelector('#week');
         let option = document.createElement('option');
+
         option.textContent = `${weekStartMonth}/${weekStartDay}-${weekEndMonth}/${weekEndDay}`
         weekSelect.appendChild(option);
-        console.log({weekStart, weekEnd,weekEndMonth,weekStartDay,weekStartMonth, weekEndDay});
+        console.log({test});
+        //
         if(isEmployer){
             let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
             let submitSchedule = document.querySelector("#submit-schedule")
-            let resetChanges= document.querySelector("#reset-changes")
+            let resetChanges = document.querySelector("#reset-changes")
             let saveChanges = document.querySelector("#shift-save")
             let workerId = scheduleDropdown.value
             scheduleDropdown.addEventListener('change', () =>{
+                document.querySelectorAll('.avail-cell').forEach(cell => {
+                    cell.style.backgroundColor = '';
+                })
                 workerId = scheduleDropdown.value
                 schedules(workerId)
                 get_availability(workerId)
             })
-        
+            resetChanges.addEventListener('click', () =>{
+                document.querySelectorAll('.schedule-input').forEach(item =>{
+                    console.log(item)
+                    item.value = 'off'
+                    item.placeholder = 'off'
+                })
+            });
             submitSchedule.addEventListener('click', () =>{
                 let daysInput = document.querySelectorAll('.scheduling-input')
                 let regex = /\d{1,2}:\d{2}/;

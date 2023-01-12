@@ -220,6 +220,9 @@ def home(request):
     user = User.objects.filter(username=user).values()
     memos = Memo.objects.filter(company=user[0]['company']).values()
     context = {'user': user, 'memos': memos}
+    today = datetime.datetime.now()
+    if today.strftime('%a') == 'Mon':
+        User.objects.update(hoursWorked=0)
     try:
         clockStat = Clock.objects.get(employee=request.user.id)
         clockIn = clockStat.clockIn

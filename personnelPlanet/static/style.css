@@ -421,11 +421,13 @@ nav{
     display: none;
 }
 #shift-page-avail-table{
-    margin-top: 1%;
+    margin-top: 2%;
 }
 #shift-page-avail-mobile{
     display: none;
+    margin-top: 2%;
 }
+
 /* SHIFT PAGE MOBILE */
 @media (max-width: 800px) { 
     #employer-schedule-table{
@@ -448,8 +450,8 @@ nav{
         display: block;
         width: 100%;
     }
-
  }
+
 /* HOME PAGE */
 
 /*  Main containers */
@@ -580,7 +582,7 @@ nav{
 
 }
 .card-img-top{
-    max-height: 60% !important;
+    height: 60% !important;
 }
 /*  -------------- HOME PAGE MOBILE --------------  */
 @media (max-width: 650px) { 
