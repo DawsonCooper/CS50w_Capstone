@@ -378,11 +378,25 @@ def shift(request):
 def profile(request):
     # More specific user info (company id, pay, hours worked, position, etc)
     context = {}
+    if request.method == 'POST':
+        # ADD CONDITIONS TO UPDATE EACH INPUT IF IT HAS A VALUE
+        form = RegisterForm(request.POST, request.FILES)
+        if form.is_valid():
+            first_name = form.cleaned_data["firstName"]
+            last_name = form.cleaned_data["lastName"]
+            phoneNumber = form.cleaned_data["phoneNumber"]
+            try:
+                User.objects.filter(id=request.user.id).update(
+                    first_name=first_name, last_name=last_name, phoneNumber=phoneNumber)
+            except User.DoesNotExist:
+                context['error'] = 'Problem locating your profile infomation please try again'
     empList = User.objects.filter(
         company=request.user.company).all().values("first_name", "last_name", 'workId', 'isEmployer')
     print(empList)
     if empList:
         context['employees'] = empList
+
+    context['form'] = RegisterForm
     return render(request, 'profile.html', {
         'context': context})
 

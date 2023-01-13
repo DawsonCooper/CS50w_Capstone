@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // SELECT MENU CHECKBOX LSIT OF EMPPLOYEES //
+    // SELECT MENU CHECKBOX LSIT OF EMPLOYEES //
     let checkList = document.querySelector('#emp-list');
     checkList.getElementsByClassName('selector')[0].onclick = function(e) {
       if (checkList.classList.contains('visible'))

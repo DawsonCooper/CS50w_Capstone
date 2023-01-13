@@ -1,4 +1,12 @@
 {% extends 'layout.html' %} {% block body %}
+{% if context.error %}
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+  <div>
+    {{ context.error }}
+  </div>
+</div>
+{% endif %}
 <div id="availability">
   <table id="avail-table" class="table table-bordered">
     <thead class="thead-dark">
@@ -107,6 +115,7 @@
     {% csrf_token %}
     <button type="button" id="submit-avail" class="btn">Submit</button>
   </div>
+  <!--  COMPANY FINGERPRING AND EDIT MODAL  -->
   <div id='profile-user-info'>
     <h2 style='text-align: center; padding-top: 2%;'>Your Company Fingerprint</h2>
     <hr style='background-color: black;'>
@@ -117,6 +126,43 @@
     <p class='user-info-items'><strong>Phone Number:</strong> {{ user.phoneNumber }}</p>
     <p class='user-info-items'><strong>Pay Rate:</strong> {{ user.payRate }}</p>
     <p class='user-info-items'><strong>Company:</strong> {{ user.company }}</p>
+    <div id='edit-fingerprint-wrapper'>
+      <button type="button" id='edit-fingerprint' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editFPmodal">Edit</button>
+      
+    </div>
+  </div>
+  <!--  EDIT MODAL  -->
+  <div class="modal fade" id="editFPmodal" tabindex="-1" aria-labelledby="EditPersonalInfoModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Personal Info</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'profile' %}" method='POST'>
+              {% csrf_token %}
+              <div class="form-inputs">
+                  {{ context.form.firstName }}
+                  {{ context.form.firstName.errors }}
+              </div>
+              <div class="form-inputs">
+                  {{ context.form.lastName }}
+                  {{ context.form.lastName.errors }}
+              </div>
+              <div class="form-inputs">
+                  {{ context.form.phoneNumber }}
+                  {{ context.form.phoneNumber.errors }}
+              </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id='save-fp-changes' type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+      </div>
+    </div>
   </div>
   
   <div id='task-container'>

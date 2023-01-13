@@ -221,13 +221,15 @@ nav{
     top: 0;
     margin-right: 4vw;
     font-size: 1.2rem;
-    padding-left: 1%;
-    padding-right: 1%;
+    padding: 1%;
 }
 .user-info-items{
     padding-top: 1%;
     display: flex;
     justify-content: space-between;
+}
+#edit-fingerprint-wrapper{
+    text-align: center;
 }
 /*   TASK CREATOR STYLES   */
 #task-container{
@@ -326,6 +328,7 @@ nav{
   #existing-tasks::-webkit-scrollbar{
     display: none;
   }
+
 /*   PROFILE PAGE MOBILE   */
 @media (max-width: 1000px) {
     #availability{
