@@ -196,10 +196,17 @@ function schedules(workerId){
         }
         console.log(scheduleArr)
         let daysInput = document.querySelectorAll('.scheduling-input')
-        console.log(daysInput)
-        for(let i = 0; i < 7; i++){
-            daysInput[i].value = scheduleArr[i][0] 
-            daysInput[i + 7].value = scheduleArr[i][1] 
+        let mobileDaysInput = document.querySelectorAll('.mobile-input')
+        if (window.innerWidth > 800){
+            for(let i = 0; i < 7; i++){
+                daysInput[i].value = scheduleArr[i][0] 
+                daysInput[i + 7].value = scheduleArr[i][1] 
+            }
+        }else{
+            for(let i = 0; i < 14; i+=2){
+                mobileDaysInput[i].value = scheduleArr[i][0] 
+                mobileDaysInput[i + 1].value = scheduleArr[i][1] 
+            }
         }
 
 
@@ -361,31 +368,57 @@ document.addEventListener("DOMContentLoaded", () => {
                     item.placeholder = 'off'
                 })
             });
+            let regex = /\d{1,2}:\d{2}/;
+            let isCleanData = true;
+
             submitSchedule.addEventListener('click', () =>{
-                let daysInput = document.querySelectorAll('.scheduling-input')
-                let regex = /\d{1,2}:\d{2}/;
-                // Use regex to test all values for format when looping first 7 are start times last are end times
+                if (window.innerWidth > 800){
+                    let daysInput = document.querySelectorAll('.scheduling-input')
+                    
+                    // Use regex to test all values for format when looping first 7 are start times last are end times
 
-                let isCleanData = true;
-                daysInput.forEach(day => {
-                    if(day.value != 'off' && !regex.test(day.value)){
-                        isCleanData = false;
-                    }
-                })
-                if (!isCleanData){alert('Make sure all times are in the proper format hh:mm');}
-                else{$('#shift-change-modal').modal('show')}
-                let sortedDaysArr = []
-                saveChanges.addEventListener('click', () =>{
-                    for (let i = 0; i < 7; i++){
-                        sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
-                    }
-                    console.log(sortedDaysArr, workerId, 'here')
-                    sendSchedule(sortedDaysArr, workerId)
+                    daysInput.forEach(day => {
+                        if(day.value != 'off' && !regex.test(day.value)){
+                            isCleanData = false;
+                        }
+                    })
+                    if (!isCleanData){alert('Make sure all times are in the proper format hh:mm');}
+                    else{$('#shift-change-modal').modal('show')}
+                    let sortedDaysArr = []
+                    saveChanges.addEventListener('click', () =>{
+                        for (let i = 0; i < 7; i++){
+                            sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
+                        }
+                        console.log(sortedDaysArr, workerId, 'here')
+                        sendSchedule(sortedDaysArr, workerId)
 
-                    sortedDaysArr = [];
-            });
+                        sortedDaysArr = [];
+                    
+                    });
+                }else{
+                    let mobileDaysInput = document.querySelectorAll('.mobile-input')
+                    // Use regex to test all values for format when looping first 7 are start times last are end times
+                    mobileDaysInput.forEach(day => {
+                        if(day.value != 'off' && !regex.test(day.value)){
+                            isCleanData = false;
+                        }
+                    })
+                    if (!isCleanData){alert('Make sure all times are in the proper format hh:mm');}
+                    else{$('#shift-change-modal').modal('show')}
+                    let mobileSortedArr = []
+                    saveChanges.addEventListener('click', () =>{
+                        for (let i = 0; i < 14; i+=2){
+                            mobileSortedArr.push(`${mobileDaysInput[i].value}-${mobileDaysInput[i + 1].value}`)
+                        }
+                        console.log(mobileSortedArr, workerId, 'here')
+                        sendSchedule(mobileSortedArr, workerId)
+
+                        mobileSortedArr = [];
+                    
+                    });
+                }
             })
-    }
+        }
 
     }
     else if (/\bmessages\b/gi.test(window.location.href)){

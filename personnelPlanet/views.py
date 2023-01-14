@@ -313,30 +313,17 @@ def shift(request):
         print('working')
         print(scheduleChanges, workerId)
         # VERY POOR PRACTICE USING ARRAY INSTEAD OF OBJECT THESE INDEXS ARE ARBITRARY
-        try:
-            Schedule.objects.filter(employee=workerId).update(
-                monday=scheduleChanges[0],
-                tuesday=scheduleChanges[1],
-                wednesday=scheduleChanges[2],
-                thursday=scheduleChanges[3],
-                friday=scheduleChanges[4],
-                saturday=scheduleChanges[5],
-                sunday=scheduleChanges[6],
-            )
-            print('updating')
-        except Schedule.DoesNotExist:
-            change = Schedule(
-                employee=workerId,
-                monday=scheduleChanges[0],
-                tuesday=scheduleChanges[1],
-                wednesday=scheduleChanges[2],
-                thursday=scheduleChanges[3],
-                friday=scheduleChanges[4],
-                saturday=scheduleChanges[5],
-                sunday=scheduleChanges[6],
-            )
-            change.save()
-            print('creating')
+
+        Schedule.objects.filter(employee=workerId).update_or_create(
+            employee=workerId,
+            monday=scheduleChanges[0],
+            tuesday=scheduleChanges[1],
+            wednesday=scheduleChanges[2],
+            thursday=scheduleChanges[3],
+            friday=scheduleChanges[4],
+            saturday=scheduleChanges[5],
+            sunday=scheduleChanges[6],
+        )
         return JsonResponse({
             'message': 'Shift changed successfully'
         })

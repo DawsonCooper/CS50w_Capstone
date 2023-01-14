@@ -401,9 +401,6 @@ nav{
 }
 
 /* shift page */
-#shift-table-cont{
-    margin: 2%;
-}
 
 /* EMPLOYER SECTION */
 #employer-shift-body{
@@ -411,16 +408,17 @@ nav{
 }
 
 .employer-shift-select{
-    width: 20%;
+    width: 20% !important;
 }
 
 #employer-schedule-table{
-    margin-top: 1%;
+    margin-top: 2%;
 }
 .scheduling-input{
     width: 60%;
 }
 #employer-schedule-table-mobile{
+    margin-top: 1%;
     display: none;
 }
 #shift-page-avail-table{
@@ -430,9 +428,15 @@ nav{
     display: none;
     margin-top: 2%;
 }
+.shift-buttons{
+    margin-top: 1%;
+}
 
 /* SHIFT PAGE MOBILE */
 @media (max-width: 800px) { 
+    .employer-shift-select{
+        width: 100% !important;
+    }
     #employer-schedule-table{
         display: none;
     }
@@ -451,8 +455,13 @@ nav{
     }
     #shift-page-avail-mobile{
         display: block;
+        margin-top: 1rem;
         width: 100%;
     }
+    .shift-buttons{
+        width: 49%;
+    }
+
  }
 
 /* HOME PAGE */
