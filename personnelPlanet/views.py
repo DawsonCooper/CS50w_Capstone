@@ -112,7 +112,8 @@ def clock(request):
             hoursWorked = round(worked.total_seconds() / 60 / 60, 2)
             print(hoursWorked)
             employeeInstace = User.objects.get(id=employee)
-            employeeInstace.hoursWorked = employeeInstace.hoursWorked + hoursWorked
+            employeeInstace.hoursWorked = round(
+                employeeInstace.hoursWorked + hoursWorked, 2)
             employeeInstace.save()
             clockStatus.delete()
 
@@ -382,14 +383,28 @@ def profile(request):
         # ADD CONDITIONS TO UPDATE EACH INPUT IF IT HAS A VALUE
         form = RegisterForm(request.POST, request.FILES)
         if form.is_valid():
-            first_name = form.cleaned_data["firstName"]
-            last_name = form.cleaned_data["lastName"]
-            phoneNumber = form.cleaned_data["phoneNumber"]
-            try:
-                User.objects.filter(id=request.user.id).update(
-                    first_name=first_name, last_name=last_name, phoneNumber=phoneNumber)
-            except User.DoesNotExist:
-                context['error'] = 'Problem locating your profile infomation please try again'
+            if form.cleaned_data['firstName']:
+                first_name = form.cleaned_data["firstName"]
+                try:
+                    User.objects.filter(id=request.user.id).update(
+                        first_name=first_name)
+                except User.DoesNotExist:
+                    context['error'] = 'Problem locating your profile infomation please try again'
+            if form.cleaned_data['lastName']:
+                last_name = form.cleaned_data["lastName"]
+                try:
+                    User.objects.filter(id=request.user.id).update(
+                        last_name=last_name)
+                except User.DoesNotExist:
+                    context['error'] = 'Problem locating your profile infomation please try again'
+            if form.cleaned_data['phoneNumber']:
+                phoneNumber = form.cleaned_data["phoneNumber"]
+                try:
+                    User.objects.filter(id=request.user.id).update(
+                        phoneNumber=phoneNumber)
+                except User.DoesNotExist:
+                    context['error'] = 'Problem locating your profile infomation please try again'
+
     empList = User.objects.filter(
         company=request.user.company).all().values("first_name", "last_name", 'workId', 'isEmployer')
     print(empList)

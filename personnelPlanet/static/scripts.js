@@ -107,7 +107,7 @@ function task(assignTo='', taskBody='', status=false, method='', taskId = 0){
             })
         })
         .then(response => response.json())
-        .then(result => alert(result))
+        .then(result => console.log(result))
         .catch(error => alert(error));
     }
 }
@@ -116,7 +116,7 @@ function clockOut(){
     fetch('/clock', {
         method: 'PUT',
     }).then(response => response)
-    .then(result => alert(result))
+    .then(result => console.log(result))
     .catch(err => alert(err))
 }
 
@@ -340,20 +340,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
         // week range select menu
-        let date = new Date();
-        let weekStart = (date.getDate() - date.getDay()) + 1;
-        let weekEnd = weekStart + 6;
-        let weekStartMonth = new Date(date.setDate(weekStart)).getMonth() + 1;
-        let weekEndMonth = new Date(date.setDate(weekEnd)).getMonth() + 1;
-        let weekStartDay = new Date(date.setDate(weekStart)).getDate();
-        let weekEndDay = new Date(date.setDate(weekEnd)).getDate();
-        let weekSelect = document.querySelector('#week');
-        let option = document.createElement('option');
-
-        option.textContent = `${weekStartMonth}/${weekStartDay}-${weekEndMonth}/${weekEndDay}`
-        weekSelect.appendChild(option);
-        console.log({test});
-        //
         if(isEmployer){
             let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
             let submitSchedule = document.querySelector("#submit-schedule")
