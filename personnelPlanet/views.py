@@ -223,6 +223,12 @@ def home(request):
     context = {'user': user, 'memos': memos}
     today = datetime.datetime.now()
     if today.strftime('%a') == 'Mon':
+        hours = User.objects.filter(workId=user.workId).values(
+            'hoursWorked', 'totalHours')
+        totalHours = 0
+        for item in hours:
+            totalHours = item + totalHours
+        User.objects.filter(workId=user.workId).update(totalHours=totalHours)
         User.objects.update(hoursWorked=0)
     try:
         clockStat = Clock.objects.get(employee=request.user.id)
@@ -393,7 +399,7 @@ def profile(request):
                     context['error'] = 'Problem locating your profile infomation please try again'
 
     empList = User.objects.filter(
-        company=request.user.company).all().values("first_name", "last_name", 'workId', 'isEmployer')
+        company=request.user.company).all().values("id", "first_name", "last_name", 'workId', 'isEmployer')
     print(empList)
     if empList:
         context['employees'] = empList

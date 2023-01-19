@@ -16,6 +16,7 @@ class User(AbstractUser):
     isEmployer = models.BooleanField(default=False)
     hoursWorked = models.FloatField(default=0)
     company = models.CharField(max_length=25, null=True)
+    totalHours = models.IntegerField(null=True, default=0)
 
 
 class Availability(models.Model):

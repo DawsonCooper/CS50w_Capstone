@@ -1,4 +1,5 @@
 {% extends 'layout.html' %} {% block body %}
+<div id='profile-body'>
 {% if context.error %}
 <div class="alert alert-danger d-flex align-items-center" role="alert">
   <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
@@ -181,6 +182,9 @@
     <div id='employees'>
       <h2>Team List</h2>
       {% for emp in context.employees %}
+      {% if user.isEmployer %}
+      <a id="{{ emp.id }}" class='emp-links' href='' data-toggle="modal" data-target="#emp-changes-modal">
+      {% endif%}
       <section>
       <div class="card" style="width: 18rem;">
         <div class="card-body">
@@ -195,6 +199,9 @@
         </div>
       </div>
     </section>
+    {% if user.isEmployer %}
+  </a>
+    {% endif%}
       {% endfor %}
     </div>
   </div>
@@ -226,5 +233,31 @@
       </div>
     </div>
   </div>
+</div>
+<div class="modal fade" id="emp-changes-modal" tabindex="-1" role="dialog" aria-labelledby="emp-name" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="emp-name"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id='emp-changes-form' class="modal-body">
+        <label for="emp-workId">Employees Work Id</label>
+        <input id='emp-workId' type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        <label for="emp-payRate">Employees Pay Rate</label>
+        <input id='emp-payRate' type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        <label for="emp-company">Employees Company Name</label>
+        <input id='emp-company' type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        <button id='emp-term' class='btn btn-danger'>Terminate</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}

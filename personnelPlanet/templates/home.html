@@ -83,10 +83,18 @@
       {% endif %}
       </div>
       <div id='right-container'>
-        <h3 style='text-align: center;'>E-Learning</h3>
+        <h3 style='text-align: center; padding-top: 1vh; margin-bottom: 0;'>E-Learning</h3>
         <div id='eLearn-main-cont'>
           <div id='eLearn-todo' class='eLearn-row'>
-            
+            <section>
+              <div class="card home-card" style="width: 18rem;">
+                <img class="card-img-top" src="{% static '/media/odin.png' %}" alt="Card image cap">
+                <div class="home-card-body">
+                  <h5 class="card-title">The Odin Project</h5>
+                  <a href="https://www.theodinproject.com/" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </section>
           </div>
           <div id='eLearn-complete' class='eLearn-row'>
             
@@ -95,7 +103,7 @@
               <img class="card-img-top" src="{% static '/media/cs50.png' %}" alt="Card image cap">
               <div class="home-card-body">
                 <h5 class="card-title">CS50x</h5>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="https://www.edx.org/course/introduction-computer-science-harvardx-cs50x" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </section>
@@ -104,7 +112,7 @@
               <img class="card-img-top" src="{% static '/media/cs50w.png' %}" alt="Card image cap">
               <div class="home-card-body">
                 <h5 class="card-title">CS50w</h5>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </section>
@@ -113,7 +121,7 @@
               <img class="card-img-top" src="{% static '/media/fcc.png' %}" alt="Card image cap">
               <div class="home-card-body">
                 <h5 class="card-title">FCC Responsive Web Design</h5>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="https://www.freecodecamp.org/learn/responsive-web-design/" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </section>
@@ -122,7 +130,7 @@
               <img class="card-img-top" src="{% static '/media/fcc.png' %}" alt="Card image cap">
               <div class="home-card-body">
                 <h5 class="card-title">FCC Javascript</h5>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/" class="btn btn-primary">Go somewhere</a>
               </div>
             </div>
           </section>
@@ -133,9 +141,9 @@
       <div id='clock-container'>
         <div id='clock-in-out' class='clock-cont-child'>
           {% if context.hoursToday %}
-            <h5>Clock Status: On</h5>
+            <h5 id='clockStat'>Clock Status: On</h5>
           {% else %}
-            <h5>Clock Status: Off</h5>
+            <h5 id='clockStat'>Clock Status: Off</h5>
           {% endif %}
             <div id='clock-buttons'>
                 <button type='button' id='clock-in' class='btn btn-success'>Clock In</button>

@@ -15,26 +15,33 @@ const date = new Date()
 const userWorkId = JSON.parse(document.getElementById('userWorkId').textContent);
 // APIS
 function clockIn(){
+    let statusElem = document.getElementById('clockStat');
     // SEND POST REQUEST AND HANDLE REST IN VIEW
     fetch('/clock', {
         method: 'POST',
     }).then(response => response)
-    .then(result => alert(result))
+    .then(result => {
+        statusElem.innerText = '';
+        statusElem.innerText = 'Clock Status: On';
+        alert('Clocked In')
+    })
     .catch(err => alert(err))
 }
 function populate_tasks(taskList){
     // CREATE DOM ELEMENTS FOR EACH TASK AND APPEND TO #existing-tasks ELEMENT
     taskList.forEach(task => {
         taskWrapper = document.createElement('section');
+        let complete = ''
         if (task.assignedTo.length > 10){
-            console.log(task.assignedTo)
             task.assignedTo = task.assignedTo.replace(/[^a-zA-Z0-9]/g, ' ')
         }
-        
+        if (task.complete === true){
+            complete = '<box-icon name="check" color="limegreen"></box-icon>'
+        }
         let taskOfUser = `
         <div class="card" style="width: 18rem;">
           <div class="card-body">
-            <h5 class="card-title">${task.assignedTo}</h5>
+            <h5 class="card-title">${task.assignedTo}${complete}</h5>
             <p class="card-text">${task.taskBody}</p>
             <a id='task-complete' onclick='task("","", true, "PUT", ${task.id})' value=${task.id} class='btn'>Mark Complete</a>
           </div>
@@ -42,7 +49,7 @@ function populate_tasks(taskList){
         let taskOfCoworker = `
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">${task.assignedTo}</h5>
+                <h5 class="card-title">${task.assignedTo}${complete}</h5>
                 <p class="card-text">${task.taskBody}</p>
                 <a id='task-complete' value=${task.id} class='btn'>Offer Help</a>
             </div>
@@ -50,7 +57,7 @@ function populate_tasks(taskList){
         let taskViewedByManager = `
         <div class="card" style="width: 18rem;">
           <div class="card-body">
-            <h5 class="card-title">${task.assignedTo}</h5>
+            <h5 class="card-title">${task.assignedTo}${complete}</h5>
             <p class="card-text">${task.taskBody}</p>
             <a id='task-complete' onclick='task("","", true, "PUT", ${task.id})' value=${task.id} class='btn'>Close task</a>
           </div>
@@ -113,10 +120,15 @@ function task(assignTo='', taskBody='', status=false, method='', taskId = 0){
 }
 function clockOut(){
     // SENT PUT REQUEST AND HANDLE REST IN VIEW
+    let statusElem = document.getElementById('clockStat');
     fetch('/clock', {
         method: 'PUT',
     }).then(response => response)
-    .then(result => console.log(result))
+    .then(result => {
+        statusElem.innerText = '';
+        statusElem.innerText = 'Clock Status: Off';
+        alert('Clocked Out')
+    })
     .catch(err => alert(err))
 }
 
@@ -141,7 +153,7 @@ function updateMemo(memoId, memoUpdate){
                 memoId: memoId
             })
         }).then(response => response)
-        .then(result => alert(result))
+        .then(result => console.log(result))
         .catch(err => alert(err))
     }
     else if (memoId === 'new'){
@@ -153,7 +165,7 @@ function updateMemo(memoId, memoUpdate){
                 body: memoUpdate['body']
             })
         }).then(response => response)
-        .then(result => alert(result))
+        .then(result => console.log(result))
         .catch(err => alert(err))
         
     }
@@ -245,12 +257,13 @@ function get_availability(user){
         }
         
         })
-        console.log(availObj)
     })
     .catch(error => console.log(error))
 
 }
-
+function getEmpInfo(id){
+    
+}
 document.addEventListener("DOMContentLoaded", () => {
     if (/\bregister\b/gi.test(window.location.href || /\blogin\b/gi.test(window.location.href))){
         regUserCircle = document.querySelector("#reg-user-circle");
@@ -263,11 +276,19 @@ document.addEventListener("DOMContentLoaded", () => {
     //-------------------- PROFILE AVAIL TABLE SCRIPTS --------------------------//
     else if (/\bprofile\b/gi.test(window.location.href)){
         //STEP 1: FETCH FOR CURRENT USER AVAILABILITY
-        console.log(userId)
+        
         get_availability(userId)
         task("","","","GET")
         //STEP 2: TARGET CELLS THAT ARE MARKED AS AVAILABLE AND TURN LIMEGREEN
-
+        let empLinks = document.querySelectorAll('.emp-links')
+        empLinks.forEach(link => {
+            console.log(link)
+            link.addEventListener('click', (e) =>{
+                e.preventDefault();
+                empId = link.id;
+                let empObj = getEmpInfo(empLink);
+            })
+        })
         let allCells = document.querySelectorAll('.avail-cell')
         // SET INITAIL AVAIL OBJ 
         allCells.forEach(cell => {
@@ -303,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         cell.style.backgroundColor = '';
                         availObj[split[1]] = '';
                     }
-                    console.log(availObj)
+                    
                 });
             }
         })
@@ -313,12 +334,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 cell.style.backgroundColor = ''
             })
             for (var day in availObj) availObj[day] = '';
-            console.log(availObj)
+            
         })
         document.querySelector("#submit-avail").addEventListener('click', (e) => {
         e.preventDefault()
         availability(availObj);
-        console.log(availObj);
+        
     })
     // POST FETCH FOR TASK CREATION //
     let taskButton = document.querySelector("#submit-task");
@@ -363,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             resetChanges.addEventListener('click', () =>{
                 document.querySelectorAll('.schedule-input').forEach(item =>{
-                    console.log(item)
+                    
                     item.value = 'off'
                     item.placeholder = 'off'
                 })
@@ -389,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         for (let i = 0; i < 7; i++){
                             sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
                         }
-                        console.log(sortedDaysArr, workerId, 'here')
+                        
                         sendSchedule(sortedDaysArr, workerId)
 
                         sortedDaysArr = [];
@@ -410,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         for (let i = 0; i < 14; i+=2){
                             mobileSortedArr.push(`${mobileDaysInput[i].value}-${mobileDaysInput[i + 1].value}`)
                         }
-                        console.log(mobileSortedArr, workerId, 'here')
+                        
                         sendSchedule(mobileSortedArr, workerId)
 
                         mobileSortedArr = [];
@@ -475,6 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else if (/\b\b/gi.test(window.location.href)){
         let memoId = 0;
+        
         document.querySelector('#remove-memo').addEventListener('click', () =>{
             let memoList = document.querySelectorAll('.carousel-item')
             let memoSubject = ''

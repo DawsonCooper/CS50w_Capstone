@@ -2,6 +2,7 @@
 
 :root{
     --my-lightblue: #63ACE5;
+    --ebony-clay: #22313f;
 }
 html{
     font-family: 'Space Grotesk', sans-serif !important;
@@ -328,26 +329,40 @@ nav{
   #existing-tasks::-webkit-scrollbar{
     display: none;
   }
-
+.emp-links{
+    text-decoration: none !important;
+    color: var(--ebony-clay)
+}
+.emp-links:hover{
+    color: var(--ebony-clay)
+}
+#emp-changes-form{
+    padding: 5%;
+}
+#emp-term{
+    margin-top: 2%;
+}
 /*   PROFILE PAGE MOBILE   */
 @media (max-width: 1000px) {
+    #profile-body{
+        margin: 5%;
+    }
     #availability{
-        margin-left: 0;
         position: static !important;
     }
     #profile-buttons{
         width: 90vw;
-        margin-left: 5vw;
+
     }
     #profile-buttons button{
         width: 20%;
         font-size: 1.1rem;
     }
     #avail-table-mobile{
-        margin-left: .5vw;
+
         display: block;
         
-        width: 99vw;
+        width: 90vw;
        
     }
     #avail-mobile-thead{
@@ -361,15 +376,15 @@ nav{
     }
     #profile-user-info{
         position: static;
-        margin-left: 1vw;
-        margin-top: 5vh;
-        margin-bottom: 5vh;
-        width: 98vw;
+        margin-top: 2vh;
+
+
+        width: 90vw;
     }
     #task-container {
         height: auto;
         
-        width: 100vw;
+        width: 90vw;
         flex-direction: column;
     }
     #add-task-wrapper{
@@ -490,16 +505,24 @@ nav{
     justify-content: space-between;
 }
 #right-container{
+    color: white;
     height: 750px;
     width: 50vw;
     float: right;
-    background-color: lightblue !important;;
+    background-color: var(--my-lightblue) !important;
+    
 }
 #eLearn-main-cont{
     height: 90%;
+    padding: 2%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    background-color: var(--my-lightblue) !important;
+}
+.card-title{
+    color: var(--ebony-clay); 
+
 }
 /*   Container children   */
 .carousel{
@@ -568,8 +591,7 @@ nav{
     width: auto;
     height: 45%;
     display: flex;
-    
-    background-color: rgba(0,0,0,.5);
+    background-color: var(--ebony-clay);
     margin: 2%;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -590,9 +612,7 @@ nav{
     bottom: 10px;
     width: 100%;
 }
-.home-card-body a{
 
-}
 .card-img-top{
     height: 60% !important;
 }
