@@ -30,9 +30,9 @@ urlpatterns = [
     path('get_availability/<int:user>',
          views.get_availability, name='get_availability'),
     path('task', views.task, name='task'),
+    path('empInfo/<int:empId>', views.empInfo, name='empInfo'),
     # Views
     path('', views.home, name='home'),
-    path('hire', views.hire, name='hire'),
     path('shifts', views.shift, name='shifts'),
     path('profile', views.profile, name='profile'),
     path('messages', views.messages, name='messages'),

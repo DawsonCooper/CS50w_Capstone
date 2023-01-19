@@ -18,6 +18,16 @@ class User(AbstractUser):
     company = models.CharField(max_length=25, null=True)
     totalHours = models.IntegerField(null=True, default=0)
 
+    def serialize(self):
+        return {
+            'workId': self.workId,
+            'payRate': self.payRate,
+            'isEmployer': self.isEmployer,
+            'hoursWorked': self.hoursWorked,
+            'company': self.company,
+            'totalHours': self.totalHours
+        }
+
 
 class Availability(models.Model):
     employee = models.IntegerField()

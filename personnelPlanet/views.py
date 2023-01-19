@@ -126,6 +126,32 @@ def clock(request):
 
 
 @csrf_exempt
+def empInfo(request, empId):
+    if request.method == 'GET':
+        emp = User.objects.get(id=empId)
+        emp = emp.serialize()
+        return JsonResponse({
+            'employee': emp,
+        })
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        try:
+            User.objects.filter(id=empId).update(
+                workId=data['workId'], payRate=data['payRate'], company=data['company'])
+        except User.DoesNotExist:
+            return JsonResponse({
+                'Error': 'User does not exist'
+            })
+        except Exception:
+            return JsonResponse({
+                'Error': Exception
+            })
+        return JsonResponse({
+            'message': 'Changes completed'
+        })
+
+
+@csrf_exempt
 def memo(request):
     # put is for removing the memo
     if request.method == 'PUT':
@@ -299,12 +325,6 @@ def messages(request):
         )
         return JsonResponse({'message': 'Message Sent!'})
     return JsonResponse({'message': 'Failed to send message'})
-
-
-def hire(request):
-    # Only for employers allow employer to link a user with their company and enter in employee information (pay, position, etc)
-    # link employee using employee id that should be auto generated
-    return render(request, 'hire.html')
 
 
 @csrf_exempt

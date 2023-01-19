@@ -261,8 +261,34 @@ function get_availability(user){
     .catch(error => console.log(error))
 
 }
-function getEmpInfo(id){
-    
+function empInfo(id, method='GET', workId='', payRate=0, company=''){
+    if (method == 'GET'){
+        fetch(`empInfo/${id}`, {
+            method: 'GET',
+        }).then(response => response.json())
+        .then(result => {
+            let empObj = result.employee;
+            console.log(empObj);
+            document.getElementById('emp-workId').value = empObj['workId'];
+            document.getElementById('emp-payRate').value = empObj['payRate'];
+            document.getElementById('emp-company').value = empObj['company'];
+        })
+        .catch(error => alert(error))
+    }
+    else{
+        fetch(`empInfo/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                workId: workId,
+                payRate: payRate,
+                company: company
+            })
+        }).then(response => response.json())
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => alert(error))
+    }
 }
 document.addEventListener("DOMContentLoaded", () => {
     if (/\bregister\b/gi.test(window.location.href || /\blogin\b/gi.test(window.location.href))){
@@ -282,13 +308,20 @@ document.addEventListener("DOMContentLoaded", () => {
         //STEP 2: TARGET CELLS THAT ARE MARKED AS AVAILABLE AND TURN LIMEGREEN
         let empLinks = document.querySelectorAll('.emp-links')
         empLinks.forEach(link => {
-            console.log(link)
             link.addEventListener('click', (e) =>{
                 e.preventDefault();
                 empId = link.id;
-                let empObj = getEmpInfo(empLink);
+                empInfo(empId);
+                document.getElementById('save-user-changes').addEventListener('click', () =>{
+                    let workId = document.getElementById('emp-workId').value;
+                    let payRate = document.getElementById('emp-payRate').value;
+                    let company = document.getElementById('emp-company').value;
+                    empInfo(empId, 'PUT', workId, payRate, company);
+                    console.log({workId, payRate, company})
+                })
             })
         })
+        
         let allCells = document.querySelectorAll('.avail-cell')
         // SET INITAIL AVAIL OBJ 
         allCells.forEach(cell => {
