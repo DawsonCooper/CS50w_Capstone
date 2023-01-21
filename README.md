@@ -1,7 +1,7 @@
 ## Personnel Planet Capstone
 #### Distinctiveness and Complexity
 This project is a mock personnel management application designed to support a company in handling basic employee information and communication.
-It differs from the other projects in this course in its functionality and goals, this project implements a closed group communication not meant for general use like the social network. 
+It differs from the other projects in this course in its functionality and goals, this project implements a group based live communication not meant for general use like the social network project. 
 
 #### Files and their purpose
 ##### HTML Files
