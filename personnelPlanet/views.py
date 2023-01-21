@@ -47,16 +47,23 @@ def task(request):
 
     if request.method == 'POST':
         data = json.loads(request.body)
+        empId = 0
+        print(data.get('assignTo'))
+        if len(data.get('assignTo')) == 1:
+            temp = data.get('assignTo')
 
-        # TODO: handle inital creation of task populate model with fetch info
+            empId = User.objects.filter(
+                workId=temp[0]).values('id')
+            print(empId)
         try:
             Tasks.objects.create(assignedTo=data.get('assignTo'), taskBody=data.get('taskBody'), complete=data.get('status'),
-                                 assingedBy=request.user.id, company=request.user.company
+                                 assingedBy=request.user.id, company=request.user.company, assignedToId=empId
                                  )
         except Exception as e:
             print(e)
             return JsonResponse({'message': 'error: task unable to be created'})
         return JsonResponse({'message': 'Task creation complete'})
+
     if request.method == 'GET':
         # TODO: pull task info by company serialize and send to client
         taskList = Tasks.objects.filter(
@@ -67,16 +74,14 @@ def task(request):
 
     if request.method == 'PUT':
         data = json.loads(request.body)
-        print('hello from put')
         # TODO: handle status changes to tasks from employees and deletions from employers
         if data.get('status'):
             print(data.get('status'), data.get('taskId'))
             if request.user.isEmployer:
                 try:
-                    Tasks.objects.delete(data.get('taskId'))
+                    Tasks.objects.filter(id=data.get('taskId')).delete()
                     return JsonResponse({'status': 'Task successfully removed'})
                 except Exception as e:
-                    print(e)
                     return JsonResponse({'status': f'Your task deletion failed with code: {e}'})
             else:
                 Tasks.objects.filter(pk=data.get('taskId')).update(
@@ -135,16 +140,29 @@ def empInfo(request, empId):
         })
     if request.method == 'PUT':
         data = json.loads(request.body)
+        print(data)
+        if data['terminate'] == True:
+            try:
+                User.objects.filter(id=empId).delete()
+                Messages.objects.filter(fromUserId=empId).all().delete()
+                Tasks.objects.filter(assignedToId=empId).all().delete()
+                Clock.objects.filter(employee=empId).all().delete()
+                Availability.objects.filter(employee=empId).all().delete()
+                Schedule.objects.filter(employee=empId).all().delete()
+                return JsonResponse({'message': 'Succesfully terminated employee'})
+            except Exception:
+                return JsonResponse({'message': 'An error occurred while trying to remove the employee please check your employee list and try again.'})
         try:
             User.objects.filter(id=empId).update(
                 workId=data['workId'], payRate=data['payRate'], company=data['company'])
+
         except User.DoesNotExist:
             return JsonResponse({
                 'Error': 'User does not exist'
             })
-        except Exception:
+        except Exception as err:
             return JsonResponse({
-                'Error': Exception
+                'Error': err
             })
         return JsonResponse({
             'message': 'Changes completed'
@@ -372,7 +390,8 @@ def shift(request):
 
         employeeId = request.user.id
         try:
-            schedule = Schedule.objects.filter(employee=employeeId).values()
+            schedule = Schedule.objects.get(employee=employeeId)
+            print(schedule)
         except Schedule.DoesNotExist:
             Schedule.objects.create(employee=request.user.id)
         schedule = Schedule.objects.filter(employee=employeeId).values()

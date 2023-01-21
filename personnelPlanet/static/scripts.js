@@ -39,7 +39,7 @@ function populate_tasks(taskList){
             complete = '<box-icon name="check" color="limegreen"></box-icon>'
         }
         let taskOfUser = `
-        <div class="card" style="width: 18rem;">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">${task.assignedTo}${complete}</h5>
             <p class="card-text">${task.taskBody}</p>
@@ -47,7 +47,7 @@ function populate_tasks(taskList){
           </div>
         </div>`
         let taskOfCoworker = `
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${task.assignedTo}${complete}</h5>
                 <p class="card-text">${task.taskBody}</p>
@@ -55,7 +55,7 @@ function populate_tasks(taskList){
             </div>
         </div>`
         let taskViewedByManager = `
-        <div class="card" style="width: 18rem;">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">${task.assignedTo}${complete}</h5>
             <p class="card-text">${task.taskBody}</p>
@@ -261,7 +261,7 @@ function get_availability(user){
     .catch(error => console.log(error))
 
 }
-function empInfo(id, method='GET', workId='', payRate=0, company=''){
+function empInfo(id, method='GET', workId='', payRate=0, company='', terminate = false){
     if (method == 'GET'){
         fetch(`empInfo/${id}`, {
             method: 'GET',
@@ -281,11 +281,17 @@ function empInfo(id, method='GET', workId='', payRate=0, company=''){
             body: JSON.stringify({
                 workId: workId,
                 payRate: payRate,
-                company: company
+                company: company,
+                terminate: terminate
             })
         }).then(response => response.json())
         .then(result => {
-            console.log(result)
+            if(confirm(result.message)){
+                location.reload();
+            }else{
+                location.reload();
+            }
+            
         })
         .catch(error => alert(error))
     }
@@ -312,12 +318,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
                 empId = link.id;
                 empInfo(empId);
+                let terminate = false;
+                    document.querySelector('#emp-term').addEventListener('click', () =>{
+                        if (terminate === true){
+                            terminate = false;
+                            document.querySelector('#term-message').innerText = 'You have deselected the termination process';
+                        }else{
+                        terminate = true;
+                        document.querySelector('#term-message').innerText = 'You have selected to terminate this employee';
+                        }
+                    });
                 document.getElementById('save-user-changes').addEventListener('click', () =>{
                     let workId = document.getElementById('emp-workId').value;
                     let payRate = document.getElementById('emp-payRate').value;
                     let company = document.getElementById('emp-company').value;
-                    empInfo(empId, 'PUT', workId, payRate, company);
-                    console.log({workId, payRate, company})
+                    
+                    empInfo(empId, 'PUT', workId, payRate, company, terminate);
+                    
                 })
             })
         })
@@ -385,6 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
         task(empList, taskBody, false, 'POST');
+        document.querySelector('#add-task-modal').style.display = 'none';
     });
 
 

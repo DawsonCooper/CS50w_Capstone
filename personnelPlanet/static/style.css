@@ -349,6 +349,7 @@ nav{
     }
     #availability{
         position: static !important;
+        margin: 0;
     }
     #profile-buttons{
         width: 90vw;
@@ -368,6 +369,10 @@ nav{
     #avail-mobile-thead{
         width: 30vw;
     }
+    #shift-table{
+        display: none;
+    }
+
     .shift-mobile{
         width: 23.33vw;
     }
@@ -383,7 +388,6 @@ nav{
     }
     #task-container {
         height: auto;
-        
         width: 90vw;
         flex-direction: column;
     }
@@ -396,8 +400,9 @@ nav{
         flex-direction: row; 
         width: auto;
         height: auto;
-        overflow: scroll;
         scrollbar-width: thin;
+        overflow-x: scroll;
+
     }
     #employees::-webkit-scrollbar,
     #existing-tasks::-webkit-scrollbar{
@@ -412,7 +417,12 @@ nav{
     #employees section div{
         width: 40vw !important;
         height: auto;
+
     }
+}
+#close-tab-alert{
+    position: absolute;
+    right: 10px;
 }
 
 /* shift page */
@@ -504,26 +514,7 @@ nav{
     display: flex;
     justify-content: space-between;
 }
-#right-container{
-    color: white;
-    height: 750px;
-    width: 50vw;
-    float: right;
-    background-color: var(--my-lightblue) !important;
-    
-}
-#eLearn-main-cont{
-    height: 90%;
-    padding: 2%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background-color: var(--my-lightblue) !important;
-}
-.card-title{
-    color: var(--ebony-clay); 
 
-}
 /*   Container children   */
 .carousel{
     position: absolute !important;
@@ -587,18 +578,43 @@ nav{
 }
 
 /*   RIGHT CONTAINER CHILDREN   */
+#right-container{
+    color: white;
+    height: 750px;
+    width: 50vw;
+    float: right;
+    background-color: var(--my-lightblue) !important;
+    
+}
+#eLearn-main-cont{
+    height: 90%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: var(--my-lightblue) !important;
+    position: relative;
+}
+.card-title{
+    color: var(--ebony-clay); 
+
+}
 .eLearn-row{
     width: auto;
-    height: 45%;
+    height: 25vh;
     display: flex;
     background-color: var(--ebony-clay);
+
     margin: 2%;
     overflow-x: scroll;
     overflow-y: hidden;
     scroll-behavior: smooth;
     scrollbar-width:thin;
     scrollbar-color: lightgrey white;
+    transition: opacity 1s linear;
+    z-index: 99;
 }
+
 .eLearn-row::-webkit-scrollbar{
     display: none;
 }

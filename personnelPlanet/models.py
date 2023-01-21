@@ -38,8 +38,6 @@ class Availability(models.Model):
 
 class Schedule(models.Model):
     employee = models.IntegerField()
-    weekStart = models.DateField(null=True, blank=True)
-    weekEnd = models.DateField(null=True, blank=True)
     monday = models.CharField(default='off', max_length=15)
     tuesday = models.CharField(default='off', max_length=15)
     wednesday = models.CharField(default='off', max_length=15)
@@ -91,6 +89,7 @@ class Memo(models.Model):
 
 
 class Tasks(models.Model):
+    assignedToId = models.IntegerField(default=0, blank=False, null=False)
     assignedTo = models.CharField(max_length=150, default='Team')
     taskBody = models.CharField(max_length=300, default='Task')
     complete = models.BooleanField(default=False)

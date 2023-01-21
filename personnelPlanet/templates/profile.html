@@ -1,13 +1,17 @@
 {% extends 'layout.html' %} {% block body %}
 <div id='profile-body'>
-{% if context.error %}
-<div class="alert alert-danger d-flex align-items-center" role="alert">
-  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-  <div>
-    {{ context.error }}
+  <div class="alert alert-primary d-flex align-items-center" role="alert">
+    <svg height='25px' width='25px' class="bi flex-shrink-0 me-2" role="img" aria-label="Info:"><use xlink:href="#info-fill"/>
+      <symbol id="info-fill" viewBox="0 0 16 16">
+        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+      </symbol>
+    </svg>
+    <div>
+      Make sure to keep track of your Work Id you will use it to log in
+    </div>
+    <button id='close-tab-alert' type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-</div>
-{% endif %}
+  
 <div id="availability">
   <table id="avail-table" class="table table-bordered">
     <thead class="thead-dark">
@@ -186,7 +190,7 @@
       <a id="{{ emp.id }}" class='emp-links' href='' data-toggle="modal" data-target="#emp-changes-modal">
       {% endif%}
       <section>
-      <div class="card" style="width: 18rem;">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ emp.first_name }} {{ emp.last_name }}</h5>
           <p class="card-text">{{ user.company }}</p>
@@ -251,6 +255,7 @@
         <label for="emp-company">Employees Company Name</label>
         <input id='emp-company' type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
         <button id='emp-term' class='btn btn-danger'>Terminate</button>
+        <h4 id='term-message'></h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
