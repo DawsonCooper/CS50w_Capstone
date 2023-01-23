@@ -262,8 +262,8 @@ def schedules(request, workerId):
 def home(request):
     # User information (company, shifts,)
     user = request.user
-    user = User.objects.filter(username=user).values()
-    memos = Memo.objects.filter(company=user[0]['company']).values()
+
+    memos = Memo.objects.filter(company=user.company).values()
     context = {'user': user, 'memos': memos}
     today = datetime.datetime.now()
     if today.strftime('%a') == 'Mon':
@@ -271,8 +271,9 @@ def home(request):
             'hoursWorked', 'totalHours')
         totalHours = 0
         for item in hours:
-            totalHours = item + totalHours
-        User.objects.filter(workId=user.workId).update(totalHours=totalHours)
+            totalHours = item['hoursWorked'] + totalHours
+        User.objects.filter(workId=request.user.workId).update(
+            totalHours=totalHours)
         User.objects.update(hoursWorked=0)
     try:
         clockStat = Clock.objects.get(employee=request.user.id)

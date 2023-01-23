@@ -419,6 +419,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
         // week range select menu
+        var start = Date.now();
+        var days = 14;
+        var dates = []
+        for(var i=0; i<days; i++)
+            dates.push(new Date(start + (i * 1000 * 60 * 60 * 24)).toDateString());
+        alert(dates)
+
+
+        // employer inputs
         if(isEmployer){
             let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
             let submitSchedule = document.querySelector("#submit-schedule")

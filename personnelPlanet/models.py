@@ -49,8 +49,6 @@ class Schedule(models.Model):
     def serialize(self):
         return {
             'employee': self.employee,
-            'weekStart': self.weekStart,
-            'weekEnd': self.weekEnd,
             'monday': self.monday,
             'tuesday': self.tuesday,
             'wednesday': self.wednesday,
