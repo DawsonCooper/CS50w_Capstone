@@ -170,16 +170,26 @@ function updateMemo(memoId, memoUpdate){
         
     }
 }
-function sendSchedule(schedule, workerId){
+function sendSchedule(schedule, workerId, week){
     fetch('/shifts', {
         method: 'POST',
         body: JSON.stringify({
             schedule: schedule,
             workerId: workerId,
+            week: week,
         })
         })
     .then(response => response.json)
     .then(result=> console.log(result))
+    .catch(err => console.log(err))
+}
+function getScheduleByWeek(workerId, week){
+    console.log({workerId})
+    fetch(`/get_schedule_by_week/${workerId}/${week}`, {
+        method: 'GET',
+        })
+    .then(response => response.json())
+    .then(result=> genTables(result))
     .catch(err => console.log(err))
 }
 function availability(userAvailability) {
@@ -193,34 +203,40 @@ function availability(userAvailability) {
     .then(result=> console.log(result))
     .catch(err => console.log(err))
 }
+function genTables(result){
+    console.log(result)
+    let schedule = result.schedule
+    console.log(schedule)
+    delete schedule.week
+    let scheduleArr = []
+    for(let day in schedule){
+        if (typeof schedule[day] === 'string'){    
+            scheduleArr.push(schedule[day].split('-'))
+        }
+        console.log(schedule[day])
+    }
+    console.log({scheduleArr})
+    let daysInput = document.querySelectorAll('.scheduling-input')
+    let mobileDaysInput = document.querySelectorAll('.mobile-input')
+    if (window.innerWidth > 800){
+        for(let i = 0; i < 7; i++){
+            daysInput[i].value = scheduleArr[i][0] 
+            daysInput[i + 7].value = scheduleArr[i][1] 
+        }
+    }else{
+        for(let i = 0; i < 14; i+=2){
+            mobileDaysInput[i].value = scheduleArr[i/2][0] 
+            mobileDaysInput[i + 1].value = scheduleArr[i/2][1] 
+        }
+    }
+
+}
 function schedules(workerId){
     fetch(`/schedules/${workerId}`, {
         method: 'GET',
     }).then(response => response.json())
     .then(result => {
-        let schedule = result.schedule
-        let scheduleArr = []
-        for(let day in schedule){
-            if (typeof schedule[day] === 'string'){    
-                scheduleArr.push(schedule[day].split('-'))
-            }
-            console.log(schedule[day])
-        }
-        console.log(scheduleArr)
-        let daysInput = document.querySelectorAll('.scheduling-input')
-        let mobileDaysInput = document.querySelectorAll('.mobile-input')
-        if (window.innerWidth > 800){
-            for(let i = 0; i < 7; i++){
-                daysInput[i].value = scheduleArr[i][0] 
-                daysInput[i + 7].value = scheduleArr[i][1] 
-            }
-        }else{
-            for(let i = 0; i < 14; i+=2){
-                mobileDaysInput[i].value = scheduleArr[i][0] 
-                mobileDaysInput[i + 1].value = scheduleArr[i][1] 
-            }
-        }
-
+        genTables(result)
 
     })
     .catch(err => console.log(err))
@@ -419,14 +435,33 @@ document.addEventListener("DOMContentLoaded", () => {
     // SHIFT MAKER FUNCTION
     else if (/\bshifts\b/gi.test(window.location.href)){
         // week range select menu
-        var start = Date.now();
-        var days = 14;
-        var dates = []
-        for(var i=0; i<days; i++)
-            dates.push(new Date(start + (i * 1000 * 60 * 60 * 24)).toDateString());
-        alert(dates)
+        let start = Date.now();
+        console.log(start)
+        let today = new Date();
+        let day = today.getDay() || 7; 
+        // checks if its monday and converts time
+        if( day !== 1 )                
+            today.setHours(-24 * (day - 1));  
+        today = Date.parse(today);
+        let days = 14;
+        let dates = []
 
-
+        for(let i=0; i<days; i++){
+            dates.push(new Date(today + (i * 1000 * 60 * 60 * 24)).toDateString());
+        }
+        console.log(dates[0], dates[6])
+        let option = document.createElement('option');
+        
+        let option2 = document.createElement('option');
+        
+        option.value = `${dates[0]} - ${dates[6]}`;
+        option2.value = `${dates[7]} - ${dates[13]}`;
+        option.innerText = `${dates[0]} - ${dates[6]}`;
+        option2.innerText = `${dates[7]} - ${dates[13]}`;
+        weekDropdown = document.getElementById('week')
+        weekDropdown.appendChild(option)
+        weekDropdown.appendChild(option2)
+        
         // employer inputs
         if(isEmployer){
             let scheduleDropdown = document.querySelector("#employee-schedule-dropdown")
@@ -451,7 +486,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             let regex = /\d{1,2}:\d{2}/;
             let isCleanData = true;
-
+            weekDropdown.addEventListener('change',() =>{
+                getScheduleByWeek(workerId, weekDropdown.value)
+            })
             submitSchedule.addEventListener('click', () =>{
                 if (window.innerWidth > 800){
                     let daysInput = document.querySelectorAll('.scheduling-input')
@@ -470,12 +507,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         for (let i = 0; i < 7; i++){
                             sortedDaysArr.push(`${daysInput[i].value}-${daysInput[i + 7].value}`)
                         }
+                        if(week.value === 'Week' || workerId === 'Employees'){
+                            alert('Please select a week and employee')
+                        }else{
+                            console.log('hello', week.value)
+                            sendSchedule(sortedDaysArr, workerId, week.value)
+                            sortedDaysArr = [];
+                        }
                         
-                        sendSchedule(sortedDaysArr, workerId)
-
-                        sortedDaysArr = [];
                     
                     });
+                    
                 }else{
                     let mobileDaysInput = document.querySelectorAll('.mobile-input')
                     // Use regex to test all values for format when looping first 7 are start times last are end times
@@ -497,10 +539,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         mobileSortedArr = [];
                     
                     });
+                    
                 }
             })
-        }
+        }else{
+            weekDropdown.addEventListener('change',() =>{
+                getScheduleByWeek(userId, weekDropdown.value)
+        
 
+            })
+        }
     }
     else if (/\bmessages\b/gi.test(window.location.href)){
         let url = `ws://${window.location.host}/ws/socket-server/`

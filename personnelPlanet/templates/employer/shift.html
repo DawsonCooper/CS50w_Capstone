@@ -2,7 +2,7 @@
 {% block body %}
 <div id='employer-shift-body'>
 {% if workers %}
-<select id='employee-schedule-dropdown' class="form-select employer-shift-select" aria-label="List of employees">
+<select id='employee-schedule-dropdown' class="form-select employer-shift-select" aria-label="List of employees" value='none'>
     <option selected hidden>Employees</option>
   
     {% for worker in workers  %}
@@ -12,7 +12,9 @@
     {% endfor %}
     {% endif %}
 </select>
-
+<select class='form-select' id="week" value='none'>
+  
+</select>
 <!-- WE WILL WANT A TABLE THAT DISPLAYS EMPLOYEE SHIFT INFO ONCE AN EMPLOYEE IS CLICKED IN THE SELECT MENU -->
 <table id="employer-schedule-table" class="table table-bordered">
     <thead class="thead-dark">

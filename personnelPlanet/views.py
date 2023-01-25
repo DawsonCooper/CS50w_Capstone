@@ -43,6 +43,35 @@ DAYS = ["monday", "tuesday", "wednesday",
 
 
 @csrf_exempt
+def get_schedule_by_week(request, week, workerId):
+    print(week)
+
+    try:
+        schedule = Schedule.objects.filter(
+            week=week).filter(employee=workerId)
+        print(schedule)
+    except Exception as e:
+        print(e)
+        return JsonResponse({'errors': 'Employee schedule not found'})
+    try:
+        schedule = schedule[0].serialize()
+        return JsonResponse({'schedule': schedule})
+    except IndexError:
+        return JsonResponse({
+            'schedule': {
+                'employee': workerId,
+                'monday': 'off-off',
+                'tuesday': 'off-off',
+                'wednesday': 'off-off',
+                'thursday': 'off-off',
+                'friday': 'off-off',
+                'saturday': 'off-off',
+                'sunday': 'off-off',
+            }
+        })
+
+
+@csrf_exempt
 def task(request):
 
     if request.method == 'POST':
@@ -355,12 +384,14 @@ def shift(request):
         data = json.loads(request.body)
         scheduleChanges = data.get('schedule')
         workerId = data.get('workerId')
+        week = data.get('week')
         print('working')
         print(scheduleChanges, workerId)
         # VERY POOR PRACTICE USING ARRAY INSTEAD OF OBJECT THESE INDEXS ARE ARBITRARY
 
-        Schedule.objects.filter(employee=workerId).update_or_create(
+        Schedule.objects.filter(employee=workerId, week=week).update_or_create(
             employee=workerId,
+            week=week,
             monday=scheduleChanges[0],
             tuesday=scheduleChanges[1],
             wednesday=scheduleChanges[2],

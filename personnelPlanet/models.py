@@ -38,17 +38,19 @@ class Availability(models.Model):
 
 class Schedule(models.Model):
     employee = models.IntegerField()
-    monday = models.CharField(default='off', max_length=15)
-    tuesday = models.CharField(default='off', max_length=15)
-    wednesday = models.CharField(default='off', max_length=15)
-    thursday = models.CharField(default='off', max_length=15)
-    friday = models.CharField(default='off', max_length=15)
-    saturday = models.CharField(default='off', max_length=15)
-    sunday = models.CharField(default='off', max_length=15)
+    week = models.CharField(default='null', max_length=55)
+    monday = models.CharField(default='off-off', max_length=15)
+    tuesday = models.CharField(default='off-off', max_length=15)
+    wednesday = models.CharField(default='off-off', max_length=15)
+    thursday = models.CharField(default='off-off', max_length=15)
+    friday = models.CharField(default='off-off', max_length=15)
+    saturday = models.CharField(default='off-off', max_length=15)
+    sunday = models.CharField(default='off-off', max_length=15)
 
     def serialize(self):
         return {
             'employee': self.employee,
+            'week': self.week,
             'monday': self.monday,
             'tuesday': self.tuesday,
             'wednesday': self.wednesday,

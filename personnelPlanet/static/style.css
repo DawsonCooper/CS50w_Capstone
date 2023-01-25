@@ -426,7 +426,14 @@ nav{
 }
 
 /* shift page */
-
+#week{
+    margin-bottom: 1%;
+    margin-top: 1%;
+    width: 20% !important;
+}
+#shift-table-cont{
+    padding: 1%;
+}
 /* EMPLOYER SECTION */
 #employer-shift-body{
     margin: 1%;
@@ -485,6 +492,9 @@ nav{
     }
     .shift-buttons{
         width: 49%;
+    }
+    #week{
+        width: 100% !important;
     }
 
  }
