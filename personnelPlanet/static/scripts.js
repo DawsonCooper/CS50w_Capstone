@@ -153,7 +153,7 @@ function updateMemo(memoId, memoUpdate){
                 memoId: memoId
             })
         }).then(response => response)
-        .then(result => console.log(result))
+        .then(result => alert('Memo Modified'))
         .catch(err => alert(err))
     }
     else if (memoId === 'new'){
@@ -165,7 +165,7 @@ function updateMemo(memoId, memoUpdate){
                 body: memoUpdate['body']
             })
         }).then(response => response)
-        .then(result => console.log(result))
+        .then(result => alert('Memo Added'))
         .catch(err => alert(err))
         
     }
@@ -180,7 +180,7 @@ function sendSchedule(schedule, workerId, week){
         })
         })
     .then(response => response.json)
-    .then(result=> console.log(result))
+    .then(result=> alert('Shifts updated'))
     .catch(err => console.log(err))
 }
 function getScheduleByWeek(workerId, week){
@@ -237,7 +237,6 @@ function schedules(workerId){
     }).then(response => response.json())
     .then(result => {
         genTables(result)
-
     })
     .catch(err => console.log(err))
 }
@@ -474,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     cell.style.backgroundColor = '';
                 })
                 workerId = scheduleDropdown.value
-                schedules(workerId)
+                getScheduleByWeek(workerId, weekDropdown.value)
                 get_availability(workerId)
             })
             resetChanges.addEventListener('click', () =>{
@@ -604,32 +603,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else if (/\b\b/gi.test(window.location.href)){
         let memoId = 0;
-        
-        document.querySelector('#remove-memo').addEventListener('click', () =>{
-            let memoList = document.querySelectorAll('.carousel-item')
-            let memoSubject = ''
-            memoList.forEach(memo => {
-                if (memo.classList.contains('active')){
-                    memoId = memo.id
-                    console.log(memo);
-                    memoSubject = memo.childNodes[1].childNodes[1].innerText;
+        if (isEmployer){
+            document.querySelector('#remove-memo').addEventListener('click', () =>{
+                let memoList = document.querySelectorAll('.carousel-item')
+                let memoSubject = ''
+                memoList.forEach(memo => {
+                    if (memo.classList.contains('active')){
+                        memoId = memo.id
+                        console.log(memo);
+                        memoSubject = memo.childNodes[1].childNodes[1].innerText;
 
+                    }
+                })
+                document.querySelector('#remove-memo-check').innerText = `Remove memo ${memoSubject}`
+                document.querySelector('#remove-memo-confirm').addEventListener('click', () =>{
+                    updateMemo(memoId, false);
+                })
+
+            });
+            document.querySelector('#submit-memo').addEventListener('click', () =>{
+                let memoObj = {
+                    subject: document.querySelector('#memo-subject-input').value,
+                    body: document.querySelector('#memo-body-input').value
                 }
+                updateMemo('new', memoObj);
             })
-            document.querySelector('#remove-memo-check').innerText = `Remove memo ${memoSubject}`
-            document.querySelector('#remove-memo-confirm').addEventListener('click', () =>{
-                updateMemo(memoId, false);
-            })
-                
-            console.log(memoSubject);
-        });
-        document.querySelector('#submit-memo').addEventListener('click', () =>{
-            let memoObj = {
-                subject: document.querySelector('#memo-subject-input').value,
-                body: document.querySelector('#memo-body-input').value
-            }
-            updateMemo('new', memoObj);
-        })
+        }   
+
         document.querySelector('#clock-in').addEventListener('click', () =>{
             clockIn();
         });

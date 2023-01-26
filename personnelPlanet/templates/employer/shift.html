@@ -100,7 +100,7 @@
           
     </tbody>
   </table>
-  <button type="button" class="btn btn-primary shift-buttons" id='submit-schedule' data-target="#shift-change-modal">
+  <button type="button" class="btn btn-primary shift-buttons" id='submit-schedule' data-bs-toggle="modal" data-target="#shift-change-modal">
     Submit Schedule
   </button>
   <button class="btn btn-danger shift-buttons" id='reset-changes'>Reset Changes</button>
@@ -215,7 +215,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="shift-change-modalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -223,7 +223,7 @@
         Are you sure you want to make these shift changes?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" id='shift-save'class="btn btn-primary">Save changes</button>
       </div>
     </div>

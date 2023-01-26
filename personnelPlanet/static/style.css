@@ -232,6 +232,9 @@ nav{
 #edit-fingerprint-wrapper{
     text-align: center;
 }
+#id_lastName, #id_phoneNumber, #id_firstName{
+    width: 99% !important;
+}
 /*   TASK CREATOR STYLES   */
 #task-container{
     margin-top: 5vh;
@@ -506,7 +509,8 @@ nav{
     display: flex;
     flex-direction: column;
     height: 90vh;
-    width: 100vw;
+    width: 98vw;
+    margin-right: 2%;
 }
 #memo-container{
     margin: 2%;
@@ -594,7 +598,7 @@ nav{
     width: 50vw;
     float: right;
     background-color: var(--my-lightblue) !important;
-    
+    margin-bottom: 2.5vh;
 }
 #eLearn-main-cont{
     height: 90%;

@@ -389,17 +389,18 @@ def shift(request):
         print(scheduleChanges, workerId)
         # VERY POOR PRACTICE USING ARRAY INSTEAD OF OBJECT THESE INDEXS ARE ARBITRARY
 
-        Schedule.objects.filter(employee=workerId, week=week).update_or_create(
+        Schedule.objects.update_or_create(
             employee=workerId,
             week=week,
-            monday=scheduleChanges[0],
-            tuesday=scheduleChanges[1],
-            wednesday=scheduleChanges[2],
-            thursday=scheduleChanges[3],
-            friday=scheduleChanges[4],
-            saturday=scheduleChanges[5],
-            sunday=scheduleChanges[6],
-        )
+            defaults={
+                'monday': scheduleChanges[0],
+                'tuesday': scheduleChanges[1],
+                'wednesday': scheduleChanges[2],
+                'thursday': scheduleChanges[3],
+                'friday': scheduleChanges[4],
+                'saturday': scheduleChanges[5],
+                'sunday': scheduleChanges[6],
+            })
         return JsonResponse({
             'message': 'Shift changed successfully'
         })
@@ -422,7 +423,7 @@ def shift(request):
 
         employeeId = request.user.id
         try:
-            schedule = Schedule.objects.get(employee=employeeId)
+            schedule = Schedule.objects.filter(employee=employeeId)
             print(schedule)
         except Schedule.DoesNotExist:
             Schedule.objects.create(employee=request.user.id)
@@ -430,7 +431,7 @@ def shift(request):
         schedule = schedule[0]
         for day in schedule:
             if not isinstance(schedule[day], int):
-                if len(schedule[day]) > 3:
+                if len(schedule[day]) > 3 and len(schedule[day]) < 10:
                     schedule[day] = schedule[day].split('-')
 
         print(schedule)
