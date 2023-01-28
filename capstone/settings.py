@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8ua4)$^y9y+_h%gf&gvyo-15=)pblfqsb9!&0093a4gg$-1#)e
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1:8000',
-                 'personnel-planet.herokuapp.com/']
+                 'personnel-planet.herokuapp.com']
 
 
 # Application definition
