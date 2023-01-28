@@ -1,1 +1,1 @@
-web: gunicorn personnelPlanet.wsgi --log-file-
+web: gunicorn personnelPlanet.wsgi --log-file -
