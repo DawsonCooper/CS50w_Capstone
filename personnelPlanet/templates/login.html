@@ -9,13 +9,20 @@
       <div class="form-inputs">{{ loginForm.password }}</div>
 
       <div class="form-inputs">
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit">
       </div>
-    </div>
+    
     {% if message %}
     <p>{{ message }}</p>
     {% endif %}
   </form>
+  <div id='login-to-dummy'>
+    <p>What to check the website out under a dummy account?</p>
+    <input id='login-dummy-button' type="submit" value="Click Here">
+  </div>
+  <span id='dummy-id' class='dummy-logins'>J7D7791</span>
+  <span id='dummy-password' class='dummy-logins'>asdf</span>
+</div>
 </div>
 <div class="wave-footer">
   <svg

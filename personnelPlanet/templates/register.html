@@ -3,7 +3,7 @@
 <div id='reg-body' class='full-page'>
     <form id='register-form' action="{% url 'register' %}" method='POST' enctype="multipart/form-data">
         <div id='reg-form-head'><p>Register</p></div>
-        <div class='form'>
+        <div class='form reg'>
             {% csrf_token %}
             <div class="form-inputs">
                 {{ regForm.firstName }}

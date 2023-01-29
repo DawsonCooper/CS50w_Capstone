@@ -77,13 +77,16 @@ nav{
 .form{
     min-height: 100%;
     min-width: 100%;
-    padding-top: 10%;
+    padding-top: 15vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background-color: lightgrey ;
     
+}
+.reg{
+    padding-top: 10vh;
 }
 .form-inputs{
     margin-top: 2.5%;
@@ -95,7 +98,7 @@ nav{
 .form-inputs input[type=password]
 {
     height: 4vh;
-    width: 10vw;
+    width: 100%;
 }
 .form-inputs input[type=checkbox]{
     height: 2vh;
@@ -108,8 +111,13 @@ nav{
 
 
 
-@media (max-width: 1500px) { 
-    
+@media (max-width: 800px) { 
+    .form{
+        padding-top: 20vh;
+    }
+    .reg{
+        padding-top: 12vh;
+    }
     #register-form{
         margin-top: 2vh;
         height: 75%;
@@ -121,15 +129,9 @@ nav{
     }
 
     .form-inputs{
-        padding-top: 5%;
+        padding-top: 2.5%;
     }
-    .form-inputs input[type=text],
-    .form-inputs input[type=tel],
-    .form-inputs input[type=password]
-    {
-        height: 4vh;
-        width: 40vw;
-    }
+
     .form-inputs input[type=checkbox]{
         height: 3vh;
         width: 3vw;
@@ -183,7 +185,14 @@ nav{
         padding-top: 5%;
     }
 }
-
+.dummy-logins{
+    display: none;
+}
+#login-to-dummy{
+    position: absolute;
+    bottom: 3vh;
+    text-align: center;
+}
 /* Profile Page */
 #availability{
     position: relative;

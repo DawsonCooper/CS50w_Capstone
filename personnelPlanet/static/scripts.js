@@ -216,12 +216,20 @@ function genTables(result){
         console.log(schedule[day])
     }
     console.log({scheduleArr})
+    let shiftCells = document.querySelectorAll('.shift-cell')
     let daysInput = document.querySelectorAll('.scheduling-input')
     let mobileDaysInput = document.querySelectorAll('.mobile-input')
     if (window.innerWidth > 800){
-        for(let i = 0; i < 7; i++){
-            daysInput[i].value = scheduleArr[i][0] 
-            daysInput[i + 7].value = scheduleArr[i][1] 
+        if (isEmployer){
+            for(let i = 0; i < 7; i++){
+                daysInput[i].value = scheduleArr[i][0] 
+                daysInput[i + 7].value = scheduleArr[i][1] 
+            }
+        }else{
+            for(let i = 0; i < 7; i++){
+                shiftCells[i].value = scheduleArr[i][0] 
+                shiftCells[i + 7].value = scheduleArr[i][1] 
+            }
         }
     }else{
         for(let i = 0; i < 14; i+=2){
@@ -601,6 +609,15 @@ document.addEventListener("DOMContentLoaded", () => {
            
         });
     }
+    else if (/\blogin\b/gi.test(window.location.href)){
+        loginDumbBtn = document.querySelector('#login-dummy-button');
+        loginDumbBtn.addEventListener('click',  () => {
+            id= document.querySelector('#dummy-id').innerText;
+            password= document.querySelector('#dummy-password').innerText;
+            console.log({id, password});
+            // CHANGE VALUES OF INPUT FIELDS AND THEN CLICK THE SUBMIT BUTTON TO SEND FORM TO BE
+        })
+    }   
     else if (/\b\b/gi.test(window.location.href)){
         let memoId = 0;
         if (isEmployer){
