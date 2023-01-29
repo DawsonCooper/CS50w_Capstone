@@ -46,8 +46,14 @@ urlpatterns = [
     path('logout', views.logout_view, name='logout'),
     path('register', views.register, name='register'),
     url(r'^media/(?P<path>.*)$', serve,
-        {'document_root':       settings.MEDIA_ROOT}),
+        {'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve,
         {'document_root': settings.STATIC_ROOT}),
 ]
-urlpatterns += staticfiles_urlpatterns()
+
+urlpatterns + staticfiles_urlpatterns()
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
