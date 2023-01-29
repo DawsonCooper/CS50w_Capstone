@@ -36,7 +36,7 @@ urlpatterns = [
     path('get_schedule_by_week/<int:workerId>/<str:week>',
          views.get_schedule_by_week, name='get_schedule_by_week'),
     # Views
-    path('', views.home, name='home'),
+    path('/', views.home, name='home'),
     path('shifts', views.shift, name='shifts'),
     path('profile', views.profile, name='profile'),
     path('messages', views.messages, name='messages'),
