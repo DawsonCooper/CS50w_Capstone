@@ -17,7 +17,7 @@
                 {{ regForm.phoneNumber }}
                 {{ regForm.phoneNumber.errors }}
             </div>
-            <div class="form-inputs" id='check-input'>
+            <div class="form-inputs d-flex justify-content-center" id='check-input'>
                 <span>Are you an Employer?</span>
                 {{ regForm.isEmployer }}
                 {{ regForm.isEmployer.errors }}
@@ -33,8 +33,13 @@
             <div class="form-inputs">
                 <input type='submit' value='Submit'>
             </div>
+        </form>
+        <div class='form-footer text-center mt-2'>
+            <p>Want to log into a dummy account?</p>
+            <a href='/login'><button id='reg-dummy-login' type='button' class='btn btn-primary'>Click Here</button></a>
         </div>
-    </form>
+        </div>
+    
 
 <div class="wave-footer">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

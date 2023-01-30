@@ -5,7 +5,7 @@
 
   </select>
 
-  <table id="shift-table" class="table table-bordered">
+  <table id="employer-schedule-table" class="table table-bordered">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Schedule</th>
@@ -20,52 +20,24 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">Clock In</th>
-        <td class="shift-cell" id="clock-in-monday">
-          {% if schedule.monday == 'off' %} {{ schedule.monday }} {% else %}{{ schedule.monday.0 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-in-tuesday">
-          {% if schedule.tuesday == 'off' %} {{ schedule.tuesday }} {% else %}{{ schedule.tuesday.0 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-in-wednesday">
-          {% if schedule.wednesday == 'off' %} {{ schedule.wednesday }} {% else %}{{ schedule.wednesday.0 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-in-thursday">
-          {% if schedule.thursday == 'off' %} {{ schedule.thursday }} {% else %}{{ schedule.thursday.0 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-in-friday">
-          {% if schedule.friday == 'off' %} {{ schedule.friday }} {% else %}{{ schedule.friday.0 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-in-saturday">
-          {% if schedule.saturday == 'off' %} {{ schedule.saturday }} {% else %}{{ schedule.saturday.0 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-in-sunday">
-          {% if schedule.sunday == 'off' %} {{ schedule.sunday }} {% else %}{{ schedule.sunday.0 }} {% endif %}
-        </td>
+        <th scope="row">Start</th>
+        <td class="schedule-cell" id="start-monday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="start-tuesday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="start-wednesday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="start-thursday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="start-friday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="start-saturday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="start-sunday"><p class='scheduling-input' type='text' value='off'></p></td>
       </tr>
       <tr>
-        <th scope="row">Clock Out</th>
-        <td class="shift-cell" id="clock-out-monday">
-        {% if schedule.monday == 'off' %} {{ schedule.monday }} {% else %}{{ schedule.monday.1 }} {% endif %}
-      </td>
-        <td class="shift-cell" id="clock-out-tuesday">
-          {% if schedule.tuesday == 'off' %} {{ schedule.tuesday }} {% else %}{{ schedule.tuesday.1 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-out-wednesday">
-          {% if schedule.wednesday == 'off' %} {{ schedule.wednesday }} {% else %}{{ schedule.wednesday.1 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-out-thursday">
-          {% if schedule.thursday == 'off' %} {{ schedule.thursday }} {% else %}{{ schedule.thursday.1 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-out-friday">
-          {% if schedule.friday == 'off' %} {{ schedule.friday }} {% else %}{{ schedule.friday.1 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-out-saturday">
-          {% if schedule.saturday == 'off' %} {{ schedule.saturday }} {% else %}{{ schedule.saturday.1 }} {% endif %}
-        </td>
-        <td class="shift-cell" id="clock-out-sunday">
-          {% if schedule.sunday == 'off' %} {{ schedule.sunday }} {% else %}{{ schedule.sunday.1 }} {% endif %}
-        </td>
+        <th scope="row">End</th>
+        <td class="schedule-cell" id="end-monday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="end-tuesday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="end-wednesday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="end-thursday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="end-friday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="end-saturday"><p class='scheduling-input' type='text' value='off'></p></td>
+        <td class="schedule-cell" id="end-sunday"><p class='scheduling-input' type='text' value='off'></p></td>
       </tr>
     </tbody>
   </table>

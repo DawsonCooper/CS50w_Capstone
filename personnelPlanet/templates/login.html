@@ -5,11 +5,11 @@
     <div class="form">
       
       {% csrf_token %}
-      <div class="form-inputs">{{ loginForm.workId }}</div>
-      <div class="form-inputs">{{ loginForm.password }}</div>
+      <div class="form-inputs mt-5">{{ loginForm.workId }}</div>
+      <div class="form-inputs mt-5">{{ loginForm.password }}</div>
 
-      <div class="form-inputs">
-        <input type="submit" value="Submit">
+      <div class="form-inputs text-center mt-5">
+        <input type="submit" value="Submit" id='login-submit'>
       </div>
     
     {% if message %}

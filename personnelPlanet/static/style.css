@@ -66,7 +66,7 @@ nav{
     position: relative;
     z-index: 99;
     justify-content: center;
-    height: 50vh;
+    height: 55vh;
     width: 25vw;
     margin-bottom: 10%;
     
@@ -87,12 +87,15 @@ nav{
 }
 .reg{
     padding-top: 10vh;
+    text-align: center;
 }
 .form-inputs{
     margin-top: 2.5%;
     font-size: 1.1rem;
+    width: 75%;
 
 }
+
 .form-inputs input[type=text],
 .form-inputs input[type=tel],
 .form-inputs input[type=password]
