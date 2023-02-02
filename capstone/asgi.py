@@ -17,7 +17,7 @@ from channels.security.websocket import OriginValidator
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'capstone.settings')
 
 application = ProtocolTypeRouter({
-    'http': get_asgi_application(),
+    'https': get_asgi_application(),
     'websocket': OriginValidator(
         AuthMiddlewareStack(
             URLRouter(
