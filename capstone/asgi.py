@@ -13,13 +13,16 @@ from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 import personnelPlanet.routing
+from channels.security.websocket import OriginValidator
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'capstone.settings')
 
 application = ProtocolTypeRouter({
     'http': get_asgi_application(),
-    'websocket': AuthMiddlewareStack(
-        URLRouter(
-            personnelPlanet.routing.websocket_urlpatterns
+    'websocket': OriginValidator(
+        AuthMiddlewareStack(
+            URLRouter(
+                personnelPlanet.routing.websocket_urlpatterns
+            )
         )
     )
 })
