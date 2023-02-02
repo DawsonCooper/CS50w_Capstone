@@ -294,9 +294,9 @@ def home(request):
 
     memos = Memo.objects.filter(company=user.company).values()
     context = {'user': user, 'memos': memos}
-    today = datetime.datetime.now()
+    todayDT = datetime.datetime.now()
     today = User.objects.filter(workId=user.workId).values('hoursWorked')
-    if today.strftime('%a') == 'Mon':
+    if todayDT.strftime('%a') == 'Mon':
         hours = User.objects.filter(workId=user.workId).values(
             'hoursWorked', 'totalHours')
         totalHours = 0
