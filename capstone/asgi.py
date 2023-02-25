@@ -18,11 +18,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'capstone.settings')
 
 application = ProtocolTypeRouter({
     'http': get_asgi_application(),
-    'websocket': OriginValidator(
+    'websocket':
         AuthMiddlewareStack(
             URLRouter(
                 personnelPlanet.routing.websocket_urlpatterns
             )
-        )
     )
 })
