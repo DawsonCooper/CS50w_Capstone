@@ -558,7 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     else if (/\bmessages\b/gi.test(window.location.href)){
-        let url = `wss://${window.location.host}/ws/socket-server/`
+        let url = `ws://${window.location.host}/ws/socket-server/`
         const messageSocket = new WebSocket(url)
         
         allMsgCont = document.querySelector('#all-messages-container')
