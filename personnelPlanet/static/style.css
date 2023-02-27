@@ -116,14 +116,17 @@ nav{
 
 @media (max-width: 800px) { 
     .form{
-        padding-top: 20vh;
+        height: auto;
+        padding-top: 15vh;
     }
+
     .reg{
         padding-top: 12vh;
     }
     #register-form{
         margin-top: 2vh;
-        height: 75%;
+        height: auto;
+        
         width: 60vw;
         margin-left: 0;
     }
@@ -140,11 +143,18 @@ nav{
         width: 3vw;
         margin-left: 2vw;
     }
+    #reg-dummy-login{
+        margin-bottom: 1rem;
+    }
+    #id_isEmployer{
+        height: 5vh;
+        width: 5vw;
+    }
  }
 
 
 .wave-footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -192,8 +202,6 @@ nav{
     display: none;
 }
 #login-to-dummy{
-    position: absolute;
-    bottom: 3vh;
     text-align: center;
 }
 /* Profile Page */
@@ -693,6 +701,7 @@ nav{
 #msg-page-body{
   
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
