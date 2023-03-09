@@ -3,6 +3,7 @@
 :root{
     --my-lightblue: #63ACE5;
     --ebony-clay: #22313f;
+    --mobile-form-width: 75vw;
 }
 html{
     font-family: 'Space Grotesk', sans-serif !important;
@@ -59,7 +60,7 @@ nav{
         font-size: 1.5rem;
         letter-spacing: 5px;
         color: white;
-    }
+}
 /* REG PAGE */
 #register-form{
     display: flex;
@@ -69,21 +70,32 @@ nav{
     height: 55vh;
     width: 25vw;
     margin-bottom: 10%;
-    
-    box-shadow: 3px 2px 2px #ccc;
-
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;}
+#login-form{
+    display: flex;
+    position: relative;
+    z-index: 99;
+    justify-content: center;
+    gap: 1.5rem;
+    height: 55vh;
+    width: 25vw;
+    margin-bottom: 10%;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .form{
     min-height: 100%;
     min-width: 100%;
-    padding-top: 15vh;
+    padding-top: 10vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     background-color: lightgrey ;
     
+}
+#login-form .form{
+    gap: 1.5rem;
 }
 .reg{
     padding-top: 10vh;
@@ -115,23 +127,25 @@ nav{
 
 
 @media (max-width: 800px) { 
-    .form{
+    #register-form .form{
         height: auto;
-        padding-top: 15vh;
+
     }
 
-    .reg{
-        padding-top: 12vh;
-    }
     #register-form{
         margin-top: 2vh;
         height: auto;
-        
-        width: 60vw;
+        width: var(--mobile-form-width);
+        margin-left: 0;
+    }
+    #login-form{
+        justify-content: space-around;
+        height: auto;
+        width: var(--mobile-form-width);
         margin-left: 0;
     }
     #reg-form-head{
-        width: 60vw;
+        width: var(--mobile-form-width);
     }
 
     .form-inputs{
@@ -366,6 +380,9 @@ nav{
     margin-top: 2%;
 }
 /*   PROFILE PAGE MOBILE   */
+#profile-body{
+    overflow-x: hidden;
+}
 @media (max-width: 1000px) {
     #profile-body{
         margin: 5%;

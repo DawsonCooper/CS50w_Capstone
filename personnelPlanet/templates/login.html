@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} {% block body %}
 <div id="reg-body" class="full-page">
-  <form id="register-form" action="{% url 'login' %}" method="POST">
+  <form id="login-form" class='both-forms' action="{% url 'login' %}" method="POST">
     <div id='reg-form-head'><p>Login</p></div>
     <div class="form">
       
@@ -9,16 +9,16 @@
       <div class="form-inputs mt-3">{{ loginForm.password }}</div>
 
       <div class="form-inputs text-center mt-3">
-        <input type="submit" class='btn btn-primary' value="Log in" id='login-submit'>
+        <input type="submit" class='btn btn-primary form-control' value="Log in" id='login-submit'>
       </div>
     
     {% if message %}
     <p>{{ message }}</p>
     {% endif %}
   </form>
-  <div id='login-to-dummy' class='mb-3'>
+  <div id='login-to-dummy' class='mb-3 form-inputs'>
     <p>What to check the website out under a dummy account?</p>
-    <input id='login-dummy-button' class='btn btn-primary' type="submit" value="Click Here">
+    <input id='login-dummy-button' class='btn btn-primary form-control' type="submit" value="Click Here">
   </div>
   <span id='dummy-id' class='dummy-logins'>J7D7791</span>
   <span id='dummy-password' class='dummy-logins'>asdf</span>

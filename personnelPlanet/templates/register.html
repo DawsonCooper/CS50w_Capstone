@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
 <div id='reg-body' class='full-page'>
-    <form id='register-form' action="{% url 'register' %}" method='POST' enctype="multipart/form-data">
+    <form id='register-form' class='both-forms' action="{% url 'register' %}" method='POST' enctype="multipart/form-data">
         <div id='reg-form-head'><p>Register</p></div>
         <div class='form reg'>
             {% csrf_token %}
@@ -31,12 +31,12 @@
                 {{ regForm.password.errors }}
             </div>
             <div class="form-inputs">
-                <input type='submit' class='btn btn-primary' value='Register'>
+                <input type='submit' class='btn btn-primary form-control' value='Register'>
             </div>
         </form>
         <div class='form-footer text-center mt-2'>
             <p>Want to log into a dummy account?</p>
-            <a href='/login'><button id='reg-dummy-login' type='button' class='btn btn-primary'>Click Here</button></a>
+            <a href='/login'><button id='reg-dummy-login' type='button' class='btn btn-primary form-control'>Click Here</button></a>
         </div>
         </div>
     
