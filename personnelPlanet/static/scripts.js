@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
         availability(availObj);
         
     })
-    // POST FETCH FOR TASK CREATION //
+    // POST FETCH FOR TASK CREATION AND MODS //
     let taskButton = document.querySelector("#submit-task");
     taskButton.addEventListener('click', () => {
         let taskBody = document.querySelector('#task-textarea').value;
@@ -427,8 +427,33 @@ document.addEventListener("DOMContentLoaded", () => {
         task(empList, taskBody, false, 'POST');
         document.querySelector('#add-task-modal').style.display = 'none';
     });
-
-
+    setTimeout(() => {
+        let completeTask = document.querySelectorAll("#task-complete");
+        console.log(completeTask)
+        completeTask.forEach(task => {
+            task.addEventListener('click', () => {
+            console.log(task.innerText)
+            if(task.innerText == 'Offer Help'){
+                fetch('/addToTask', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        taskId: task.value,
+                    })  
+                })
+                .then((response) => response.json())
+                .then((result) => {
+                  alert("Success: You will be added to this task shortly!");
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
+            }
+        });
+        
+    })
+    }, 1000)
+    
+    
 
     // SELECT MENU CHECKBOX LSIT OF EMPLOYEES //
     let checkList = document.querySelector('#emp-list');
@@ -552,8 +577,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }else{
             weekDropdown.addEventListener('change',() =>{
                 getScheduleByWeek(userId, weekDropdown.value)
-        
-
             })
         }
     }

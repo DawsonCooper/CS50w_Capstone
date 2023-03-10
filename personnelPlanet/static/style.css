@@ -725,7 +725,7 @@ nav{
 #all-messages-container{
     height: 85vh;
     width: 50vw;
-    margin: 20px;
+    margin: 1vw;
     border: 2px solid rgba(99, 172, 229, .7);
     border-radius: 10px;
     overflow-y: scroll;
@@ -733,7 +733,7 @@ nav{
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: lightgrey white;
-
+    left: 24vw;
 
 }
 #all-messages-container::-webkit-scrollbar{

@@ -40,7 +40,7 @@ urlpatterns = [
     path('shifts', views.shift, name='shifts'),
     path('profile', views.profile, name='profile'),
     path('messages', views.messages, name='messages'),
-
+    path('addToTask', views.addToTask, name='addToTask'),
     # Authentication/Authorization
     path('login', views.login_view, name='login'),
     path('logout', views.logout_view, name='logout'),

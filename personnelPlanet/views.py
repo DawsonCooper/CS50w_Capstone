@@ -72,6 +72,20 @@ def get_schedule_by_week(request, week, workerId):
 
 
 @csrf_exempt
+def addToTask(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        task = Tasks.objects.filter(data.get('taskId')).values()
+        print(task)
+        current = task['assignedTo']
+        new = f'{current} {request.user.workId}'
+        print(new)
+        Tasks.objects.filter(data.get('taskId')).update(assignedTo=new)
+        print('----------------------------')
+
+
+@csrf_exempt
 def task(request):
 
     if request.method == 'POST':
