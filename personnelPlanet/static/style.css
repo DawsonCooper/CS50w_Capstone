@@ -48,6 +48,10 @@ nav{
     background-color: rgb(238, 238, 238);
     overflow: hidden;
     height: 90vh;
+    flex-direction: column;
+}
+.login-alert{
+    width: 25vw;
 }
 #reg-form-head{
         background-color: var(--my-lightblue);
@@ -147,7 +151,9 @@ nav{
     #reg-form-head{
         width: var(--mobile-form-width);
     }
-
+    .login-alert{
+        width: var(--mobile-form-width);
+    }
     .form-inputs{
         padding-top: 2.5%;
     }
@@ -793,6 +799,7 @@ nav{
 @media (max-width: 1100px) { 
     #all-messages-container{
         width: 90vw;
+        left: 5vw;
     }
 
  }
