@@ -506,10 +506,9 @@ def login_view(request):
             user = User.objects.get(workId=username, password=password)
 
             print(user)
-            if user is not None:
-                login(request, user)
-                return render(request, 'home.html', {
-                })
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/')
         else:
             return render(request, "login.html", {
                 "message": "Invalid work Id and/or password."

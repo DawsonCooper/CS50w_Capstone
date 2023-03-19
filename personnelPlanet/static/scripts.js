@@ -320,7 +320,7 @@ function empInfo(id, method='GET', workId='', payRate=0, company='', terminate =
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    if (/\bregister\b/gi.test(window.location.href) || /\blogin\b/gi.test(window.location.href)){
+    if (/\bregister\b/gi.test(window.location.href)){
         document.querySelector('body').style.overflow = 'hidden'
     }
     //-------------------- PROFILE AVAIL TABLE SCRIPTS --------------------------//
@@ -628,6 +628,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     else if (/\blogin\b/gi.test(window.location.href)){
+        document.querySelector('body').style.overflow = 'hidden'
+
         loginDumbBtn = document.querySelector('#login-dummy-button');
         loginDumbBtn.addEventListener('click',  () => {
             id= document.querySelector('#dummy-id').innerText;
