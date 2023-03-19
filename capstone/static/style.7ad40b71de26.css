@@ -43,15 +43,12 @@ nav{
 
 #reg-body{
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     background-color: rgb(238, 238, 238);
-    overflow:hidden; 
-    height: 100vh;
+    overflow: hidden;
+    height: 90vh;
     flex-direction: column;
-    position: absolute;
-    z-index: -3;
-    padding-top: 8vh;
 }
 .login-alert{
     width: 25vw;
@@ -81,7 +78,7 @@ nav{
 #login-form{
     display: flex;
     position: relative;
-    z-index: 1;
+    z-index: 99;
     justify-content: center;
     gap: 1.5rem;
     height: 55vh;
@@ -184,7 +181,6 @@ nav{
     overflow: hidden;
     line-height: 0;
     transform: rotate(180deg);
-    z-index: -2;
 }
 
 .wave-footer svg {
@@ -733,7 +729,7 @@ nav{
     align-items: center;
 }
 #all-messages-container{
-    height: 82vh;
+    height: 85vh;
     width: 50vw;
     margin: 1vw;
     border: 2px solid rgba(99, 172, 229, .7);

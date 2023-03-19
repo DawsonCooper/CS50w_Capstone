@@ -320,8 +320,13 @@ function empInfo(id, method='GET', workId='', payRate=0, company='', terminate =
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    if (/\bregister\b/gi.test(window.location.href) || /\blogin\b/gi.test(window.location.href)){
-        document.querySelector('body').style.overflow = 'hidden'
+    if (/\bregister\b/gi.test(window.location.href || /\blogin\b/gi.test(window.location.href))){
+        regUserCircle = document.querySelector("#reg-user-circle");
+        if (window.innerWidth < 650){
+
+            regUserCircle.setAttribute("color", "#63ACE5");
+            console.log(regUserCircle)
+        }
     }
     //-------------------- PROFILE AVAIL TABLE SCRIPTS --------------------------//
     else if (/\bprofile\b/gi.test(window.location.href)){
