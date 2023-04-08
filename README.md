@@ -35,7 +35,7 @@ Requirments.txt holds all the dependencies for this project
 
 Procfile contains a commant important for the hosting service Heroku that this project is hosted on.
 
-
+package.json and package-lock.json are files containing project dependencies and other information about how the server interacts with the project.
 
 #### How to use
 A user will first be prompted to login or create an account for the company that they are apart of. The user will then be redirected to the home page.
