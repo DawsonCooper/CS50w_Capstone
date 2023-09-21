@@ -503,19 +503,24 @@ def login_view(request):
             username = form.cleaned_data["workId"]
             password = form.cleaned_data["password"]
             print(username, password, request)
-            user = User.objects.get(workId=username, password=password)
-
+            try:
+                User.objects.get(workId=username, password=password)
+                user = User.objects.get(workId=username, password=password)
+            except User.DoesNotExist:
+                user = None
             print(user)
         if user is not None:
             login(request, user)
             return HttpResponseRedirect('/')
         else:
             return render(request, "login.html", {
+                'loginForm': LoginForm,
                 "message": "Invalid work Id and/or password."
             })
 
     return render(request, 'login.html', {
-        'loginForm': LoginForm
+        'loginForm': LoginForm,
+        'message': False
     })
 
 

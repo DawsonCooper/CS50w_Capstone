@@ -55,6 +55,9 @@ nav{
 .login-alert{
     width: 25vw;
 }
+.message{
+    position: relative !important;
+}
 #reg-form-head{
         background-color: var(--my-lightblue);
         height: 8vh;
@@ -210,6 +213,43 @@ nav{
 
 
 /* LOGIN VIEW */
+
+@keyframes wrong {
+    0%{
+        transform: translate(0);
+    }
+     15%{
+        transform: translate(5vw);
+    } 
+    30%{
+        transform: translate(-5vw); 
+    }  
+    45%{
+        transform: translate(4vw);
+    }
+    60%{
+        transform: translate(-4vw);
+    }
+    75%{
+        transform: translate(3vw);
+    }
+    87%{
+        transform: translate(-3vw);
+    }
+    100%{
+        transform: translate(0);
+    }
+}
+
+.wrong-info{
+    animation: wrong .75s infinite
+}
+.invis-message{
+    position: fixed;
+    margin:0;
+    padding:0;
+    visibility: hidden;
+}
 
 @media (max-width: 650px){
     .login-form-inputs{

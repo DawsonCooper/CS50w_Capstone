@@ -248,7 +248,7 @@ nav{
     position: fixed;
     margin:0;
     padding:0;
-    visibility: hidden;
+    visibility: none;
 }
 
 @media (max-width: 650px){

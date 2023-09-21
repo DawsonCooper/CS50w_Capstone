@@ -7,7 +7,7 @@
       </symbol>
     </svg>
     <div>
-      Some functionality is currently under maintenance and may not behave as expected.
+      Some functionalities are currently under maintenance and may not behave as expected.
     </div>
     <button id='close-tab-alert' type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
@@ -24,7 +24,9 @@
       </div>
     
     {% if message %}
-    <p>{{ message }}</p>
+    <span id='login-message'>{{ message }}</span>
+    {% else %}
+    <span id='login-message' class='invis-message'>{{ message }}</span>
     {% endif %}
   </form>
   <div id='login-to-dummy' class='mb-3 form-inputs'>

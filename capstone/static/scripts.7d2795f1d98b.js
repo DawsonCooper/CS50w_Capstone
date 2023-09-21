@@ -631,13 +631,6 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (/\blogin\b/gi.test(window.location.href)){
         document.querySelector('body').style.overflow = 'hidden'
         
-        if (isMessage){
-            document.querySelector('#login-form').classList.add('wrong-info')
-            setTimeout(()=>{
-                document.querySelector('#login-form').classList.remove('wrong-info')
-            }, 750)
-        }
-
         loginDumbBtn = document.querySelector('#login-dummy-button');
         loginDumbBtn.addEventListener('click',  () => {
             id= document.querySelector('#dummy-id').innerText;
